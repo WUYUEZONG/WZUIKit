@@ -13,6 +13,7 @@
 		CC6682382716BA8400E40F6F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC6682362716BA8400E40F6F /* Main.storyboard */; };
 		CC66823A2716BA8500E40F6F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC6682392716BA8500E40F6F /* Assets.xcassets */; };
 		CC66823D2716BA8500E40F6F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC66823B2716BA8500E40F6F /* LaunchScreen.storyboard */; };
+		CC66824B2716BE9D00E40F6F /* WZUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = CC66824A2716BE9D00E40F6F /* WZUIKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC66824B2716BE9D00E40F6F /* WZUIKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +44,7 @@
 			children = (
 				CC66822F2716BA8400E40F6F /* Example */,
 				CC66822E2716BA8400E40F6F /* Products */,
+				CC6682492716BE9D00E40F6F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +70,13 @@
 			path = Example;
 			sourceTree = "<group>";
 		};
+		CC6682492716BE9D00E40F6F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -83,6 +93,9 @@
 			dependencies = (
 			);
 			name = Example;
+			packageProductDependencies = (
+				CC66824A2716BE9D00E40F6F /* WZUIKit */,
+			);
 			productName = Example;
 			productReference = CC66822D2716BA8400E40F6F /* Example.app */;
 			productType = "com.apple.product-type.application";
@@ -358,6 +371,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CC66824A2716BE9D00E40F6F /* WZUIKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WZUIKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CC6682252716BA8400E40F6F /* Project object */;
 }
