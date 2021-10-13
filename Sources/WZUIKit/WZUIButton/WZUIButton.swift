@@ -223,7 +223,9 @@ public extension WZUIButton {
     enum ImagePosition {
         /// image at first
         case head
+        /// image at behind
         case behind
+        /// image on top
         case top
     }
 }
