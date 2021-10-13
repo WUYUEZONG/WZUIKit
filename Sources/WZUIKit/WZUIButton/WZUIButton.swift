@@ -16,6 +16,7 @@ open class WZUIButton: UIView {
     
     // MARK: - custom properties -
     
+    /// set image to title spacing default is 10.
     public var wzImageTrailingSpacing: CGFloat = 10 {
         didSet {
             contentStack.spacing = wzImageTrailingSpacing
@@ -71,6 +72,7 @@ open class WZUIButton: UIView {
         }
     }
     
+    /// to set  the `wzImage` size
     public var imageSize: CGSize = CGSize(width: 26, height: 26) {
         didSet {
             
@@ -229,6 +231,7 @@ public extension WZUIButton {
 
 public extension WZUIButton {
     
+    /// add an action for button
     func addAction(_ action:@escaping (WZUIButton)->()) {
         wzAction = action
     }
