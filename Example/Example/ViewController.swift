@@ -2,16 +2,113 @@
 //  ViewController.swift
 //  Example
 //
-//  Created by mntechMac on 2021/10/13.
+//  Created by mntechMac on 2021/10/8.
 //
 
 import UIKit
+import WZUIKit
 
 class ViewController: UIViewController {
-
+    
+    lazy var testButton: WZUIButton = {
+        let btn = WZUIButton()
+        btn.wzTitle.text = "This is title"
+        btn.wzDetail.text = "here show some detail"
+        return btn
+    }()
+    
+    
+    @IBOutlet weak var otherButton: WZUIButton!
+    
+    func setupOtherButton() {
+        
+        
+        
+        
+        otherButton.wzImage.image = UIImage(systemName: "pencil.circle")
+        
+        otherButton.wzTitle.text = "BUTTON TITLE"
+        otherButton.wzDetail.text = "here I can set detail of button description."
+        
+        otherButton.backgroundColor = .systemBlue
+        otherButton.layer.cornerRadius = 6
+        
+        otherButton.imageSize = CGSize(width: 28, height: 28)
+        
+        otherButton.wzTitle.font = .systemFont(ofSize: 15, weight: .medium)
+        
+        otherButton.wzTitle.textColor = .white
+        otherButton.wzDetail.textColor = .white
+        
+        otherButton.wzImage.tintColor = .white
+        
+        otherButton.contentInsertEdge = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+        
+        otherButton.addAction { sender in
+            let alert = UIAlertController(title: sender.wzTitle.text, message: sender.wzDetail.text, preferredStyle: .alert)
+            let ok = UIAlertAction(title: "Oooook!", style: .default) { action in
+                alert.dismiss(animated: true, completion: nil)
+            }
+            alert.addAction(ok)
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+        otherButton.wzImageTrailingSpacing = 20
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        setupOtherButton()
+        
+        view.addSubview(testButton)
+        testButton.translatesAutoresizingMaskIntoConstraints = false
+        let x = testButton.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        let y = testButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        NSLayoutConstraint.activate([x, y])
+        
+        testButton.wzImage.image = UIImage(systemName: "pencil.circle")
+        
+        testButton.layer.borderColor = UIColor.systemGray4.cgColor
+        testButton.layer.borderWidth = 1
+        testButton.layer.cornerRadius = 6
+        
+        testButton.addAction { button in
+            switch button.wzImagePosition {
+            case .head:
+                
+                UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 6, initialSpringVelocity: 14, options: UIView.AnimationOptions.curveEaseInOut) {
+                    button.wzImagePosition = .behind
+                } completion: { f in
+                    
+                }
+                
+            case .behind:
+                
+                UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 8, initialSpringVelocity: 10, options: UIView.AnimationOptions.curveEaseInOut) {
+                    button.wzImagePosition = .top
+                } completion: { f in
+                    
+                }
+            case .top:
+                
+                UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 6, initialSpringVelocity: 14, options: UIView.AnimationOptions.curveEaseInOut) {
+                    button.wzImagePosition = .head
+                } completion: { f in
+                    
+                }
+                
+            }
+        }
+        
+        
+        
+        testButton.contentInsertEdge = UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10)
+
+        testButton.imageSize = CGSize(width: 32, height: 32)
+        
     }
 
 
