@@ -26,7 +26,6 @@ class ViewController: UIViewController {
         
         
         otherButton.wzImage.image = UIImage(systemName: "pencil.circle")
-        
         otherButton.wzTitle.text = "BUTTON TITLE"
         otherButton.wzDetail.text = "here I can set detail of button description."
         
@@ -45,12 +44,25 @@ class ViewController: UIViewController {
         otherButton.contentInsertEdge = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
         
         otherButton.addAction { sender in
-            let alert = UIAlertController(title: sender.wzTitle.text, message: sender.wzDetail.text, preferredStyle: .alert)
-            let ok = UIAlertAction(title: "Oooook!", style: .default) { action in
-                alert.dismiss(animated: true, completion: nil)
+//            let alert = UIAlertController(title: sender.wzTitle.text, message: sender.wzDetail.text, preferredStyle: .alert)
+//            let ok = UIAlertAction(title: "Oooook!", style: .default) { action in
+//                alert.dismiss(animated: true, completion: nil)
+//            }
+//            alert.addAction(ok)
+//            self.present(alert, animated: true, completion: nil)
+            
+            if sender.wzImage.image != nil {
+                sender.wzImage.image = nil
+                sender.wzImage.isHidden = true
+            } else if sender.wzTitle.text != nil  {
+                sender.wzTitle.text = nil
+            } else {
+                sender.wzImage.image = UIImage(systemName: "pencil.circle")
+                sender.wzImage.isHidden = false
+                sender.wzTitle.text = "BUTTON TITLE"
+                sender.wzDetail.text = "here I can set detail of button description."
             }
-            alert.addAction(ok)
-            self.present(alert, animated: true, completion: nil)
+            
         }
         
         otherButton.wzImageTrailingSpacing = 20
