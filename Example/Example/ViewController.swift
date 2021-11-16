@@ -14,6 +14,7 @@ class ViewController: UIViewController {
         let btn = WZUIButton()
         btn.wzTitle.text = "This is title"
         btn.wzDetail.text = "here show some detail"
+        btn.tintColor = .systemBlue
         return btn
     }()
     
@@ -22,10 +23,14 @@ class ViewController: UIViewController {
     
     func setupOtherButton() {
         
+        var buttonImage = UIImage(named: "switch-button")
+        if #available(iOS 13.0, *) {
+            buttonImage = UIImage(systemName: "pencil.circle")
+        }
         
         
+        otherButton.wzImage.image = buttonImage
         
-        otherButton.wzImage.image = UIImage(systemName: "pencil.circle")
         otherButton.wzTitle.text = "BUTTON TITLE"
         otherButton.wzDetail.text = "here I can set detail of button description."
         
@@ -57,7 +62,7 @@ class ViewController: UIViewController {
             } else if sender.wzTitle.text != nil  {
                 sender.wzTitle.text = nil
             } else {
-                sender.wzImage.image = UIImage(systemName: "pencil.circle")
+                sender.wzImage.image = buttonImage
                 sender.wzImage.isHidden = false
                 sender.wzTitle.text = "BUTTON TITLE"
                 sender.wzDetail.text = "here I can set detail of button description."
@@ -81,9 +86,13 @@ class ViewController: UIViewController {
         let y = testButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         NSLayoutConstraint.activate([x, y])
         
-        testButton.wzImage.image = UIImage(systemName: "pencil.circle")
+        var buttonImage = UIImage(named: "switch-button")
+        if #available(iOS 13.0, *) {
+            buttonImage = UIImage(systemName: "pencil.circle")
+        }
+        testButton.wzImage.image = buttonImage
         
-        testButton.layer.borderColor = UIColor.systemGray4.cgColor
+        testButton.layer.borderColor = UIColor.systemGray.cgColor
         testButton.layer.borderWidth = 1
         testButton.layer.cornerRadius = 6
         
