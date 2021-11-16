@@ -128,7 +128,7 @@ class ViewController: UIViewController {
         
         testButton.contentInsertEdge = UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10)
 
-        testButton.imageSize = CGSize(width: 32, height: 32)
+        testButton.imageSize = CGSize(width: 28, height: 28)
         
     }
 
