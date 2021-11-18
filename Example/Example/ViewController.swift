@@ -21,6 +21,8 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var otherButton: WZUIButton!
     
+    var otherButtonStyle = 0
+    
     func setupOtherButton() {
         
         var buttonImage = UIImage(named: "switch-button")
@@ -48,7 +50,7 @@ class ViewController: UIViewController {
         
         otherButton.contentInsertEdge = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
         
-        otherButton.addAction { sender in
+        otherButton.addAction { [weak self] sender in
 //            let alert = UIAlertController(title: sender.wzTitle.text, message: sender.wzDetail.text, preferredStyle: .alert)
 //            let ok = UIAlertAction(title: "Oooook!", style: .default) { action in
 //                alert.dismiss(animated: true, completion: nil)
@@ -56,17 +58,43 @@ class ViewController: UIViewController {
 //            alert.addAction(ok)
 //            self.present(alert, animated: true, completion: nil)
             
-            if sender.wzImage.image != nil {
+            switch self?.otherButtonStyle {
+            case 0:
+                self?.otherButtonStyle = 1
                 sender.wzImage.image = nil
                 sender.wzImage.isHidden = true
-            } else if sender.wzTitle.text != nil  {
+            case 1:
+                self?.otherButtonStyle = 2
                 sender.wzTitle.text = nil
-            } else {
+            case 2:
+                self?.otherButtonStyle = 3
+                sender.wzImage.image = buttonImage
+                sender.wzImage.isHidden = false
+                sender.wzDetail.text = nil
+            case 3:
+                self?.otherButtonStyle = 4
+                sender.wzImage.image = nil
+                sender.wzImage.isHidden = true
+                sender.wzTitle.text = "BUTTON TITLE"
+            default:
+                self?.otherButtonStyle = 0
                 sender.wzImage.image = buttonImage
                 sender.wzImage.isHidden = false
                 sender.wzTitle.text = "BUTTON TITLE"
                 sender.wzDetail.text = "here I can set detail of button description."
             }
+            
+//            if sender.wzImage.image != nil {
+//                sender.wzImage.image = nil
+//                sender.wzImage.isHidden = true
+//            } else if sender.wzTitle.text != nil  {
+//                sender.wzTitle.text = nil
+//            } else {
+//                sender.wzImage.image = buttonImage
+//                sender.wzImage.isHidden = false
+//                sender.wzTitle.text = "BUTTON TITLE"
+//                sender.wzDetail.text = "here I can set detail of button description."
+//            }
             
         }
         
