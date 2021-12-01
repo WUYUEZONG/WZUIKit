@@ -32,10 +32,15 @@ public extension UIColor {
 
 public extension UIColor {
     
-    static func randomColor() -> UIColor {
-        let red = arc4random_uniform(254) + 1
-        let green = arc4random_uniform(254) + 1
-        let blue = arc4random_uniform(254) + 1
+    static func randomColor(_ start: UInt32 = 0) -> UIColor {
+        var start = start
+        let max: UInt32 = 255
+        if start > max {
+            start = max
+        }
+        let red = CGFloat(arc4random_uniform(max - start) + start)
+        let green = CGFloat(arc4random_uniform(max - start) + start)
+        let blue = CGFloat(arc4random_uniform(max - start) + start)
         return colorWithRGB(red: red, green: green, blue: blue, alpha: 1)
     }
     

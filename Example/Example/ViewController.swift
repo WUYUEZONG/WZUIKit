@@ -124,32 +124,37 @@ class ViewController: UIViewController {
         testButton.layer.borderWidth = 1
         testButton.layer.cornerRadius = 6
         
-        testButton.addAction { button in
-            switch button.wzImagePosition {
-            case .head:
-                
-                UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 6, initialSpringVelocity: 14, options: UIView.AnimationOptions.curveEaseInOut) {
-                    button.wzImagePosition = .behind
-                } completion: { f in
-                    
-                }
-                
-            case .behind:
-                
-                UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 8, initialSpringVelocity: 10, options: UIView.AnimationOptions.curveEaseInOut) {
-                    button.wzImagePosition = .top
-                } completion: { f in
-                    
-                }
-            case .top:
-                
-                UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 6, initialSpringVelocity: 14, options: UIView.AnimationOptions.curveEaseInOut) {
-                    button.wzImagePosition = .head
-                } completion: { f in
-                    
-                }
-                
-            }
+        testButton.addAction { [weak self] button in
+            
+            let page = PageController()
+            
+            self?.present(page, animated: true, completion: nil)
+            
+//            switch button.wzImagePosition {
+//            case .head:
+//
+//                UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 6, initialSpringVelocity: 14, options: UIView.AnimationOptions.curveEaseInOut) {
+//                    button.wzImagePosition = .behind
+//                } completion: { f in
+//
+//                }
+//
+//            case .behind:
+//
+//                UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 8, initialSpringVelocity: 10, options: UIView.AnimationOptions.curveEaseInOut) {
+//                    button.wzImagePosition = .top
+//                } completion: { f in
+//
+//                }
+//            case .top:
+//
+//                UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 6, initialSpringVelocity: 14, options: UIView.AnimationOptions.curveEaseInOut) {
+//                    button.wzImagePosition = .head
+//                } completion: { f in
+//
+//                }
+//
+//            }
         }
         
         

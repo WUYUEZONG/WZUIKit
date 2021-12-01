@@ -17,7 +17,7 @@ open class WZUIPageContentController: UIViewController {
 
 
 
-protocol WZUIPageControllerDelegate {
+public protocol WZUIPageControllerDelegate {
     
     func initControllerAtIndex(_ index: Int) -> UIViewController
 }
@@ -27,10 +27,10 @@ protocol WZUIPageControllerDelegate {
 
 open class WZUIPageController: UIViewController {
     
-    var delegate: WZUIPageControllerDelegate?
+    public var delegate: WZUIPageControllerDelegate?
     
     /// titles
-    var titleDataSources: [String] = []
+    public var titleDataSources: [String] = []
     private var cachedControllers: [String: UIViewController] = [:]
     
     private(set) var selectedIndex: Int = 0
@@ -46,9 +46,11 @@ open class WZUIPageController: UIViewController {
         
         collection.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "UICollectionViewCell")
         
-        collection.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10);
+        collection.contentInset = UIEdgeInsets(top: 4, left: 10, bottom: 4, right: 10);
         
         collection.translatesAutoresizingMaskIntoConstraints = false
+        collection.showsVerticalScrollIndicator = false
+        collection.showsHorizontalScrollIndicator = false
         
         return collection
     }()
@@ -85,6 +87,7 @@ open class WZUIPageController: UIViewController {
         
         view.backgroundColor = .white
         
+        addChild(pageController)
         // colors
         pageController.view.backgroundColor = view.backgroundColor
         pageTitleCollection.backgroundColor = view.backgroundColor
@@ -113,6 +116,8 @@ open class WZUIPageController: UIViewController {
         NSLayoutConstraint.activate([h])
         
         
+        titleContentStack.addArrangedSubview(pageTitleCollection)
+        
         // delegate
         pageTitleCollection.delegate = self
         pageTitleCollection.dataSource = self
@@ -133,7 +138,7 @@ open class WZUIPageController: UIViewController {
     func viewControllerAtIndex(_ index: Int) -> UIViewController? {
         
         let titleCount = titleDataSources.count
-        guard index < titleCount || index >= 0 else {
+        guard index < titleCount && index >= 0 else {
             // out of range
             return nil
         }
@@ -147,13 +152,15 @@ open class WZUIPageController: UIViewController {
         let newController = delegate?.initControllerAtIndex(index) ?? UIViewController()
         newController.title = title
         // cache
+        newController.view.backgroundColor = .randomColor(50)
         cachedControllers[title] = newController
         return newController
     }
     
     func indexOfViewController(_ viewContoller: UIViewController) -> Int {
-        selectedIndex = titleDataSources.firstIndex(of: viewContoller.title!) ?? 0
-        return selectedIndex
+        let index = titleDataSources.firstIndex(of: viewContoller.title!) ?? 0
+        reloadData(at: index, resetContent: false, isSelectedAtTitle: false)
+        return index
     }
     
 }
@@ -161,22 +168,92 @@ open class WZUIPageController: UIViewController {
 
 public extension WZUIPageController {
     
-    func addTitleRightItem(with title: String?, with image: UIImage? = nil, at target: Any?, with action: Selector) {
+    @discardableResult
+    func addTitleRightItem(with title: String?, with image: UIImage? = nil, at target: Any?, with action: Selector) -> UIButton {
         let button = UIButton()
         button.addTarget(target, action: action, for: .touchUpInside)
+        button.setTitle(title, for: .normal)
+        button.setImage(image, for: .normal)
+        if #available(iOS 13.0, *) {
+            button.setTitleColor(.label, for: .normal)
+        } else {
+            button.setTitleColor(.darkGray, for: .normal)
+        }
         let w = button.widthAnchor.constraint(equalToConstant: collectionHeight())
         NSLayoutConstraint.activate([w])
         titleContentStack.addArrangedSubview(button)
+        return button
     }
     
-    
     func reloadData(at index: Int) {
+        reloadData(at: index, resetContent: true, isSelectedAtTitle: false)
+    }
+    
+    /// reload newData
+    ///
+    ///
+    /// `index` : reset title index, reset content controller
+    ///
+    /// `resetContent` : if need reset viewcontroller. default is `true`, if `false` only set the title index
+    ///
+    private func reloadData(at index: Int, resetContent: Bool = true, isSelectedAtTitle: Bool = true) {
+        
+        guard index >= 0 && index < self.titleDataSources.count else {
+            return
+        }
         
         selectedIndex = index
         
+        
         pageTitleCollection.reloadData()
-        if let viewController = viewControllerAtIndex(index) {
+        
+        if resetContent {
+            
+            if !isSelectedAtTitle {
+                // 非点击title时
+                perform(#selector(scrollToIndex(params:)), with: ["index": index, "position": UICollectionView.ScrollPosition.centeredHorizontally], afterDelay: 0.2)
+            }
+        } else {
+            
+            // 滚动content时
+            
+            var position: UICollectionView.ScrollPosition? = nil
+            
+            let visibleItems = pageTitleCollection.indexPathsForVisibleItems
+            
+            if let first = visibleItems.first, let last = visibleItems.last {
+                if first.row > index {
+                    position = .left
+                } else if last.row < index {
+                    position = .right
+                }
+            }
+            
+            if let position = position {
+                scrollToIndex(params: ["index": index, "position": position])
+            }
+            
+        }
+        
+        if resetContent, let viewController = viewControllerAtIndex(index) {
             pageController.setViewControllers([viewController], direction: .reverse, animated: false, completion: nil)
+        }
+    }
+    
+    
+    /// scrollTo
+    ///
+    /// @KEY `index`
+    /// @KEY `position` scroll animation
+    ///
+    @objc func scrollToIndex(params: [String: Any]?) {
+        
+        guard let params = params else {
+            return
+        }
+        
+        if let position = params["position"] as? UICollectionView.ScrollPosition {
+            pageTitleCollection.scrollToItem(at: IndexPath(row: params["index"]! as! Int, section: 0), at: position, animated: true)
         }
         
     }
@@ -192,7 +269,24 @@ extension WZUIPageController : UICollectionViewDelegate, UICollectionViewDataSou
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UICollectionViewCell", for: indexPath)
-        cell.backgroundColor = .randomColor()
+        var label = UILabel()
+        
+        if let cellLabel = cell.backgroundView as? UILabel {
+            label = cellLabel
+            //label.text = titleDataSources[indexPath.row]
+        } else {
+            label.textAlignment = .center
+            label.layer.cornerRadius = 5
+            label.clipsToBounds = true
+            cell.backgroundView = label
+        }
+        
+        
+        label.textColor = selectedIndex == indexPath.row ? .white : .gray
+        label.backgroundColor = selectedIndex == indexPath.row ? .randomColor(80) : .clear
+        label.text = titleDataSources[indexPath.row]
+//        cell.backgroundColor = selectedIndex == indexPath.row ? .randomColor(80) : .clear//.randomColor(100)
+        
         return cell
     }
     
@@ -201,13 +295,14 @@ extension WZUIPageController : UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        reloadData(at: indexPath.row)
+        reloadData(at: indexPath.row, resetContent: true, isSelectedAtTitle: true)
     }
     
 }
 
 
 extension WZUIPageController : UIPageViewControllerDelegate, UIPageViewControllerDataSource {
+    
     
     public func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         
@@ -221,7 +316,7 @@ extension WZUIPageController : UIPageViewControllerDelegate, UIPageViewControlle
     
     func pageContentController(current: UIViewController, isToNext: Bool) -> UIViewController? {
         var index = indexOfViewController(current)
-        guard index >= 0 && index < titleDataSources.count - 1 else { return nil }
+        guard index >= 0 && index < titleDataSources.count else { return nil }
         if isToNext {
             index += 1
         } else {
