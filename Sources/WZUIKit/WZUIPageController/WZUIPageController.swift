@@ -159,10 +159,16 @@ open class WZUIPageController: UIViewController {
     
     func indexOfViewController(_ viewContoller: UIViewController) -> Int {
         let index = titleDataSources.firstIndex(of: viewContoller.title!) ?? 0
-        reloadData(at: index, resetContent: false, isSelectedAtTitle: false)
         return index
     }
     
+}
+
+/// params keys
+extension String {
+    
+    static var paramKeyPosition = "position"
+    static var paramKeyIndex = "index"
 }
 
 
@@ -184,7 +190,11 @@ public extension WZUIPageController {
         titleContentStack.addArrangedSubview(button)
         return button
     }
-    
+    /// reload newData
+    ///
+    ///
+    /// `index` : reset title index, reset content controller
+    ///
     func reloadData(at index: Int) {
         reloadData(at: index, resetContent: true, isSelectedAtTitle: false)
     }
@@ -198,20 +208,15 @@ public extension WZUIPageController {
     ///
     private func reloadData(at index: Int, resetContent: Bool = true, isSelectedAtTitle: Bool = true) {
         
-        guard index >= 0 && index < self.titleDataSources.count else {
-            return
-        }
-        
-        selectedIndex = index
-        
-        
-        pageTitleCollection.reloadData()
+        guard index >= 0 && index < self.titleDataSources.count else { return }
+        if selectedIndex == index && isSelectedAtTitle { return }
         
         if resetContent {
             
             if !isSelectedAtTitle {
                 // 非点击title时
-                perform(#selector(scrollToIndex(params:)), with: ["index": index, "position": UICollectionView.ScrollPosition.centeredHorizontally], afterDelay: 0.2)
+                let params: [String: Any] = [.paramKeyIndex: index, .paramKeyPosition: UICollectionView.ScrollPosition.centeredHorizontally]
+                perform(#selector(scrollToIndex(params:)), with: params, afterDelay: 0.2)
             }
         } else {
             
@@ -219,21 +224,24 @@ public extension WZUIPageController {
             
             var position: UICollectionView.ScrollPosition? = nil
             
-            let visibleItems = pageTitleCollection.indexPathsForVisibleItems
-            
-            if let first = visibleItems.first, let last = visibleItems.last {
-                if first.row > index {
-                    position = .left
-                } else if last.row < index {
-                    position = .right
-                }
+            if let layoutAttribute = pageTitleCollection.layoutAttributesForItem(at: IndexPath(row: index, section: 0)) {
+                let frame = layoutAttribute.frame
+                let contentX = pageTitleCollection.contentOffset.x
+                
+                let isOutOfRight = frame.minX - contentX - pageTitleCollection.frame.width > -frame.width
+                let isOutOfLeft = frame.minX < contentX
+                
+                position = isOutOfLeft ? .left : (isOutOfRight ? .right : nil)
             }
-            
+
             if let position = position {
-                scrollToIndex(params: ["index": index, "position": position])
+                scrollToIndex(params: [.paramKeyIndex: index, .paramKeyPosition: position])
             }
             
         }
+        
+        selectedIndex = index
+        pageTitleCollection.reloadData()
         
         if resetContent, let viewController = viewControllerAtIndex(index) {
             pageController.setViewControllers([viewController], direction: .reverse, animated: false, completion: nil)
@@ -252,8 +260,8 @@ public extension WZUIPageController {
             return
         }
         
-        if let position = params["position"] as? UICollectionView.ScrollPosition {
-            pageTitleCollection.scrollToItem(at: IndexPath(row: params["index"]! as! Int, section: 0), at: position, animated: true)
+        if let position = params[.paramKeyPosition] as? UICollectionView.ScrollPosition {
+            pageTitleCollection.scrollToItem(at: IndexPath(row: params[.paramKeyIndex]! as! Int, section: 0), at: position, animated: true)
         }
         
     }
@@ -323,6 +331,14 @@ extension WZUIPageController : UIPageViewControllerDelegate, UIPageViewControlle
             index -= 1
         }
         return viewControllerAtIndex(index)
+    }
+    
+    
+    public func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        if finished, let controller = pageViewController.viewControllers?.first {
+            reloadData(at: indexOfViewController(controller), resetContent: false, isSelectedAtTitle: false)
+        }
+        
     }
     
 }
