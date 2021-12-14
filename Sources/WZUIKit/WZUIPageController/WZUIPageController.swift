@@ -209,7 +209,7 @@ public extension WZUIPageController {
     private func reloadData(at index: Int, resetContent: Bool = true, isSelectedAtTitle: Bool = true) {
         
         guard index >= 0 && index < self.titleDataSources.count else { return }
-        if selectedIndex == index && isSelectedAtTitle { return }
+        if selectedIndex == index && (isSelectedAtTitle || !resetContent) { return }
         
         if resetContent {
             
@@ -272,7 +272,10 @@ public extension WZUIPageController {
 extension WZUIPageController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 60, height: collectionView.frame.height - collectionView.contentInset.top - collectionView.contentInset.bottom)
+        let defaultHeight = collectionView.frame.height - collectionView.contentInset.top - collectionView.contentInset.bottom
+        var width = titleDataSources[indexPath.row].width(attributes: [.font: UIFont.systemFont(ofSize: 15)], default: defaultHeight)
+        width = width < 60 ? 60 : width
+        return CGSize(width: width, height: defaultHeight)
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -286,7 +289,9 @@ extension WZUIPageController : UICollectionViewDelegate, UICollectionViewDataSou
             label.textAlignment = .center
             label.layer.cornerRadius = 5
             label.clipsToBounds = true
+            label.font = .systemFont(ofSize: 15)
             cell.backgroundView = label
+            
         }
         
         

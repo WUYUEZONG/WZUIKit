@@ -13,7 +13,7 @@ class PageController: WZUIPageController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        titleDataSources = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"]
+        titleDataSources = ["1", "2", "3", "4", "5", "666666", "7777777", "88888888", "9", "10", "11", "12", "13", "14", "15"]
         
         reloadData(at: 0)//Int(titleDataSources.count / 2))
         
