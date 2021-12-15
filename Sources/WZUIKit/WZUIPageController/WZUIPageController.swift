@@ -273,7 +273,7 @@ extension WZUIPageController : UICollectionViewDelegate, UICollectionViewDataSou
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let defaultHeight = collectionView.frame.height - collectionView.contentInset.top - collectionView.contentInset.bottom
-        var width = titleDataSources[indexPath.row].width(attributes: [.font: UIFont.systemFont(ofSize: 15)], default: defaultHeight)
+        var width = titleDataSources[indexPath.row].width(attributes: [.font: UIFont.systemFont(ofSize: 15)])
         width = width < 60 ? 60 : width
         return CGSize(width: width, height: defaultHeight)
     }
