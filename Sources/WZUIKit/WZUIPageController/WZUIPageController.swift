@@ -75,6 +75,8 @@ open class WZUIPageController: UIViewController {
         return page
     }()
     
+    private var cachedTitleWidth: [String: CGFloat] = [:]
+    
     open override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -272,9 +274,15 @@ public extension WZUIPageController {
 extension WZUIPageController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let key = titleDataSources[indexPath.row]
         let defaultHeight = collectionView.frame.height - collectionView.contentInset.top - collectionView.contentInset.bottom
-        var width = titleDataSources[indexPath.row].width(attributes: [.font: UIFont.systemFont(ofSize: 15)])
+        if let cachedWidth = cachedTitleWidth[key] {
+            return CGSize(width: cachedWidth, height: defaultHeight);
+        }
+        var width = key.width(attributes: [.font: UIFont.systemFont(ofSize: 15)]) + 20
+        debugPrint("the width is \(width)")
         width = width < 60 ? 60 : width
+        cachedTitleWidth[key] = width
         return CGSize(width: width, height: defaultHeight)
     }
     
