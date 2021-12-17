@@ -163,10 +163,13 @@ open class WZUIPageController: UIViewController {
 
 
 /// params keys
-extension String {
+extension WZUIPageController {
     
-    static var paramKeyPosition = "position"
-    static var paramKeyIndex = "index"
+    /// the func `scrollToIndex` params key of `position`
+    func keyNamedPosition() -> String { "position" }
+    /// the func `scrollToIndex` params key of `index`
+    func keyNamedIndex() -> String { "index" }
+    
 }
 
 
@@ -213,13 +216,12 @@ public extension WZUIPageController {
             
             if !isSelectedAtTitle {
                 // 非点击title时
-                let params: [String: Any] = [.paramKeyIndex: index, .paramKeyPosition: UICollectionView.ScrollPosition.centeredHorizontally]
+                let params: [String: Any] = [self.keyNamedIndex(): index, self.keyNamedPosition(): UICollectionView.ScrollPosition.centeredHorizontally]
                 perform(#selector(scrollToIndex(params:)), with: params, afterDelay: 0.2)
             }
         } else {
             
             // 滚动content时
-            
             var position: UICollectionView.ScrollPosition? = nil
             
             if let layoutAttribute = pageTitleCollection.layoutAttributesForItem(at: IndexPath(row: index, section: 0)) {
@@ -233,7 +235,7 @@ public extension WZUIPageController {
             }
 
             if let position = position {
-                scrollToIndex(params: [.paramKeyIndex: index, .paramKeyPosition: position])
+                scrollToIndex(params: [self.keyNamedIndex(): index, self.keyNamedPosition(): position])
             }
             
         }
@@ -258,8 +260,8 @@ public extension WZUIPageController {
             return
         }
         
-        if let position = params[.paramKeyPosition] as? UICollectionView.ScrollPosition {
-            pageTitleCollection.scrollToItem(at: IndexPath(row: params[.paramKeyIndex]! as! Int, section: 0), at: position, animated: true)
+        if let position = params[self.keyNamedPosition()] as? UICollectionView.ScrollPosition {
+            pageTitleCollection.scrollToItem(at: IndexPath(row: params[self.keyNamedIndex()]! as! Int, section: 0), at: position, animated: true)
         }
         
     }
