@@ -15,19 +15,7 @@ open class WZUIPageContentController: UIViewController {
 }
 
 
-
-
-public protocol WZUIPageControllerDelegate {
-    
-    func initControllerAtIndex(_ index: Int) -> UIViewController
-}
-
-
-
-
 open class WZUIPageController: UIViewController {
-    
-    public var delegate: WZUIPageControllerDelegate?
     
     /// titles
     public var titleDataSources: [String] = []
@@ -151,10 +139,10 @@ open class WZUIPageController: UIViewController {
             return cached
         }
         
-        let newController = delegate?.initControllerAtIndex(index) ?? UIViewController()
+        let newController = initControllerAtIndex(index)
         newController.title = title
         // cache
-        newController.view.backgroundColor = .randomColor(50)
+//        newController.view.backgroundColor = .randomColor(50)
         cachedControllers[title] = newController
         return newController
     }
@@ -164,7 +152,15 @@ open class WZUIPageController: UIViewController {
         return index
     }
     
+    open func initControllerAtIndex(_ index: Int) -> UIViewController {
+        let vc = UIViewController()
+        vc.view.backgroundColor = .randomColor(66)
+        return vc
+    }
+    
 }
+
+
 
 /// params keys
 extension String {

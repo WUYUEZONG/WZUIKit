@@ -43,4 +43,10 @@ class PageController: WZUIPageController {
         testCount += 1
     }
     
+    override func initControllerAtIndex(_ index: Int) -> UIViewController {
+        let vc = UIViewController()
+        vc.view.backgroundColor = .randomColor(88)
+        return vc
+    }
+    
 }
