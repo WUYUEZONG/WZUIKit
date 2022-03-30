@@ -144,6 +144,25 @@ open class WZUIButton: UIView {
     
     // MARK: - interal properties -
     
+    lazy var loadingView: UIActivityIndicatorView = {
+        let style: UIActivityIndicatorView.Style!
+        if #available(iOS 13, *) {
+            style = UIActivityIndicatorView.Style.medium
+        } else {
+            style = UIActivityIndicatorView.Style.white
+        }
+        let view = UIActivityIndicatorView(style: style)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(view)
+        
+        view.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        view.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        
+        return view
+    }()
+
+    var lastStyleTuple: (backgroundColor: UIColor?, titleColor: UIColor?, detailColor: UIColor?, boardColor: CGColor?, imageTint: UIColor)?
+    
     lazy var tapEffectLayer: CALayer = {
         let view = CALayer()
         view.backgroundColor = UIColor(white: 0, alpha: 0).cgColor
@@ -240,6 +259,27 @@ public extension WZUIButton {
     /// add an action for button
     func addAction(_ action:@escaping (WZUIButton)->()) {
         wzAction = action
+    }
+    
+    func startLoading() {
+        
+        lastStyleTuple = (backgroundColor, wzTitle.textColor, wzDetail.textColor, layer.borderColor, wzImage.tintColor)
+        backgroundColor = .colorF2
+        wzTitle.textColor = .colorD8
+        wzDetail.textColor = .colorD8
+        layer.borderColor = UIColor.clear.cgColor
+        wzImage.tintColor = .colorD8
+        loadingView.color = .color666
+        loadingView.startAnimating()
+    }
+    
+    func stopLoading() {
+        loadingView.stopAnimating()
+        backgroundColor = lastStyleTuple?.backgroundColor
+        wzTitle.textColor = lastStyleTuple?.titleColor
+        wzDetail.textColor = lastStyleTuple?.detailColor
+        layer.borderColor = lastStyleTuple?.boardColor
+        wzImage.tintColor = lastStyleTuple?.imageTint
     }
     
 }

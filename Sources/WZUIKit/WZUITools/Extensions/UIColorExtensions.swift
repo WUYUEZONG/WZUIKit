@@ -10,20 +10,20 @@ import UIKit
 
 public extension UIColor {
     
-    // Init color without divide 255.0
-    //
-    // - Parameters:
-    //   - r: (0 ~ 255) red
-    //   - g: (0 ~ 255) green
-    //   - b: (0 ~ 255) blue
-    //   - a: (0 ~ 1) alpha
+    /// Init color without divide 255.0
+    ///
+    /// - Parameters:
+    ///   - r: (0 ~ 255) red
+    ///   - g: (0 ~ 255) green
+    ///   - b: (0 ~ 255) blue
+    ///   - a: (0 ~ 1) alpha
     convenience init(r: Int, g: Int, b: Int, a: CGFloat) {
         self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: a)
     }
     
-    // Init color with hex code
-    //
-    // - Parameter hex: hex code (eg. 0x00eeee)
+    /// Init color with hex code
+    ///
+    /// - Parameter hex: hex code (eg. 0x00eeee)
     convenience init(hex: Int) {
         self.init(r: (hex & 0xff0000) >> 16, g: (hex & 0xff00) >> 8, b: (hex & 0xff), a: 1)
     }
@@ -88,5 +88,44 @@ public extension UIColor {
         Scanner(string: bString).scanHexInt32(&b)
         
         return UIColor(red: CGFloat(r) / 255.0, green: CGFloat(g) / 255.0, blue: CGFloat(b) / 255.0, alpha: alpha)
+    }
+}
+
+
+public extension UIColor {
+    
+    static var color333: UIColor {
+        if #available(iOS 13, *) {
+            return UIColor { $0.userInterfaceStyle == .light ? UIColor(hex: 0x333333) : UIColor(hex: 0xDEDEDE) }
+        }
+        return UIColor(hex: 0x333333)
+    }
+    
+    static var color999: UIColor {
+        if #available(iOS 13, *) {
+            return UIColor  { $0.userInterfaceStyle == .light ? UIColor(hex: 0x999999) : UIColor(hex: 0x838383) }
+        }
+        return UIColor(hex: 0x999999)
+    }
+    
+    static var color666: UIColor {
+        if #available(iOS 13, *) {
+            return UIColor  { $0.userInterfaceStyle == .light ? UIColor(hex: 0x666666) : UIColor(hex: 0xB8B8B8) }
+        }
+        return UIColor(hex: 0x666666)
+    }
+    
+    static var colorD8: UIColor {
+        if #available(iOS 13, *) {
+            return UIColor  { $0.userInterfaceStyle == .light ? UIColor(hex: 0xD8D8D8) : UIColor(hex: 0x292929) }
+        }
+        return UIColor(hex: 0xD8D8D8)
+    }
+    
+    static var colorF2: UIColor {
+        if #available(iOS 13, *) {
+            return UIColor  { $0.userInterfaceStyle == .light ? UIColor(hex: 0xF2F2F2) : UIColor(hex: 0x161616) }
+        }
+        return UIColor(hex: 0xF2F2F2)
     }
 }

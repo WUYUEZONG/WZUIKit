@@ -63,25 +63,31 @@ class ViewController: UIViewController {
                 self?.otherButtonStyle = 1
                 sender.wzImage.image = nil
                 sender.wzImage.isHidden = true
+                sender.startLoading()
+                
             case 1:
                 self?.otherButtonStyle = 2
                 sender.wzTitle.text = nil
+                
             case 2:
                 self?.otherButtonStyle = 3
                 sender.wzImage.image = buttonImage
                 sender.wzImage.isHidden = false
                 sender.wzDetail.text = nil
+                
             case 3:
                 self?.otherButtonStyle = 4
                 sender.wzImage.image = nil
                 sender.wzImage.isHidden = true
                 sender.wzTitle.text = "BUTTON TITLE"
+                
             default:
                 self?.otherButtonStyle = 0
                 sender.wzImage.image = buttonImage
                 sender.wzImage.isHidden = false
                 sender.wzTitle.text = "BUTTON TITLE"
                 sender.wzDetail.text = "here I can set detail of button description."
+                sender.stopLoading()
             }
             
 //            if sender.wzImage.image != nil {

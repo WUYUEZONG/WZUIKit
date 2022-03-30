@@ -176,7 +176,7 @@ extension WZUIPageController {
 public extension WZUIPageController {
     
     @discardableResult
-    func addTitleRightItem(with title: String?, with image: UIImage? = nil, at target: Any?, with action: Selector) -> UIButton {
+    func addTitleRightItem(title: String?, image: UIImage? = nil, at target: Any?, action: Selector) -> UIButton {
         let button = UIButton()
         button.addTarget(target, action: action, for: .touchUpInside)
         button.setTitle(title, for: .normal)
@@ -195,6 +195,7 @@ public extension WZUIPageController {
     ///
     ///
     /// `index` : reset title index, reset content controller
+    ///  reload and set default index.
     ///
     func reloadData(at index: Int) {
         reloadData(at: index, resetContent: true, isSelectedAtTitle: false)

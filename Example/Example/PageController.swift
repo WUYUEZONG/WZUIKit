@@ -19,7 +19,7 @@ class PageController: WZUIPageController {
         
         reloadData(at: 0)//Int(titleDataSources.count / 2))
         
-        addTitleRightItem(with: "TSB", with: nil, at: self, with: #selector(testAction))
+        addTitleRightItem(title: "TSB", image: nil, at: self, action: #selector(testAction))
         
     }
     
