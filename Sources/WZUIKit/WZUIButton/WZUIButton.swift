@@ -6,12 +6,24 @@
 //
 
 import UIKit
+
 /// no need set the width and height. it is auto size. you can set `contentInsertEdge` to resize the size.
+///
+/// `wzAction` 添加事件
+///
+/// `wzImagePosition` 设置图片位置
+///
+/// `wzContentPosition` 设置内容对齐位置
+///
+/// `wzImageTrailingSpacing` 图片右边与文字的间距
+///
+/// `contentInsertEdge` 内容的内间距
+///
 open class WZUIButton: UIView {
     
     
     // MARK: - action -
-    
+    /// 添加事件
     var wzAction: ((WZUIButton)->())?
     
     // MARK: - custom properties -
@@ -23,16 +35,23 @@ open class WZUIButton: UIView {
         }
     }
     
+    public var wzContentPosition: WZUIButton.ContentPosition = .center {
+        didSet {
+            
+            contentStackSettings()
+            
+        }
+    }
+    
     /// set image position with `WZUIButton.ImagePosition`
     public var wzImagePosition: WZUIButton.ImagePosition = .head {
         didSet {
             
-            if oldValue != wzImagePosition {
-                contentStackSettings()
-            }
+            contentStackSettings()
+            
         }
     }
-    
+    // MARK: - contentStackSettings -
     func contentStackSettings() {
         
         tapEffectLayer.frame = bounds
@@ -48,11 +67,7 @@ open class WZUIButton: UIView {
         
         textContentStack.isHidden = wzTitle.isHidden && wzDetail.isHidden
         
-        if textContentStack.isHidden || wzImage.isHidden {
-            contentStack.axis = .vertical
-        } else {
-            contentStack.axis = wzImagePosition == .top ? .vertical : .horizontal
-        }
+        contentStack.axis = wzImagePosition == .top ? .vertical : .horizontal
         
         switch wzImagePosition {
         case .head:
@@ -66,6 +81,28 @@ open class WZUIButton: UIView {
             wzDetail.textAlignment = .center
         }
         
+        constraints.forEach { constraint in
+            if let item = constraint.firstItem, item.isEqual(self), constraint.secondItem == nil {
+                
+                /// 设置过高度
+                if constraint.firstAttribute == .height {
+                    let shouldAllowThisHeight = constraint.constant >= (imageSize.height + contentInsertEdge.top + contentInsertEdge.bottom)
+                    contentStackTop.isActive = !shouldAllowThisHeight
+                    contentStackBottom.isActive = !shouldAllowThisHeight
+                    constraint.isActive = shouldAllowThisHeight
+                }
+                
+                /// 设置过宽度
+                if constraint.firstAttribute == .width {
+                    let shouldAllowThisWidth = constraint.constant >= (imageSize.width + contentInsertEdge.left + contentInsertEdge.right)
+                    contentStackLeading.isActive = wzContentPosition == .leading || !shouldAllowThisWidth
+                    contentStackTrailing.isActive = wzContentPosition == .trailing || !shouldAllowThisWidth
+                    constraint.isActive = shouldAllowThisWidth
+                }
+                
+            }
+        }
+        
         
     }
     
@@ -74,13 +111,13 @@ open class WZUIButton: UIView {
         didSet {
             contentStackLeading.constant = contentInsertEdge.left
             contentStackTop.constant = contentInsertEdge.top
-            contentStackTrailing.constant = -contentInsertEdge.right
-            contentStackBottom.constant = -contentInsertEdge.bottom
+            contentStackTrailing.constant = contentInsertEdge.right
+            contentStackBottom.constant = contentInsertEdge.bottom
             
             greaterContentStackLeading.constant = contentInsertEdge.left
             greaterContentStackTop.constant = contentInsertEdge.top
-            greaterContentStackTrailing.constant = -contentInsertEdge.right
-            greaterContentStackBottom.constant = -contentInsertEdge.bottom
+            greaterContentStackTrailing.constant = contentInsertEdge.right
+            greaterContentStackBottom.constant = contentInsertEdge.bottom
             
         }
     }
@@ -207,13 +244,13 @@ open class WZUIButton: UIView {
         
         contentStackLeading = contentStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: contentInsertEdge.left)
         contentStackTop = contentStack.topAnchor.constraint(equalTo: topAnchor, constant: contentInsertEdge.top)
-        contentStackTrailing = contentStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -contentInsertEdge.right)
-        contentStackBottom = contentStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -contentInsertEdge.bottom)
+        contentStackTrailing = trailingAnchor.constraint(equalTo: contentStack.trailingAnchor, constant: contentInsertEdge.right)
+        contentStackBottom = bottomAnchor.constraint(equalTo: contentStack.bottomAnchor, constant: contentInsertEdge.bottom)
         
         greaterContentStackLeading = contentStack.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: contentInsertEdge.left)
         greaterContentStackTop = contentStack.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: contentInsertEdge.top)
-        greaterContentStackTrailing = contentStack.trailingAnchor.constraint(greaterThanOrEqualTo: trailingAnchor, constant: -contentInsertEdge.right)
-        greaterContentStackBottom = contentStack.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor, constant: -contentInsertEdge.bottom)
+        greaterContentStackTrailing = trailingAnchor.constraint(greaterThanOrEqualTo: contentStack.trailingAnchor, constant: contentInsertEdge.right)
+        greaterContentStackBottom = bottomAnchor.constraint(greaterThanOrEqualTo: contentStack.bottomAnchor, constant: contentInsertEdge.bottom)
         
         contentStack.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         contentStack.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
@@ -223,10 +260,10 @@ open class WZUIButton: UIView {
         greaterContentStackTrailing.isActive = true
         greaterContentStackBottom.isActive = true
         
-        contentStackLeading.isActive = false
-        contentStackTop.isActive = false
-        contentStackTrailing.isActive = false
-        contentStackBottom.isActive = false
+        contentStackLeading.isActive = true
+        contentStackTop.isActive = true
+        contentStackTrailing.isActive = true
+        contentStackBottom.isActive = true
  
         
     }
@@ -281,6 +318,15 @@ public extension WZUIButton {
         /// image on top
         case top
     }
+    
+    enum ContentPosition {
+        /// image on top
+        case center
+        /// image at first
+        case leading
+        /// image at behind
+        case trailing
+    }
 }
 
 
@@ -292,7 +338,7 @@ public extension WZUIButton {
     }
     
     func startLoading() {
-        isUserInteractionEnabled = false
+//        isUserInteractionEnabled = false
         lastStyleTuple = (backgroundColor, wzTitle.textColor, wzDetail.textColor, layer.borderColor, wzImage.tintColor)
         backgroundColor = .wzF2
         wzTitle.textColor = .wzExtraLight
@@ -311,15 +357,6 @@ public extension WZUIButton {
         wzDetail.textColor = lastStyleTuple?.detailColor
         layer.borderColor = lastStyleTuple?.boardColor
         wzImage.tintColor = lastStyleTuple?.imageTint
-    }
-    /// 自动调整大小
-    func wzSizeToFit() {
-        
-        turnWidthHeightConstraint(off: true)
-        contentStackLeading.isActive = true
-        contentStackTop.isActive = true
-        contentStackTrailing.isActive = true
-        contentStackBottom.isActive = true
     }
     
 }

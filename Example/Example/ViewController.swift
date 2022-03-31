@@ -10,6 +10,22 @@ import WZUIKit
 
 class ViewController: UIViewController {
     
+    
+    @IBOutlet weak var longBtn: WZUIButton! {
+        didSet {
+            longBtn.wzTitle.text = "Poster"
+            if #available(iOS 13.0, *) {
+                longBtn.wzImage.image = UIImage (systemName: "pencil.circle")
+            } else {
+                // Fallback on earlier versions
+            }
+//            longBtn.wzImagePosition = .top
+//            longBtn.contentMode = .scaleAspectFit
+            longBtn.wzDetail.text = "some things about Poster. goooooo | some things about Poster. goooooo"
+            longBtn.wzContentPosition = .trailing
+        }
+    }
+    
     lazy var testButton: WZUIButton = {
         let btn = WZUIButton()
         btn.wzTitle.text = "This is title"
@@ -131,7 +147,7 @@ class ViewController: UIViewController {
         testButton.layer.borderColor = UIColor.systemGray.cgColor
         testButton.layer.borderWidth = 1
         testButton.layer.cornerRadius = 6
-        
+//        testButton.wzSizeToFit()
         testButton.addAction { [weak self] button in
             
             let page = PageController()

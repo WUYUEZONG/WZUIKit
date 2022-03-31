@@ -44,15 +44,32 @@
                                     <constraint firstAttribute="width" priority="250" constant="240" id="Cri-eE-rxV"/>
                                 </constraints>
                             </stackView>
+                            <view contentMode="scaleToFill" verticalHuggingPriority="252" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="JT4-7r-2Qe" customClass="WZUIButton" customModule="WZUIKit">
+                                <rect key="frame" x="57" y="592" width="300" height="30"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="0iX-qG-aiA"/>
+                                    <constraint firstAttribute="height" constant="100" id="Ofv-Vf-jb5"/>
+                                    <constraint firstAttribute="height" constant="30" id="jD4-2P-3EZ"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Ofv-Vf-jb5"/>
+                                    </mask>
+                                </variation>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="JT4-7r-2Qe" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="9dV-yg-hLA"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="U8J-Le-zCm" secondAttribute="bottom" constant="80" id="BhE-1z-GQT"/>
+                            <constraint firstItem="U8J-Le-zCm" firstAttribute="top" secondItem="JT4-7r-2Qe" secondAttribute="bottom" constant="60" id="bw2-nF-9WW"/>
                             <constraint firstItem="U8J-Le-zCm" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="s07-hk-DaJ"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="longBtn" destination="JT4-7r-2Qe" id="aD0-fJ-3Ll"/>
                         <outlet property="otherButton" destination="cZg-Ev-vR8" id="Kkx-Ed-JWk"/>
                     </connections>
                 </viewController>

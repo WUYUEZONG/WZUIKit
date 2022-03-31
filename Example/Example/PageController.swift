@@ -17,9 +17,15 @@ class PageController: WZUIPageController {
         
         titleDataSources = ["1", "22", "333", "4444", "5555", "666666", "7777777", "88888888", "999999999", "10101010101010", "11", "12", "13", "14", "15"]
         
-        reloadData(at: 0)//Int(titleDataSources.count / 2))
+        reloadData(at: 4)//Int(titleDataSources.count / 2))
         
         addTitleRightItem(title: "TSB", image: nil, at: self, action: #selector(testAction))
+        
+        if #available(iOS 13.0, *) {
+            addTitleRightItem(title: nil, image: UIImage(systemName: "pencil.circle"), at: self, action: #selector(testAction))
+        } else {
+            // Fallback on earlier versions
+        }
         
     }
     

@@ -14,11 +14,25 @@ open class WZUIPageContentController: UIViewController {
     
 }
 
-
+///
+/// 1. 继承 WZUIPageController
+///
+/// 2. titleDataSources 设置菜单栏文本
+///
+/// 3. addTitleRightItem 天际菜单栏右边的按钮
+///
+/// 4. reloadData
+///
 open class WZUIPageController: UIViewController {
     
     /// titles
-    public var titleDataSources: [String] = []
+    public var titleDataSources: [String] = [] {
+        didSet {
+            if !titleDataSources.isEmpty {            
+                reloadData(at: 0)
+            }
+        }
+    }
     private var cachedControllers: [String: UIViewController] = [:]
     
     private(set) var selectedIndex: Int = 0
