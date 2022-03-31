@@ -10,6 +10,10 @@ import WZUIKit
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var testNav: WZUINavgationView! {
+        didSet {
+        }
+    }
     
     @IBOutlet weak var longBtn: WZUIButton! {
         didSet {
@@ -23,6 +27,7 @@ class ViewController: UIViewController {
 //            longBtn.contentMode = .scaleAspectFit
             longBtn.wzDetail.text = "some things about Poster. goooooo | some things about Poster. goooooo"
             longBtn.wzContentPosition = .trailing
+            
         }
     }
     
@@ -131,11 +136,11 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         
 //        Bundle.main.l
-        let a =  WZUINavgationView.initNib()//WZUINavgationView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 88))
-        a?.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 88)
-        a?.backgroundColor = .wzF8
-        a?.wzTitle.text = "12"
-        view.addSubview(a!)
+        let a =  WZUINavgationView()//WZUINavgationView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 88))
+        a.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 88)
+        
+        
+        view.addSubview(a)
         
         setupOtherButton()
         

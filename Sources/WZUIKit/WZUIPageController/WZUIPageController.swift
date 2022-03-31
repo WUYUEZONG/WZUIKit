@@ -209,6 +209,7 @@ public extension WZUIPageController {
     ///
     ///
     /// `index` : reset title index, reset content controller
+    ///
     ///  reload and set default index.
     ///
     func reloadData(at index: Int) {
@@ -266,8 +267,10 @@ public extension WZUIPageController {
     
     /// scrollTo
     ///
-    /// @KEY `index`
-    /// @KEY `position` scroll animation
+    /// `params` : [String: Any]?
+    ///
+    /// - `index`
+    /// - `position` scroll animation
     ///
     @objc func scrollToIndex(params: [String: Any]?) {
         

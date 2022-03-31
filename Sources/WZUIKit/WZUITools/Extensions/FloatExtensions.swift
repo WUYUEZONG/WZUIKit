@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension CGFloat {
+public extension CGFloat {
     
     static var wzStatusBarHeight: CGFloat {
         if #available(iOS 13.0, *) {

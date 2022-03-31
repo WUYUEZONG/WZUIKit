@@ -8,7 +8,7 @@
 import UIKit
 
 
-extension String {
+public extension String {
     
     func width(attributes: [NSAttributedString.Key : Any]?) -> CGFloat {
         return self.boundingRect(with: .zero, options: .usesLineFragmentOrigin, attributes: attributes, context: nil).size.width
