@@ -94,38 +94,75 @@ public extension UIColor {
 
 public extension UIColor {
     
-    static var color333: UIColor {
+    static var wz333: UIColor {
         if #available(iOS 13, *) {
             return UIColor { $0.userInterfaceStyle == .light ? UIColor(hex: 0x333333) : UIColor(hex: 0xDEDEDE) }
         }
         return UIColor(hex: 0x333333)
     }
     
-    static var color999: UIColor {
+    static var wz999: UIColor {
         if #available(iOS 13, *) {
             return UIColor  { $0.userInterfaceStyle == .light ? UIColor(hex: 0x999999) : UIColor(hex: 0x838383) }
         }
         return UIColor(hex: 0x999999)
     }
     
-    static var color666: UIColor {
+    static var wz666: UIColor {
         if #available(iOS 13, *) {
             return UIColor  { $0.userInterfaceStyle == .light ? UIColor(hex: 0x666666) : UIColor(hex: 0xB8B8B8) }
         }
         return UIColor(hex: 0x666666)
     }
     
-    static var colorD8: UIColor {
+    /// 0xD8D8D8
+    static var wzExtraLight: UIColor {
         if #available(iOS 13, *) {
             return UIColor  { $0.userInterfaceStyle == .light ? UIColor(hex: 0xD8D8D8) : UIColor(hex: 0x292929) }
         }
         return UIColor(hex: 0xD8D8D8)
     }
     
-    static var colorF2: UIColor {
+    static var wzLight: UIColor {
+        if #available(iOS 13, *) {
+            return UIColor  { $0.userInterfaceStyle == .light ? UIColor(hex: 0xC4C4C4) : UIColor(hex: 0x777777) }
+        }
+        return UIColor(hex: 0xC4C4C4)
+    }
+    
+    
+    static var wzF2: UIColor {
         if #available(iOS 13, *) {
             return UIColor  { $0.userInterfaceStyle == .light ? UIColor(hex: 0xF2F2F2) : UIColor(hex: 0x161616) }
         }
         return UIColor(hex: 0xF2F2F2)
+    }
+    
+    static var wzF8: UIColor {
+        if #available(iOS 13, *) {
+            return UIColor  { $0.userInterfaceStyle == .light ? UIColor(hex: 0xF8F8F8) : UIColor(hex: 0x111111) }
+        }
+        return UIColor(hex: 0xF8F8F8)
+    }
+    
+    static var wzBlack: UIColor {
+        if #available(iOS 13, *) {
+            return UIColor  { $0.userInterfaceStyle == .light ? UIColor(hex: 0x000000) : UIColor(hex: 0xFFFFFF) }
+        }
+        return UIColor(hex: 0x000000)
+    }
+    
+    static var wzWhite: UIColor {
+        if #available(iOS 13, *) {
+            return UIColor  { $0.userInterfaceStyle == .light ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x090909) }
+        }
+        return UIColor(hex: 0xFFFFFF)
+    }
+    
+    static var wzDark: UIColor {
+        if #available(iOS 13, *) {
+            return UIColor  { $0.userInterfaceStyle == .light ? UIColor(hex: 0x1D1D1D) : UIColor(hex: 0xEBEBEB) }
+        }
+        return UIColor(hex: 0x1D1D1D)
     }
 }

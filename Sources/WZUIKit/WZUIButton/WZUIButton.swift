@@ -42,9 +42,9 @@ open class WZUIButton: UIView {
         wzImage.isHidden = wzImage.image == nil
         
         contentStack.insertArrangedSubview(wzImage, at: wzImagePosition == .behind ? 1 : 0)
-        contentStack.axis = wzImagePosition == .top ? .vertical : .horizontal
         
         textContentStack.isHidden = wzTitle.text == nil && wzDetail.text == nil
+        
         
         switch wzImagePosition {
         case .head:
@@ -264,12 +264,12 @@ public extension WZUIButton {
     func startLoading() {
         
         lastStyleTuple = (backgroundColor, wzTitle.textColor, wzDetail.textColor, layer.borderColor, wzImage.tintColor)
-        backgroundColor = .colorF2
-        wzTitle.textColor = .colorD8
-        wzDetail.textColor = .colorD8
+        backgroundColor = .wzF2
+        wzTitle.textColor = .wzExtraLight
+        wzDetail.textColor = .wzExtraLight
         layer.borderColor = UIColor.clear.cgColor
-        wzImage.tintColor = .colorD8
-        loadingView.color = .color666
+        wzImage.tintColor = .wzExtraLight
+        loadingView.color = .wz666
         loadingView.startAnimating()
     }
     
