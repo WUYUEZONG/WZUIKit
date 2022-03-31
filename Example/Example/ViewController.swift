@@ -130,6 +130,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+//        Bundle.main.l
+        let a =  WZUINavgationView.initNib()//WZUINavgationView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 88))
+        a?.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 88)
+        a?.backgroundColor = .wzF8
+        a?.wzTitle.text = "12"
+        view.addSubview(a!)
+        
         setupOtherButton()
         
         view.addSubview(testButton)

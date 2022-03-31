@@ -94,7 +94,7 @@ open class WZUIButton: UIView {
                 
                 /// 设置过宽度
                 if constraint.firstAttribute == .width {
-                    let shouldAllowThisWidth = constraint.constant >= (imageSize.width + contentInsertEdge.left + contentInsertEdge.right)
+                    let shouldAllowThisWidth = constraint.constant >= (imageSize.width + contentInsertEdge.left + contentInsertEdge.right + wzImageTrailingSpacing)
                     contentStackLeading.isActive = wzContentPosition == .leading || !shouldAllowThisWidth
                     contentStackTrailing.isActive = wzContentPosition == .trailing || !shouldAllowThisWidth
                     constraint.isActive = shouldAllowThisWidth
@@ -320,11 +320,11 @@ public extension WZUIButton {
     }
     
     enum ContentPosition {
-        /// image on top
+        
         case center
-        /// image at first
+        
         case leading
-        /// image at behind
+        
         case trailing
     }
 }
@@ -338,7 +338,7 @@ public extension WZUIButton {
     }
     
     func startLoading() {
-//        isUserInteractionEnabled = false
+        isUserInteractionEnabled = false
         lastStyleTuple = (backgroundColor, wzTitle.textColor, wzDetail.textColor, layer.borderColor, wzImage.tintColor)
         backgroundColor = .wzF2
         wzTitle.textColor = .wzExtraLight
