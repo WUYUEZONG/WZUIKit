@@ -292,7 +292,7 @@ public extension WZUIButton {
     }
     
     func startLoading() {
-        
+        isUserInteractionEnabled = false
         lastStyleTuple = (backgroundColor, wzTitle.textColor, wzDetail.textColor, layer.borderColor, wzImage.tintColor)
         backgroundColor = .wzF2
         wzTitle.textColor = .wzExtraLight
@@ -304,6 +304,7 @@ public extension WZUIButton {
     }
     
     func stopLoading() {
+        isUserInteractionEnabled = true
         loadingView.stopAnimating()
         backgroundColor = lastStyleTuple?.backgroundColor
         wzTitle.textColor = lastStyleTuple?.titleColor
