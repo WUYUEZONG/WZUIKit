@@ -43,8 +43,16 @@ open class WZUIButton: UIView {
         
         contentStack.insertArrangedSubview(wzImage, at: wzImagePosition == .behind ? 1 : 0)
         
-        textContentStack.isHidden = wzTitle.text == nil && wzDetail.text == nil
+        wzTitle.isHidden = wzTitle.text == nil || wzTitle.text!.isEmpty
+        wzDetail.isHidden = wzDetail.text == nil || wzDetail.text!.isEmpty
         
+        textContentStack.isHidden = wzTitle.isHidden && wzDetail.isHidden
+        
+        if textContentStack.isHidden || wzImage.isHidden {
+            contentStack.axis = .vertical
+        } else {
+            contentStack.axis = wzImagePosition == .top ? .vertical : .horizontal
+        }
         
         switch wzImagePosition {
         case .head:
@@ -68,6 +76,11 @@ open class WZUIButton: UIView {
             contentStackTop.constant = contentInsertEdge.top
             contentStackTrailing.constant = -contentInsertEdge.right
             contentStackBottom.constant = -contentInsertEdge.bottom
+            
+            greaterContentStackLeading.constant = contentInsertEdge.left
+            greaterContentStackTop.constant = contentInsertEdge.top
+            greaterContentStackTrailing.constant = -contentInsertEdge.right
+            greaterContentStackBottom.constant = -contentInsertEdge.bottom
             
         }
     }
@@ -99,6 +112,11 @@ open class WZUIButton: UIView {
     var contentStackTrailing: NSLayoutConstraint!
     var contentStackBottom: NSLayoutConstraint!
     
+    var greaterContentStackLeading: NSLayoutConstraint!
+    var greaterContentStackTop: NSLayoutConstraint!
+    var greaterContentStackTrailing: NSLayoutConstraint!
+    var greaterContentStackBottom: NSLayoutConstraint!
+    
     /// image of button aligment with title and detail
     public lazy var wzImage: UIImageView = {
         let image = UIImageView()
@@ -114,11 +132,7 @@ open class WZUIButton: UIView {
     public lazy var wzTitle: UILabel = {
         let title = UILabel()
         title.font = .systemFont(ofSize: 15, weight: .bold)
-        if #available(iOS 13.0, *) {
-            title.textColor = .label
-        } else {
-            title.textColor = .darkText
-        }
+        title.textColor = .wzDark
         textContentStack.insertArrangedSubview(title, at: 0)
         return title
     }()
@@ -127,7 +141,7 @@ open class WZUIButton: UIView {
     public lazy var wzDetail: UILabel = {
         let detail = UILabel()
         detail.font = .systemFont(ofSize: 12, weight: .light)
-        detail.textColor = .lightGray
+        detail.textColor = .wz999
         textContentStack.addArrangedSubview(detail)
         return detail
     }()
@@ -190,14 +204,30 @@ open class WZUIButton: UIView {
         layer.addSublayer(tapEffectLayer)
         
         addSubview(contentStack)
+        
         contentStackLeading = contentStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: contentInsertEdge.left)
         contentStackTop = contentStack.topAnchor.constraint(equalTo: topAnchor, constant: contentInsertEdge.top)
         contentStackTrailing = contentStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -contentInsertEdge.right)
         contentStackBottom = contentStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -contentInsertEdge.bottom)
         
-        NSLayoutConstraint.activate([contentStackLeading, contentStackTop, contentStackTrailing, contentStackBottom])
+        greaterContentStackLeading = contentStack.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: contentInsertEdge.left)
+        greaterContentStackTop = contentStack.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: contentInsertEdge.top)
+        greaterContentStackTrailing = contentStack.trailingAnchor.constraint(greaterThanOrEqualTo: trailingAnchor, constant: -contentInsertEdge.right)
+        greaterContentStackBottom = contentStack.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor, constant: -contentInsertEdge.bottom)
         
+        contentStack.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        contentStack.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         
+        greaterContentStackLeading.isActive = true
+        greaterContentStackTop.isActive = true
+        greaterContentStackTrailing.isActive = true
+        greaterContentStackBottom.isActive = true
+        
+        contentStackLeading.isActive = false
+        contentStackTop.isActive = false
+        contentStackTrailing.isActive = false
+        contentStackBottom.isActive = false
+ 
         
     }
     
@@ -281,5 +311,27 @@ public extension WZUIButton {
         layer.borderColor = lastStyleTuple?.boardColor
         wzImage.tintColor = lastStyleTuple?.imageTint
     }
+    /// 自动调整大小
+    func wzSizeToFit() {
+        
+        turnWidthHeightConstraint(off: true)
+        contentStackLeading.isActive = true
+        contentStackTop.isActive = true
+        contentStackTrailing.isActive = true
+        contentStackBottom.isActive = true
+    }
     
+}
+
+// MARK: Constraint actions
+extension WZUIButton {
+    func turnWidthHeightConstraint(off: Bool) {
+        constraints.forEach { constraint in
+            if let item = constraint.firstItem, item.isEqual(self), constraint.secondItem == nil {
+                if constraint.firstAttribute == .height || constraint.firstAttribute == .width {
+                    constraint.isActive = !off
+                }
+            }
+        }
+    }
 }

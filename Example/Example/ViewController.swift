@@ -50,6 +50,8 @@ class ViewController: UIViewController {
         
         otherButton.contentInsertEdge = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
         
+//        otherButton.wzSizeToFit()
+        
         otherButton.addAction { [weak self] sender in
 //            let alert = UIAlertController(title: sender.wzTitle.text, message: sender.wzDetail.text, preferredStyle: .alert)
 //            let ok = UIAlertAction(title: "Oooook!", style: .default) { action in
