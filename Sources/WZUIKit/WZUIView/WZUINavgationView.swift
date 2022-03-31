@@ -24,7 +24,6 @@ open class WZUINavgationView: UIView {
     
     required public init?(coder: NSCoder) {
         super.init(coder: coder)
-        UIButton
     }
     
 }
