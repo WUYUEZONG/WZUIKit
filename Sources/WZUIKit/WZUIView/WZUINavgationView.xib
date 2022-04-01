@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -13,6 +13,8 @@
                 <outlet property="backgroundImageView" destination="9KN-8P-PY7" id="Oml-tV-zQp"/>
                 <outlet property="centerContentStack" destination="2SR-gv-IKm" id="XaY-9b-G5e"/>
                 <outlet property="contentStack" destination="8O4-AU-qyh" id="Dd6-tG-bwd"/>
+                <outlet property="contentStackLeading" destination="VMQ-Rb-bpZ" id="rf5-o6-BAG"/>
+                <outlet property="contentStackTrailing" destination="fzi-Jn-HpF" id="e32-i1-3bO"/>
                 <outlet property="effectContentView" destination="BEY-z9-6Dk" id="8qi-5q-YWl"/>
                 <outlet property="rightItem" destination="TP0-us-GAh" id="9v2-Ez-po6"/>
                 <outlet property="titleLabel" destination="6Ig-CS-sAq" id="LAQ-so-lfh"/>

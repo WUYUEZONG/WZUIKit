@@ -9,10 +9,18 @@ import UIKit
 
 open class WZUIViewController: UIViewController {
     
+    var wzNavViewHeightConstraint: NSLayoutConstraint?
+    
     lazy var wzNavgationView: WZUINavgationView = {
-        let view = WZUINavgationView(frame: CGRect(x: 0, y: 0, width: CGFloat.wzScreenWidth, height: CGFloat.wzStatusWithNavgationBarHeight))
-        view.addBackItem(title: "Back", image: nil, action: nil)
+        let view = WZUINavgationView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(view)
+        view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        self.view.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        view.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        wzNavViewHeightConstraint = view.heightAnchor.constraint(equalToConstant: .wzStatusWithNavgationBarHeight)
+        wzNavViewHeightConstraint!.isActive = true
+        view.addBackItem(title: "Back", image: nil, action: nil)
         return view
     }()
     
@@ -34,7 +42,12 @@ public extension WZUIViewController {
     }
     
     @objc func wzPopViewController() {
-        self.navigationController?.popViewController(animated: true)
+        
+        if self.navigationController == nil || self.navigationController!.viewControllers.count <= 1 {
+            self.dismiss(animated: true, completion: nil)
+        } else {
+            self.navigationController!.popViewController(animated: true)
+        }
     }
 }
 
@@ -44,6 +57,7 @@ extension WZUIViewController: UINavigationControllerDelegate {
 
 /// 接管 interactivePopGestureRecognizer
 extension WZUIViewController: UIGestureRecognizerDelegate {
+    /// rootController 时拦截 interactivePopGestureRecognizer
     public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         if let navController = self.navigationController, gestureRecognizer.isEqual(navController.interactivePopGestureRecognizer) {
             return navController.viewControllers.count > 1
@@ -53,5 +67,24 @@ extension WZUIViewController: UIGestureRecognizerDelegate {
 }
 
 extension WZUIViewController {
+    
+    open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        
+        if let height = self.wzNavViewHeightConstraint {
+            if size.width < size.height {
+                height.constant = .wzNavgationBarHeight + .standardStatusBarHeight
+            } else {
+                height.constant = .wzNavgationBarHeight
+            }
+            self.navgationView.rotate(to: size.width < size.height)
+        }
+//        coordinator.animate(alongsideTransition: nil) { ct in
+//        }
+
+        
+    }
+    
+    
+    
    
 }

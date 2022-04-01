@@ -51,8 +51,8 @@ class WZUIControllerSub: WZUIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navgationView.wzTitleLabel.text = "Title"
-        navgationView.addBackItem(title: nil, image: nil) { [weak self] sender in
-            self?.navigationController?.popViewController(animated: true)
+        navgationView.addBackItem(title: "Close", image: nil) { [weak self] sender in
+            self?.wzPopViewController()
         }
     }
 }

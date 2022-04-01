@@ -27,6 +27,10 @@ open class WZUINavgationView: UIView {
     /// 右边按钮事件Block
     var wzRightActionBlock: ((UIButton)->())?
     
+    @IBOutlet weak var contentStackLeading: NSLayoutConstraint!
+    
+    @IBOutlet weak var contentStackTrailing: NSLayoutConstraint!
+    
     /// 背景图片默认隐藏
     @IBOutlet weak var backgroundImageView: UIImageView!
     /// 玻璃蒙版
@@ -68,6 +72,8 @@ open class WZUINavgationView: UIView {
         contentView.backgroundColor = .clear
         
         effectContentView.isHidden = !isShowEffect
+        
+        rotate(to: UIScreen.main.bounds.width < UIScreen.main.bounds.height)
     }
     
 }
@@ -129,6 +135,10 @@ public extension WZUINavgationView {
     var wzRightItem: UIButton {
         rightItem.isHidden = false
         return rightItem
+    }
+    /// 屏幕旋转时调用
+    func rotate(to portrait: Bool) {
+        contentStackLeading.constant = portrait ? 0 : .wzNavgationBarHeight
     }
     
 }
