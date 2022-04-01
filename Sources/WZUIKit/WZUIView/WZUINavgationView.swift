@@ -73,7 +73,7 @@ open class WZUINavgationView: UIView {
         
         effectContentView.isHidden = !isShowEffect
         
-        rotate(to: UIScreen.main.bounds.width < UIScreen.main.bounds.height)
+        rotate(to: CGFloat.wzScreenWidth < CGFloat.wzScreenHeight)
     }
     
 }

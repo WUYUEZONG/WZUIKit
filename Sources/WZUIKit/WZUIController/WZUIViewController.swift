@@ -68,8 +68,7 @@ extension WZUIViewController: UIGestureRecognizerDelegate {
 
 extension WZUIViewController {
     
-    open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        
+    func confirmNavigationViewHeight(_ size: CGSize = CGSize(width: .wzScreenWidth, height: .wzScreenHeight)) {
         if let height = self.wzNavViewHeightConstraint {
             if size.width < size.height {
                 height.constant = .wzNavgationBarHeight + .standardStatusBarHeight
@@ -78,10 +77,15 @@ extension WZUIViewController {
             }
             self.navgationView.rotate(to: size.width < size.height)
         }
-//        coordinator.animate(alongsideTransition: nil) { ct in
-//        }
-
-        
+    }
+    
+    open override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        confirmNavigationViewHeight()
+    }
+    
+    open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        confirmNavigationViewHeight(size)
     }
     
     
