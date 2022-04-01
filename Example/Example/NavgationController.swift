@@ -38,9 +38,47 @@ class NavgationController: UIViewController {
         
         nav44.addImage(UIImage(named: "simple"))
         nav44.wzRightItem.setImage(UIImage(named: "switch-button"), for: .normal)
-        nav44.addBackItem(title: "Back", image: nil) { [weak self] sender in
+        nav44.addBackItem(title: "Back", image: nil) { sender in
             print("tapaction ! ! !")
         }
+    }
+    
+}
+
+
+class WZUIControllerSub: WZUIViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navgationView.wzTitleLabel.text = "Title"
+        navgationView.addBackItem(title: nil, image: nil) { [weak self] sender in
+            self?.navigationController?.popViewController(animated: true)
+        }
+    }
+}
+
+class WZUIControllerSub2: WZUIViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navgationView.wzTitleLabel.text = "Title"
+        navgationView.addBackItem(title: "Back", image: nil) { [weak self] sender in
+            self?.wzPopViewController()
+        }
+//        if #available(iOS 13.0, *) {
+//            let barAppearance = UIBarAppearance()
+//            barAppearance.configureWithTransparentBackground()
+//            self.navigationController?.navigationBar.standardAppearance = UINavigationBarAppearance(barAppearance: barAppearance)
+//            self.navigationController?.navigationBar.compactAppearance = UINavigationBarAppearance(barAppearance: barAppearance)
+//        } else {
+//            // Fallback on earlier versions
+//        }
+//        self.navigationController?.navigationBar.backgroundColor = .black
+    }
+    
+    
+    override var prefersStatusBarHidden: Bool {
+        true
     }
     
 }

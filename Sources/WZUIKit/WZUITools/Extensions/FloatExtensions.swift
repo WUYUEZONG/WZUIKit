@@ -9,6 +9,14 @@ import UIKit
 
 public extension CGFloat {
     
+    static var wzScreenWidth: CGFloat {
+        return UIScreen.main.bounds.width
+    }
+    
+    static var wzScreenHeight: CGFloat {
+        return UIScreen.main.bounds.height
+    }
+    
     static var wzStatusBarHeight: CGFloat {
         if #available(iOS 13.0, *) {
             if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
