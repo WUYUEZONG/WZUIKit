@@ -16,8 +16,16 @@ open class WZUINavgationView: UIView {
     public var isShowEffect: Bool = true {
         didSet {
             effectContentView.isHidden = !isShowEffect
+            if isShowEffect {
+                backgroundImageView.isHidden = true
+            }
         }
     }
+    
+    /// 返回按钮事件Block
+    var wzBackActionBlock: ((UIButton)->())?
+    /// 右边按钮事件Block
+    var wzRightActionBlock: ((UIButton)->())?
     
     /// 背景图片默认隐藏
     @IBOutlet weak var backgroundImageView: UIImageView!
@@ -46,6 +54,7 @@ open class WZUINavgationView: UIView {
     }
     
     func setupUI() {
+        
         if let contentView = UIView.initNib("WZUINavgationView", owner: self) {
             self.contentView = contentView
         } else {
@@ -80,13 +89,32 @@ public extension WZUINavgationView {
     /// 在左边添加 Item
     func addLeftItem(_ view: UIView) {
         addWidthCostraint(for: view)
-        contentStack.insertArrangedSubview(view, at: 0)
+        contentStack.insertArrangedSubview(view, at: 1)
     }
     /// 在右边添加 Item
     func addRightItem(_ view: UIView) {
         addWidthCostraint(for: view)
         contentStack.addArrangedSubview(view)
     }
+    /// 添加返回按钮的点击事件
+    ///
+    /// 或者通过addTarget(_,action:,for)添加事件
+    func addBackItem(title: String?, image: UIImage?, action:((UIButton)->())?) {
+        wzBackItem.setTitle(title, for: .normal)
+        wzBackItem.setImage(image, for: .normal)
+        wzBackActionBlock = action
+        wzBackItem.addTarget(self, action: #selector(wzBackAction), for: .touchUpInside)
+    }
+    /// 添加右边按钮的点击事件
+    ///
+    /// 或者通过addTarget(_,action:,for)添加事件
+    func addRightItem(title: String?, image: UIImage?, action:((UIButton)->())?) {
+        wzRightItem.setTitle(title, for: .normal)
+        wzRightItem.setImage(image, for: .normal)
+        wzRightActionBlock = action
+        wzRightItem.addTarget(self, action: #selector(wzRightAction), for: .touchUpInside)
+    }
+    
     /// 返回按钮
     var wzBackItem: UIButton {
         backItem.isHidden = false
@@ -112,5 +140,12 @@ extension WZUINavgationView {
         if view.frame.width > 0 {
             view.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
         }
+    }
+    
+    @objc func wzBackAction() {
+        self.wzBackActionBlock?(self.backItem)
+    }
+    @objc func wzRightAction() {
+        self.wzRightActionBlock?(self.rightItem)
     }
 }
