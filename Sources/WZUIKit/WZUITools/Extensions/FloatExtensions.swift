@@ -9,7 +9,7 @@ import UIKit
 
 extension CGFloat {
     /// 竖屏状态的状态栏
-    static var statusPortraitHeight: CGFloat? = nil
+    private static var statusPortraitHeight: CGFloat? = nil
 }
 
 public extension CGFloat {
