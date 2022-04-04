@@ -15,11 +15,11 @@ extension CGFloat {
 public extension CGFloat {
     
     static var standardStatusBarHeight: CGFloat {
-        return initStatusPortraitHeight(0)
+        return initStatusPortraitHeight()
     }
     
     @discardableResult
-    static func initStatusPortraitHeight(_ height: CGFloat) -> CGFloat {
+    static func initStatusPortraitHeight(_ height: CGFloat = 0) -> CGFloat {
         if statusPortraitHeight == nil || statusPortraitHeight == 0 {
             statusPortraitHeight = height
         }
