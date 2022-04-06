@@ -138,6 +138,7 @@ public extension WZUINavgationView {
     }
     /// 屏幕旋转时调用
     func rotate(to portrait: Bool) {
+        // 竖直或横屏，屏幕状态下左右间距调整
         contentStackLeading.constant = portrait || CGFloat.standardStatusBarHeight <= 20 ? 0 : .wzNavgationBarHeight
     }
     
