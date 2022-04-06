@@ -41,9 +41,6 @@ public extension CGFloat {
             if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                 let statusBarManager = scene.statusBarManager {
                 l = statusBarManager.statusBarFrame.height
-                if statusBarManager.isStatusBarHidden, initStatusPortraitHeight(l) > 20 {
-                    l = initStatusPortraitHeight(l)
-                }
             }
             
         } else if #available(iOS 11.0, *) {

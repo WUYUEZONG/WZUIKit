@@ -138,7 +138,7 @@ public extension WZUINavgationView {
     }
     /// 屏幕旋转时调用
     func rotate(to portrait: Bool) {
-        contentStackLeading.constant = portrait ? 0 : .wzNavgationBarHeight
+        contentStackLeading.constant = portrait || CGFloat.standardStatusBarHeight <= 20 ? 0 : .wzNavgationBarHeight
     }
     
 }

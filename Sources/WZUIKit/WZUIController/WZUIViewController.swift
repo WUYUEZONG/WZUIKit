@@ -27,6 +27,7 @@ open class WZUIViewController: UIViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = .wzF8
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
@@ -71,7 +72,11 @@ extension WZUIViewController {
     func confirmNavigationViewHeight(_ size: CGSize = CGSize(width: .wzScreenWidth, height: .wzScreenHeight)) {
         if let height = self.wzNavViewHeightConstraint {
             if size.width < size.height {
-                height.constant = .wzNavgationBarHeight + .standardStatusBarHeight
+                if CGFloat.standardStatusBarHeight <= 20 {
+                    height.constant = .wzStatusWithNavgationBarHeight
+                } else {                
+                    height.constant = .wzNavgationBarHeight + .standardStatusBarHeight
+                }
             } else {
                 height.constant = .wzNavgationBarHeight
             }

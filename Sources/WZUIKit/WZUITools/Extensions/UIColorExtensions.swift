@@ -140,7 +140,7 @@ public extension UIColor {
     
     static var wzF8: UIColor {
         if #available(iOS 13, *) {
-            return UIColor  { $0.userInterfaceStyle == .light ? UIColor(hex: 0xF8F8F8) : UIColor(hex: 0x111111) }
+            return UIColor  { $0.userInterfaceStyle == .light ? UIColor(hex: 0xF8F8F8) : UIColor(hex: 0x000000) }
         }
         return UIColor(hex: 0xF8F8F8)
     }
@@ -154,7 +154,7 @@ public extension UIColor {
     
     static var wzWhite: UIColor {
         if #available(iOS 13, *) {
-            return UIColor  { $0.userInterfaceStyle == .light ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x090909) }
+            return UIColor  { $0.userInterfaceStyle == .light ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x000000) }
         }
         return UIColor(hex: 0xFFFFFF)
     }
