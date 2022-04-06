@@ -84,4 +84,8 @@ public extension CGFloat {
         return wzStatusBarHeight + wzNavgationBarHeight
     }
     
+    static var wzStatusOrNavgationBarHeight: CGFloat {
+        return wzStatusBarHeight + wzNavgationBarHeight
+    }
+    
 }

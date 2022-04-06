@@ -73,8 +73,8 @@ extension WZUIViewController {
             if size.width < size.height {
                 height.constant = .wzNavgationBarHeight + .standardStatusBarHeight
             } else {
-                height.constant = .wzNavgationBarHeight
             }
+            height.constant = .wzStatusWithNavgationBarHeight
             self.navgationView.rotate(to: size.width < size.height)
         }
     }
