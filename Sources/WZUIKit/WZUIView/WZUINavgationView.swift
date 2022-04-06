@@ -73,7 +73,7 @@ open class WZUINavgationView: UIView {
         
         effectContentView.isHidden = !isShowEffect
         
-        rotate(to: CGFloat.wzScreenWidth < CGFloat.wzScreenHeight)
+        rotate()
     }
     
 }
@@ -137,9 +137,9 @@ public extension WZUINavgationView {
         return rightItem
     }
     /// 屏幕旋转时调用
-    func rotate(to portrait: Bool) {
+    func rotate() {
         // 竖直或横屏，屏幕状态下左右间距调整
-        contentStackLeading.constant = portrait || CGFloat.standardStatusBarHeight <= 20 ? 0 : .wzNavgationBarHeight
+        contentStackLeading.constant = wzNavigationItemEdgeSpacing
     }
     
 }
@@ -158,5 +158,9 @@ extension WZUINavgationView {
     }
     @objc func wzRightAction() {
         self.wzRightActionBlock?(self.rightItem)
+    }
+    
+    var wzNavigationItemEdgeSpacing: CGFloat {
+        WZUITool.isPortrait || !WZUITool.isCamInScreen ? 5 : 30
     }
 }

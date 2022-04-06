@@ -36,17 +36,15 @@ public extension CGFloat {
     
     static var wzStatusBarHeight: CGFloat {
         
-        var l: CGFloat = wzScreenWidth < wzScreenHeight ? 20 : 0
+        var l: CGFloat = 0
         if #available(iOS 13.0, *) {
             if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                 let statusBarManager = scene.statusBarManager {
                 l = statusBarManager.statusBarFrame.height
             }
             
-        } else if #available(iOS 11.0, *) {
-            if let key = UIApplication.shared.keyWindow {
-                l = key.safeAreaInsets.top
-            }
+        } else {
+            l = UIApplication.shared.statusBarFrame.height
         }
         initStatusPortraitHeight(l)
         return l
@@ -76,13 +74,24 @@ public extension CGFloat {
     static var wzTabWithControlBarHeight: CGFloat {
         return wzTabBarHeight + wzControlBarHeight
     }
-    
+    /// 当前！状态栏和导航栏的高度之和，旋转过程中无法提前确定高度
+    ///
+    /// 高度 = 状态栏（隐藏为0） + 导航栏
     static var wzStatusWithNavgationBarHeight: CGFloat {
         return wzStatusBarHeight + wzNavgationBarHeight
     }
-    
-    static var wzStatusOrNavgationBarHeight: CGFloat {
-        return wzStatusBarHeight + wzNavgationBarHeight
+    /// 状态栏和导航栏的高度之和，旋转过程中可以提前确定高度
+    ///
+    /// 横屏 = 导航栏高度
+    ///
+    /// 刘海屏，竖屏幕 = 状态栏 + 导航栏，不论状态栏隐不隐藏。
+    ///
+    /// 非刘海屏，竖屏幕 = 状态栏（不隐藏） + 导航栏
+    static func wzStatusOrNavgationBarHeight(statusBarHide: Bool) -> CGFloat {
+        //
+        let noCamInScreen = statusBarHide || !WZUITool.isPortrait ? wzNavgationBarHeight : (wzNavgationBarHeight + standardStatusBarHeight)
+        let camInScreen = !WZUITool.isPortrait ? wzNavgationBarHeight : (wzNavgationBarHeight + standardStatusBarHeight)
+        return WZUITool.isCamInScreen ? camInScreen : noCamInScreen
     }
     
 }

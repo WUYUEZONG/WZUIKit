@@ -71,16 +71,8 @@ extension WZUIViewController {
     
     func confirmNavigationViewHeight(_ size: CGSize = CGSize(width: .wzScreenWidth, height: .wzScreenHeight)) {
         if let height = self.wzNavViewHeightConstraint {
-            if size.width < size.height {
-                if CGFloat.standardStatusBarHeight <= 20 {
-                    height.constant = .wzStatusWithNavgationBarHeight
-                } else {                
-                    height.constant = .wzNavgationBarHeight + .standardStatusBarHeight
-                }
-            } else {
-            }
-            height.constant = .wzStatusWithNavgationBarHeight
-            self.navgationView.rotate(to: size.width < size.height)
+            height.constant = .wzStatusOrNavgationBarHeight(statusBarHide: self.prefersStatusBarHidden)
+            self.navgationView.rotate()
         }
     }
     
