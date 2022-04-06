@@ -11,7 +11,7 @@ open class WZUIViewController: UIViewController {
     
     var wzNavViewHeightConstraint: NSLayoutConstraint?
     
-    lazy var wzNavgationView: WZUINavgationView = {
+    lazy var navView: WZUINavgationView = {
         let view = WZUINavgationView()
         view.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(view)
@@ -38,8 +38,8 @@ open class WZUIViewController: UIViewController {
 
 /// WZUINavgationView
 public extension WZUIViewController {
-    var navgationView: WZUINavgationView {
-        return wzNavgationView
+    var wzNavgationView: WZUINavgationView {
+        return navView
     }
     
     @objc func wzPopViewController() {
@@ -72,7 +72,7 @@ extension WZUIViewController {
     func confirmNavigationViewHeight(_ size: CGSize = CGSize(width: .wzScreenWidth, height: .wzScreenHeight)) {
         if let height = self.wzNavViewHeightConstraint {
             height.constant = .wzStatusOrNavgationBarHeight(statusBarHide: self.prefersStatusBarHidden)
-            self.navgationView.rotate()
+            self.navView.rotate()
         }
     }
     

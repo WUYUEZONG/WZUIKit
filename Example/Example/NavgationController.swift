@@ -50,8 +50,8 @@ class WZUIControllerSub: WZUIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navgationView.wzTitleLabel.text = "Title"
-        navgationView.addBackItem(title: "Close", image: nil) { [weak self] sender in
+        wzNavgationView.wzTitleLabel.text = "Title"
+        wzNavgationView.addBackItem(title: "Close", image: nil) { [weak self] sender in
             self?.wzPopViewController()
         }
     }
@@ -61,8 +61,8 @@ class WZUIControllerSub2: WZUIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navgationView.wzTitleLabel.text = "Title"
-        navgationView.addBackItem(title: "Back", image: nil) { [weak self] sender in
+        wzNavgationView.wzTitleLabel.text = "Title"
+        wzNavgationView.addBackItem(title: "Back", image: nil) { [weak self] sender in
             self?.wzPopViewController()
         }
 //        if #available(iOS 13.0, *) {
