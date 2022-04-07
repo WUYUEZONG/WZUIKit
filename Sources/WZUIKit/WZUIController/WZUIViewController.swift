@@ -24,6 +24,8 @@ open class WZUIViewController: UIViewController {
         return view
     }()
     
+    
+    
     open override func viewDidLoad() {
         super.viewDidLoad()
         
