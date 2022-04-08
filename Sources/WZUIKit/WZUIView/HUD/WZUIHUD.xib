@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -25,18 +25,18 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Xnd-kk-fMM">
-                    <rect key="frame" x="16" y="14" width="126" height="131"/>
+                    <rect key="frame" x="16" y="12" width="126" height="135"/>
                     <subviews>
                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="755" verticalHuggingPriority="755" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="6pM-8F-FLL">
-                            <rect key="frame" x="0.0" y="55.5" width="126" height="20"/>
+                            <rect key="frame" x="0.0" y="57.5" width="126" height="20"/>
                             <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </activityIndicatorView>
                         <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="253" verticalHuggingPriority="253" horizontalCompressionResistancePriority="753" verticalCompressionResistancePriority="753" translatesAutoresizingMaskIntoConstraints="NO" id="AZy-JM-dhO">
-                            <rect key="frame" x="0.0" y="40.5" width="0.0" height="50"/>
+                            <rect key="frame" x="0.0" y="42.5" width="0.0" height="50"/>
                         </imageView>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SqV-Ij-bsR">
-                            <rect key="frame" x="0.0" y="57" width="0.0" height="17"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <rect key="frame" x="0.0" y="59.5" width="0.0" height="16"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -50,8 +50,8 @@
             <constraints>
                 <constraint firstItem="Xnd-kk-fMM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="21j-4l-lR6"/>
                 <constraint firstAttribute="trailing" secondItem="Xnd-kk-fMM" secondAttribute="trailing" constant="16" id="7ZN-ri-GAk"/>
-                <constraint firstItem="Xnd-kk-fMM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="14" id="IEY-4d-OTG"/>
-                <constraint firstAttribute="bottom" secondItem="Xnd-kk-fMM" secondAttribute="bottom" constant="14" id="MSE-l2-WI1"/>
+                <constraint firstItem="Xnd-kk-fMM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="12" id="IEY-4d-OTG"/>
+                <constraint firstAttribute="bottom" secondItem="Xnd-kk-fMM" secondAttribute="bottom" constant="12" id="MSE-l2-WI1"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>

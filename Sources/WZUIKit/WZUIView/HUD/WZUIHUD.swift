@@ -9,15 +9,21 @@ import UIKit
 
 public class WZUIHUD: UIView {
     
+    enum Position {
+        case top
+        case center
+        case bottom
+    }
+    
     public static var shared = WZUIHUD()
     
     /// contentStack 内边距
-    public var padding: CGFloat = 20 {
+    public var padding: CGFloat = 15 {
         didSet {
             stackLeading.constant = padding
             stackTrailing.constant = padding
-            stackTop.constant = padding
-            stackBottom.constant = padding
+//            stackTop.constant = padding
+//            stackBottom.constant = padding
         }
     }
     
@@ -32,6 +38,19 @@ public class WZUIHUD: UIView {
     @IBOutlet weak var activityView: UIActivityIndicatorView!
     @IBOutlet weak var hudImage: UIImageView!
     @IBOutlet weak var hudText: UILabel!
+    
+    var contentTopConstraint: NSLayoutConstraint!
+    var contentBottomConstraint: NSLayoutConstraint!
+    var contentCenterConstraint: NSLayoutConstraint!
+    
+    var position: Position = .bottom {
+        didSet {
+            
+            contentTopConstraint.isActive = position == .top
+            contentCenterConstraint.isActive = position == .center
+            contentBottomConstraint.isActive = position == .bottom
+        }
+    }
     
     /// hud
     var contentView: UIView!
@@ -58,26 +77,28 @@ public class WZUIHUD: UIView {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(contentView)
         
-//        contentView.widthAnchor.constraint(equalToConstant: (CGFloat.wzScreenWidth * 0.88)).isActive = true
-        contentView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.88).isActive = true
+        contentView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.618).isActive = true
         contentView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        contentView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        
+        contentCenterConstraint = contentView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        contentTopConstraint = contentView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        contentBottomConstraint = bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        position = .bottom
         
     }
     
     public override func layoutSubviews() {
         super.layoutSubviews()
+        
         contentView.layer.cornerRadius = contentView.frame.height/2
         contentView.layer.borderColor = UIColor.wzF2.cgColor
         contentView.layer.borderWidth = 1
-        contentView.layer.shadowRadius = 5
-        contentView.layer.shadowOpacity = 0.2
+        contentView.layer.shadowRadius = 4
+        contentView.layer.shadowOpacity = 0.1
         contentView.layer.shadowColor = UIColor.black.cgColor
         contentView.layer.shadowOffset = CGSize(width: 2, height: 3)
-        contentView.backgroundColor = .wzWhite
-        hudText.textColor = .wz666
-        activityView.color = .wz666
+        contentView.backgroundColor = UIColor(white: 1, alpha: 0.96)
+        hudText.textColor = .wz333
+        activityView.color = .wz333
     }
 }
 
@@ -85,6 +106,7 @@ extension WZUIHUD {
     func addToWindow() {
         self.isHidden = false
         self.alpha = 1
+        self.isUserInteractionEnabled = false
         var window: UIWindow?
         if #available(iOS 13.0, *) {
             if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -98,10 +120,13 @@ extension WZUIHUD {
         }
         
         if let window = window {
+            contentBottomConstraint.constant = .wzControlBarHeight
             if !window.subviews.contains(self) {
                 self.frame = window.bounds
                 self.autoresizingMask = [.flexibleWidth, .flexibleHeight]
                 window.addSubview(self)
+            } else {
+                window.bringSubviewToFront(self)
             }
         }
     }
@@ -111,29 +136,36 @@ extension WZUIHUD {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(dismiss), object: nil)
         self.perform(#selector(dismiss), with: nil, afterDelay: time!)
     }
-}
-
-public extension WZUIHUD {
     
-    
-    func show(message: String? = nil, image: UIImage? = nil, _ delay: TimeInterval? = nil) {
+    func wzShow(message: String? = nil, image: UIImage? = nil, loading: Bool = false, delay: TimeInterval? = nil) {
         
-        activityView.stopAnimating()
+        if loading {
+            activityView.startAnimating()
+        } else {
+            activityView.stopAnimating()
+        }
         hudText.text = message
         hudImage.image = image
         hudText.isHidden = message == nil
         hudImage.isHidden = image == nil
+        hudText.textAlignment = (loading || image != nil) ? .natural : .center
         addToWindow()
         hideAfterDelay(time: delay)
     }
-    
-    func showLoading(message: String? = nil, _ delay: TimeInterval? = nil) {
-        hudImage.isHidden = true
-        activityView.startAnimating()
-        hudText.text = message
-        hudText.isHidden = message == nil
-        addToWindow()
-        hideAfterDelay(time: delay)
+}
+
+public extension WZUIHUD {
+    /// 展示文本信息 + 图片
+    func show(message: String? = nil, image: UIImage? = nil) {
+        wzShow(message: message, image: image, loading: false, delay: nil)
+    }
+    /// 展示文本信息 + loading
+    func showLoading(message: String? = nil, delay: TimeInterval? = nil) {
+        wzShow(message: message, image: nil, loading: true, delay: delay)
+    }
+    /// 只展示文本信息
+    func showMessage(_ message: String? = nil, delay: TimeInterval? = nil) {
+        wzShow(message: message, image: nil, loading: false, delay: delay)
     }
     
     @objc func dismiss() {
@@ -143,10 +175,4 @@ public extension WZUIHUD {
             self.isHidden = true
         }
     }
-    
-    func hudStyle(backgroundColor: UIColor = .clear, hudBackgroundColor: UIColor = .white) {
-        self.backgroundColor = backgroundColor
-        self.contentView.backgroundColor = hudBackgroundColor
-    }
-    
 }

@@ -7,23 +7,28 @@
 
 import UIKit
 
+
 extension CGFloat {
+    
+    
     /// 竖屏状态的状态栏
-    private static var statusPortraitHeight: CGFloat? = nil
+    private static var statusPortraitHeight: CGFloat = 0
 }
 
 public extension CGFloat {
     
     static var standardStatusBarHeight: CGFloat {
-        return initStatusPortraitHeight()
+        if statusPortraitHeight > 0 { return statusPortraitHeight }
+        let h = wzStatusBarHeight
+        return initStatusPortraitHeight(h)
     }
     
     @discardableResult
     static func initStatusPortraitHeight(_ height: CGFloat = 0) -> CGFloat {
-        if statusPortraitHeight == nil || statusPortraitHeight == 0 {
+        if statusPortraitHeight == 0 {
             statusPortraitHeight = height
         }
-        return statusPortraitHeight!
+        return statusPortraitHeight
     }
     
     static var wzScreenWidth: CGFloat {

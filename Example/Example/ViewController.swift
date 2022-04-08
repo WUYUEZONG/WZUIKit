@@ -81,7 +81,14 @@ class ViewController: UIViewController {
 //            alert.addAction(ok)
 //            self.present(alert, animated: true, completion: nil)
             
-            WZUIHUD.shared.showLoading(message: "请稍后...", 5)
+//            WZUIHUD.shared.showLoading(message: "请稍后...", 5)
+            WZUIHUD.shared.showMessage("请稍后...请稍后...请稍后...请稍后", delay:  4)
+//            if #available(iOS 13.0, *) {
+//                WZUIHUD.shared.show(message: "请稍后...请稍后...请稍后...请稍后...请稍后...请稍后", image: UIImage(systemName: "pencil.circle"), 5)
+//            } else {
+//                // Fallback on earlier versions
+//            }
+            
 //            WZUIHUD.shared.padding = 24
 //            switch self?.otherButtonStyle {
 //            case 0:

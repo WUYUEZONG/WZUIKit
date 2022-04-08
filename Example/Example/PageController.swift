@@ -31,22 +31,24 @@ class PageController: WZUIPageController {
     
     @objc func testAction() {
         
-        if testCount > 3 {
-            testCount = 0
-        }
+        WZUIHUD.shared.showLoading(message: "Loading", delay: 5)
         
-        switch testCount {
-        case 0:
-            titleDataSources = ["1"]
-        case 1:
-            titleDataSources = ["1", "2222", "33333333333"]
-        case 2:
-            titleDataSources = ["55555555555", "44444444", "66666"]
-        default:
-            break
-        }
-        reloadData(at: testCount)
-        testCount += 1
+//        if testCount > 3 {
+//            testCount = 0
+//        }
+//
+//        switch testCount {
+//        case 0:
+//            titleDataSources = ["1"]
+//        case 1:
+//            titleDataSources = ["1", "2222", "33333333333"]
+//        case 2:
+//            titleDataSources = ["55555555555", "44444444", "66666"]
+//        default:
+//            break
+//        }
+//        reloadData(at: testCount)
+//        testCount += 1
     }
     
     override func initControllerAtIndex(_ index: Int) -> UIViewController {
