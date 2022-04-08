@@ -1,43 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WZUIHUD" customModule="WZUIKit"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WZUIHUD" customModule="WZUIKit">
+            <connections>
+                <outlet property="activityView" destination="6pM-8F-FLL" id="hae-jI-EGe"/>
+                <outlet property="contentStack" destination="Xnd-kk-fMM" id="Cod-Sn-fGu"/>
+                <outlet property="hudImage" destination="AZy-JM-dhO" id="pG3-qQ-KDn"/>
+                <outlet property="hudText" destination="SqV-Ij-bsR" id="iO4-No-GZZ"/>
+                <outlet property="stackBottom" destination="MSE-l2-WI1" id="5e8-1C-Uyn"/>
+                <outlet property="stackLeading" destination="21j-4l-lR6" id="HQh-t3-lYl"/>
+                <outlet property="stackTop" destination="IEY-4d-OTG" id="6Us-gx-omg"/>
+                <outlet property="stackTrailing" destination="7ZN-ri-GAk" id="OGU-G1-cNa"/>
+            </connections>
+        </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="158" height="159"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="Xnd-kk-fMM">
-                    <rect key="frame" x="30" y="30" width="98" height="99"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Xnd-kk-fMM">
+                    <rect key="frame" x="20" y="20" width="118" height="119"/>
                     <subviews>
                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="755" verticalHuggingPriority="755" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="6pM-8F-FLL">
-                            <rect key="frame" x="39" y="0.0" width="20" height="99"/>
-                            <color key="color" systemColor="systemGrayColor"/>
+                            <rect key="frame" x="49" y="0.0" width="20" height="119"/>
+                            <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </activityIndicatorView>
-                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="253" verticalHuggingPriority="253" horizontalCompressionResistancePriority="753" verticalCompressionResistancePriority="753" image="switch-button" translatesAutoresizingMaskIntoConstraints="NO" id="AZy-JM-dhO">
-                            <rect key="frame" x="37" y="0.0" width="24" height="0.0"/>
+                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="253" verticalHuggingPriority="253" horizontalCompressionResistancePriority="753" verticalCompressionResistancePriority="753" translatesAutoresizingMaskIntoConstraints="NO" id="AZy-JM-dhO">
+                            <rect key="frame" x="10" y="0.0" width="98" height="0.0"/>
                         </imageView>
-                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SqV-Ij-bsR">
-                            <rect key="frame" x="31.5" y="0.0" width="35.5" height="0.0"/>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SqV-Ij-bsR">
+                            <rect key="frame" x="34" y="0.0" width="50" height="0.0"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <nil key="textColor"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" priority="250" constant="20" id="T5l-ZG-26a"/>
+                        <constraint firstAttribute="width" priority="250" constant="20" id="WWj-8b-2cj"/>
+                    </constraints>
                 </stackView>
             </subviews>
             <constraints>
-                <constraint firstItem="Xnd-kk-fMM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="21j-4l-lR6"/>
-                <constraint firstAttribute="trailing" secondItem="Xnd-kk-fMM" secondAttribute="trailing" constant="30" id="7ZN-ri-GAk"/>
-                <constraint firstItem="Xnd-kk-fMM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="IEY-4d-OTG"/>
-                <constraint firstAttribute="bottom" secondItem="Xnd-kk-fMM" secondAttribute="bottom" constant="30" id="MSE-l2-WI1"/>
+                <constraint firstItem="Xnd-kk-fMM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="21j-4l-lR6"/>
+                <constraint firstAttribute="trailing" secondItem="Xnd-kk-fMM" secondAttribute="trailing" constant="20" id="7ZN-ri-GAk"/>
+                <constraint firstItem="Xnd-kk-fMM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="IEY-4d-OTG"/>
+                <constraint firstAttribute="bottom" secondItem="Xnd-kk-fMM" secondAttribute="bottom" constant="20" id="MSE-l2-WI1"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
@@ -45,10 +59,4 @@
             <point key="canvasLocation" x="194.20289855072465" y="126.22767857142857"/>
         </view>
     </objects>
-    <resources>
-        <image name="switch-button" width="24" height="24"/>
-        <systemColor name="systemGrayColor">
-            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-    </resources>
 </document>
