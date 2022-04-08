@@ -81,7 +81,7 @@ class ViewController: UIViewController {
 //            alert.addAction(ok)
 //            self.present(alert, animated: true, completion: nil)
             
-            WZUIHUD.shared.showLoading(message: "请稍后", 5)
+            WZUIHUD.shared.showLoading(message: "请稍后...", 5)
 //            WZUIHUD.shared.padding = 24
 //            switch self?.otherButtonStyle {
 //            case 0:

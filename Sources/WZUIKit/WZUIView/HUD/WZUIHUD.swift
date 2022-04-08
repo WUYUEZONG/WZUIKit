@@ -48,7 +48,7 @@ public class WZUIHUD: UIView {
     
     func setupUI() {
         
-        self.frame = CGRect(x: 0, y: 0, width: .wzScreenWidth, height: .wzScreenHeight)
+        
         
         if let contentView = UIView.initNib("WZUIHUD", owner: self) {
             self.contentView = contentView
@@ -58,21 +58,33 @@ public class WZUIHUD: UIView {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(contentView)
         
+//        contentView.widthAnchor.constraint(equalToConstant: (CGFloat.wzScreenWidth * 0.88)).isActive = true
+        contentView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.88).isActive = true
         contentView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         contentView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         
-        contentView.backgroundColor = UIColor(white: 0, alpha: 0.5)
         
     }
     
     public override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.layer.cornerRadius = 4
+        contentView.layer.cornerRadius = contentView.frame.height/2
+        contentView.layer.borderColor = UIColor.wzF2.cgColor
+        contentView.layer.borderWidth = 1
+        contentView.layer.shadowRadius = 5
+        contentView.layer.shadowOpacity = 0.2
+        contentView.layer.shadowColor = UIColor.black.cgColor
+        contentView.layer.shadowOffset = CGSize(width: 2, height: 3)
+        contentView.backgroundColor = .wzWhite
+        hudText.textColor = .wz666
+        activityView.color = .wz666
     }
 }
 
 extension WZUIHUD {
     func addToWindow() {
+        self.isHidden = false
+        self.alpha = 1
         var window: UIWindow?
         if #available(iOS 13.0, *) {
             if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -87,6 +99,8 @@ extension WZUIHUD {
         
         if let window = window {
             if !window.subviews.contains(self) {
+                self.frame = window.bounds
+                self.autoresizingMask = [.flexibleWidth, .flexibleHeight]
                 window.addSubview(self)
             }
         }
@@ -105,7 +119,6 @@ public extension WZUIHUD {
     func show(message: String? = nil, image: UIImage? = nil, _ delay: TimeInterval? = nil) {
         
         activityView.stopAnimating()
-        self.alpha = 1
         hudText.text = message
         hudImage.image = image
         hudText.isHidden = message == nil
@@ -116,7 +129,6 @@ public extension WZUIHUD {
     
     func showLoading(message: String? = nil, _ delay: TimeInterval? = nil) {
         hudImage.isHidden = true
-        activityView.color = .white
         activityView.startAnimating()
         hudText.text = message
         hudText.isHidden = message == nil
@@ -128,11 +140,11 @@ public extension WZUIHUD {
         UIView.animate(withDuration: 0.5) {
             self.alpha = 0
         } completion: { f in
-            self.removeFromSuperview()
+            self.isHidden = true
         }
     }
     
-    func hudStyle(backgroundColor: UIColor = .clear, hudBackgroundColor: UIColor = UIColor(white: 0, alpha: 0.5)) {
+    func hudStyle(backgroundColor: UIColor = .clear, hudBackgroundColor: UIColor = .white) {
         self.backgroundColor = backgroundColor
         self.contentView.backgroundColor = hudBackgroundColor
     }

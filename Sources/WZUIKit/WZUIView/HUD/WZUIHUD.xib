@@ -24,18 +24,18 @@
             <rect key="frame" x="0.0" y="0.0" width="158" height="159"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Xnd-kk-fMM">
-                    <rect key="frame" x="20" y="20" width="118" height="119"/>
+                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Xnd-kk-fMM">
+                    <rect key="frame" x="16" y="14" width="126" height="131"/>
                     <subviews>
                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="755" verticalHuggingPriority="755" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="6pM-8F-FLL">
-                            <rect key="frame" x="49" y="0.0" width="20" height="119"/>
+                            <rect key="frame" x="0.0" y="55.5" width="126" height="20"/>
                             <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </activityIndicatorView>
                         <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="253" verticalHuggingPriority="253" horizontalCompressionResistancePriority="753" verticalCompressionResistancePriority="753" translatesAutoresizingMaskIntoConstraints="NO" id="AZy-JM-dhO">
-                            <rect key="frame" x="10" y="0.0" width="98" height="0.0"/>
+                            <rect key="frame" x="0.0" y="40.5" width="0.0" height="50"/>
                         </imageView>
-                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SqV-Ij-bsR">
-                            <rect key="frame" x="34" y="0.0" width="50" height="0.0"/>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SqV-Ij-bsR">
+                            <rect key="frame" x="0.0" y="57" width="0.0" height="17"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -48,10 +48,10 @@
                 </stackView>
             </subviews>
             <constraints>
-                <constraint firstItem="Xnd-kk-fMM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="21j-4l-lR6"/>
-                <constraint firstAttribute="trailing" secondItem="Xnd-kk-fMM" secondAttribute="trailing" constant="20" id="7ZN-ri-GAk"/>
-                <constraint firstItem="Xnd-kk-fMM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="IEY-4d-OTG"/>
-                <constraint firstAttribute="bottom" secondItem="Xnd-kk-fMM" secondAttribute="bottom" constant="20" id="MSE-l2-WI1"/>
+                <constraint firstItem="Xnd-kk-fMM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="21j-4l-lR6"/>
+                <constraint firstAttribute="trailing" secondItem="Xnd-kk-fMM" secondAttribute="trailing" constant="16" id="7ZN-ri-GAk"/>
+                <constraint firstItem="Xnd-kk-fMM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="14" id="IEY-4d-OTG"/>
+                <constraint firstAttribute="bottom" secondItem="Xnd-kk-fMM" secondAttribute="bottom" constant="14" id="MSE-l2-WI1"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
