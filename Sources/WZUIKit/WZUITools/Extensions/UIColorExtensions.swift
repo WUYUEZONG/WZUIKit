@@ -152,11 +152,25 @@ public extension UIColor {
         return UIColor(hex: 0x000000)
     }
     
+    static func wzBlack(alpha: CGFloat = 1) -> UIColor {
+        if #available(iOS 13, *) {
+            return UIColor  { $0.userInterfaceStyle == .light ? UIColor(white: 0, alpha: alpha) : UIColor(white: 1, alpha: alpha) }
+        }
+        return UIColor(white: 0, alpha: alpha)
+    }
+    
     static var wzWhite: UIColor {
         if #available(iOS 13, *) {
             return UIColor  { $0.userInterfaceStyle == .light ? UIColor(hex: 0xFFFFFF) : UIColor(hex: 0x000000) }
         }
         return UIColor(hex: 0xFFFFFF)
+    }
+    
+    static func wzWhite(alpha: CGFloat = 1) -> UIColor {
+        if #available(iOS 13, *) {
+            return UIColor  { $0.userInterfaceStyle == .light ? UIColor(white: 1, alpha: alpha) : UIColor(white: 0, alpha: alpha) }
+        }
+        return UIColor(white: 1, alpha: alpha)
     }
     
     static var wzDark: UIColor {

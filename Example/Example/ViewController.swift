@@ -82,7 +82,7 @@ class ViewController: UIViewController {
 //            self.present(alert, animated: true, completion: nil)
             
 //            WZUIHUD.shared.showLoading(message: "请稍后...", 5)
-            WZUIHUD.shared.showMessage("请稍后...请稍后...请稍后...请稍后", delay:  4)
+            WZUIHUD.shared.showMessage("请稍后...", delay:  4)
 //            if #available(iOS 13.0, *) {
 //                WZUIHUD.shared.show(message: "请稍后...请稍后...请稍后...请稍后...请稍后...请稍后", image: UIImage(systemName: "pencil.circle"), 5)
 //            } else {

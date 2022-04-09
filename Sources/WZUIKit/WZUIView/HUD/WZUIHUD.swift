@@ -18,14 +18,14 @@ public class WZUIHUD: UIView {
     public static var shared = WZUIHUD()
     
     /// contentStack 内边距
-    public var padding: CGFloat = 15 {
-        didSet {
-            stackLeading.constant = padding
-            stackTrailing.constant = padding
-//            stackTop.constant = padding
-//            stackBottom.constant = padding
-        }
-    }
+//    public var padding: CGFloat = 15 {
+//        didSet {
+//            stackLeading.constant = padding
+//            stackTrailing.constant = padding
+////            stackTop.constant = padding
+////            stackBottom.constant = padding
+//        }
+//    }
     
     
     @IBOutlet weak var stackLeading: NSLayoutConstraint!
@@ -77,7 +77,9 @@ public class WZUIHUD: UIView {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(contentView)
         
-        contentView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.618).isActive = true
+        contentView.widthAnchor.constraint(greaterThanOrEqualTo: widthAnchor, multiplier: 0.618).isActive = true
+        contentView.widthAnchor.constraint(lessThanOrEqualTo: widthAnchor, multiplier: 0.9).isActive = true
+//        contentView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.618).isActive = true
         contentView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         contentCenterConstraint = contentView.centerYAnchor.constraint(equalTo: centerYAnchor)
         contentTopConstraint = contentView.bottomAnchor.constraint(equalTo: bottomAnchor)
@@ -90,13 +92,13 @@ public class WZUIHUD: UIView {
         super.layoutSubviews()
         
         contentView.layer.cornerRadius = contentView.frame.height/2
-        contentView.layer.borderColor = UIColor.wzF2.cgColor
-        contentView.layer.borderWidth = 1
+        contentView.layer.borderColor = UIColor.wzExtraLight.cgColor
+        contentView.layer.borderWidth = 2
         contentView.layer.shadowRadius = 4
         contentView.layer.shadowOpacity = 0.1
-        contentView.layer.shadowColor = UIColor.black.cgColor
+        contentView.layer.shadowColor = UIColor.wzBlack.cgColor
         contentView.layer.shadowOffset = CGSize(width: 2, height: 3)
-        contentView.backgroundColor = UIColor(white: 1, alpha: 0.96)
+        contentView.backgroundColor = .wzWhite(alpha: 0.96)
         hudText.textColor = .wz333
         activityView.color = .wz333
     }
@@ -120,7 +122,7 @@ extension WZUIHUD {
         }
         
         if let window = window {
-            contentBottomConstraint.constant = .wzControlBarHeight
+            contentBottomConstraint.constant = CGFloat.wzControlBarHeight > 0 ? .wzControlBarHeight : 20.0
             if !window.subviews.contains(self) {
                 self.frame = window.bounds
                 self.autoresizingMask = [.flexibleWidth, .flexibleHeight]
