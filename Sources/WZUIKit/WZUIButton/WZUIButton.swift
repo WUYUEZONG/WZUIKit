@@ -178,7 +178,7 @@ open class WZUIButton: UIView {
     public lazy var wzDetail: UILabel = {
         let detail = UILabel()
         detail.font = .systemFont(ofSize: 12, weight: .light)
-        detail.textColor = .wz999
+        detail.textColor = .wz999()
         textContentStack.addArrangedSubview(detail)
         return detail
     }()

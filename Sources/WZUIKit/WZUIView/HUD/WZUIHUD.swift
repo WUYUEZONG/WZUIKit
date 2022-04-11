@@ -53,7 +53,15 @@ public class WZUIHUD: UIView {
             let statusH = CGFloat.wzStatusBarHeightWithCamInScreen()
             let controlH = CGFloat.wzControlBarHeight
             contentTopConstraint.constant = statusH > 0 ? statusH : 20.0
-            contentBottomConstraint.constant = controlH > 0 ? controlH : 20.0
+            contentBottomConstraint.constant = controlH > 0 ? controlH + 30 : 44
+            
+            switch position {
+            case .top:
+                contentView.transform = CGAffineTransform(translationX: 0, y: -transformY)
+            case .bottom:
+                contentView.transform = CGAffineTransform(translationX: 0, y: transformY)
+            default: break
+            }
             
         }
     }
@@ -88,7 +96,7 @@ public class WZUIHUD: UIView {
 //        contentView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.618).isActive = true
         contentView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         contentCenterConstraint = contentView.centerYAnchor.constraint(equalTo: centerYAnchor)
-        contentTopConstraint = contentView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        contentTopConstraint = contentView.topAnchor.constraint(equalTo: topAnchor)
         contentBottomConstraint = bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         
     }
@@ -109,12 +117,17 @@ public class WZUIHUD: UIView {
         contentView.layer.shadowOffset = CGSize(width: 2, height: 3)
         contentView.layer.shadowPath = path.cgPath
         contentView.backgroundColor = .wzWhite(alpha: 0.96)
-        hudText.textColor = .wz333
-        activityView.color = .wz333
+        hudText.textColor = .wz333()
+        activityView.color = .wz333()
     }
 }
 
 extension WZUIHUD {
+    
+    var transformY: CGFloat {
+        return 300
+    }
+    
     func addToWindow() {
         self.isHidden = false
         self.alpha = 1
@@ -140,6 +153,13 @@ extension WZUIHUD {
             } else {
                 window.bringSubviewToFront(self)
             }
+            
+            UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 2, initialSpringVelocity: 8, options: .curveEaseInOut) {
+                self.contentView.transform = .identity
+            } completion: { f in
+                
+            }
+
         }
     }
     

@@ -116,7 +116,7 @@ open class TableGameListCell: UICollectionViewCell {
         wzContent.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         contentView.addSubview(wzContent)
         
-        bottomLine.backgroundColor = UIColor.wzF2.cgColor
+        
         self.layer.addSublayer(bottomLine)
     }
     
@@ -132,15 +132,23 @@ open class TableGameListCell: UICollectionViewCell {
         super.layoutSubviews()
         
         let lineWidth: CGFloat = 1
+        bottomLine.backgroundColor = UIColor.wzExtraLight.cgColor
         bottomLine.frame = CGRect(x: posterTitle.wzMinX, y: self.wzHeight - lineWidth, width: self.wzWidth - posterTitle.wzMinX, height: lineWidth)
         
         posterTitle.textColor = .wzDark()
         ownerStatus.backgroundColor = .wzLight
         ownerStatus.setTitleColor(.wzWhite, for: .normal)
         
-        otherInfo.textColor = .wz333
+        otherInfo.textColor = .wz333()
         
-        goPlay.backgroundColor = .wz333
+        goPlay.backgroundColor = .wz333(true)
+        goPlay.layer.cornerRadius = goPlay.wzHeight / 2
+        ownerStatus.layer.cornerRadius = 4
+        
+        if #available(iOS 11.0, *) {
+            rateLabel.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMaxYCorner]
+        }
+        rateLabel.layer.cornerRadius = imageCornerRadius
         
         if let dataSource = dataSource {
             
@@ -156,8 +164,8 @@ open class TableGameListCell: UICollectionViewCell {
             for (index, tag) in tags.enumerated() {
                 let title = dataSource.tagInfo(at: index).title
                 tag.isHidden = title == nil
-                tag.tintColor = .wz999
-                tag.setTitleColor(.wz999, for: .normal)
+                tag.tintColor = .wz999()
+                tag.setTitleColor(.wz999(), for: .normal)
                 tag.setImage(dataSource.tagInfo(at: index).icon, for: .normal)
                 tag.setTitle(title, for: .normal)
             }

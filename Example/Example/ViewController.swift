@@ -32,6 +32,8 @@ class ViewController: WZUIViewController {
         wzNavgationView.wzTitleLabel.text = "WZUIKit"
         wzNavgationView.backgroundColor = .blue
         wzNavgationView.isShowEffect = false
+        
+//        WZUIHUD.shared.configWZUIHUD(isUserInteractionEnabled: true, position: .center)
     }
     
 //    override var prefersStatusBarHidden: Bool {
@@ -147,7 +149,7 @@ extension TableGameVC: TableGameListCellDataSource {
 //    }
     
     func scoreOfPoster() -> NSAttributedString {
-        NSAttributedString(string: "8.0", attributes: [.font : UIFont.systemFont(ofSize: 10, weight: .bold)])
+        NSAttributedString(string: "8.0", attributes: [.font : UIFont.systemFont(ofSize: 10, weight: .bold), .foregroundColor: UIColor.wz333(true)])
     }
     
     func copyrightInfo() -> String? {

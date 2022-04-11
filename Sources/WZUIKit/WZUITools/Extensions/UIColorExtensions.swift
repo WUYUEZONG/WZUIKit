@@ -94,15 +94,16 @@ public extension UIColor {
 
 public extension UIColor {
     
-    static var wz333: UIColor {
-        if #available(iOS 13, *) {
+    /// onlyLight, if true , just return the ligt mode color.
+    static func wz333(_ onlyLight: Bool = false) -> UIColor {
+        if #available(iOS 13, *), !onlyLight {
             return UIColor { $0.userInterfaceStyle == .light ? UIColor(hex: 0x333333) : UIColor(hex: 0xDEDEDE) }
         }
         return UIColor(hex: 0x333333)
     }
     
-    static var wz999: UIColor {
-        if #available(iOS 13, *) {
+    static func wz999(_ onlyLight: Bool = false) -> UIColor {
+        if #available(iOS 13, *), !onlyLight {
             return UIColor  { $0.userInterfaceStyle == .light ? UIColor(hex: 0x999999) : UIColor(hex: 0x838383) }
         }
         return UIColor(hex: 0x999999)
