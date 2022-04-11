@@ -49,6 +49,10 @@ public class WZUIHUD: UIView {
             contentTopConstraint.isActive = position == .top
             contentCenterConstraint.isActive = position == .center
             contentBottomConstraint.isActive = position == .bottom
+            
+            contentTopConstraint.constant = CGFloat.wzStatusBarHeightWithCamInScreen > 0 ? CGFloat.wzStatusBarHeightWithCamInScreen : 20.0
+            contentBottomConstraint.constant = CGFloat.wzControlBarHeight > 0 ? .wzControlBarHeight : 20.0
+            
         }
     }
     
@@ -122,8 +126,8 @@ extension WZUIHUD {
         }
         
         if let window = window {
-            contentBottomConstraint.constant = CGFloat.wzControlBarHeight > 0 ? .wzControlBarHeight : 20.0
             if !window.subviews.contains(self) {
+                self.position = position
                 self.frame = window.bounds
                 self.autoresizingMask = [.flexibleWidth, .flexibleHeight]
                 window.addSubview(self)
