@@ -134,13 +134,17 @@ extension TableGameVC: TableGameListCellDataSource {
         "Poster NAME"
     }
     
-    func tagImage(at index: Int) -> UIImage? {
-        UIImage(named: "icon_topic")
+    func tagInfo(at index: Int) -> (icon: UIImage?, title: String?) {
+        (UIImage(named: "icon_topic"), "tag\(index)")
     }
     
-    func tagTitle(at index: Int) -> String? {
-        "tag"
-    }
+//    func tagImage(at index: Int) -> UIImage? {
+//        UIImage(named: "icon_topic")
+//    }
+//
+//    func tagTitle(at index: Int) -> String? {
+//        "tag"
+//    }
     
     func scoreOfPoster() -> NSAttributedString {
         NSAttributedString(string: "8.0", attributes: [.font : UIFont.systemFont(ofSize: 10, weight: .bold)])

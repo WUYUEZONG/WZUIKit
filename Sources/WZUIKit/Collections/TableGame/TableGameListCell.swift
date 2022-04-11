@@ -12,10 +12,8 @@ public protocol TableGameListCellDataSource {
     func posterImage() -> UIImage
     ///
     func posterTitle() -> String
-    /// tag1...5的图标
-    func tagImage(at index: Int) -> UIImage?
-    /// tag1...5的标题
-    func tagTitle(at index: Int) -> String?
+    /// tag1...5的图标, 标题
+    func tagInfo(at index: Int) -> (icon: UIImage?, title: String?)
     /// 评分
     func scoreOfPoster() -> NSAttributedString
     /// 版权信息, 返回空则隐藏
@@ -156,11 +154,11 @@ open class TableGameListCell: UICollectionViewCell {
             ownerStatus.isHidden = dataSource.copyrightInfo() == nil
             
             for (index, tag) in tags.enumerated() {
-                let title = dataSource.tagTitle(at: index)
+                let title = dataSource.tagInfo(at: index).title
                 tag.isHidden = title == nil
                 tag.tintColor = .wz999
                 tag.setTitleColor(.wz999, for: .normal)
-                tag.setImage(dataSource.tagImage(at: index), for: .normal)
+                tag.setImage(dataSource.tagInfo(at: index).icon, for: .normal)
                 tag.setTitle(title, for: .normal)
             }
             
