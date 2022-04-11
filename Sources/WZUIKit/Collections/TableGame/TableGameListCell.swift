@@ -148,6 +148,7 @@ open class TableGameListCell: UICollectionViewCell {
         if #available(iOS 11.0, *) {
             rateLabel.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMaxYCorner]
         }
+        rateLabel.clipsToBounds = true
         rateLabel.layer.cornerRadius = imageCornerRadius
         
         if let dataSource = dataSource {
