@@ -24,7 +24,7 @@ class ViewController: WZUIViewController {
         }
     }
     
-    var datas: [String] = ["WZUIHUD"]
+    var datas: [String] = ["WZUIHUD", "TableGameVC"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +69,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             WZUIHUD.shared.showMessage("1234", delay: 5)
             break
         case 1:
-            
+            self.navigationController?.show(TableGameVC(), sender: nil)
             break
             
         default:
@@ -82,3 +82,97 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
 }
 
+class TableGameVC: WZUIViewController {
+    
+    lazy var tb: UICollectionView = {
+        let f = UICollectionViewFlowLayout()
+        f.itemSize = CGSize(width: view.wzWidth, height: 145)
+        f.scrollDirection = .vertical
+        f.minimumInteritemSpacing = 0
+        f.minimumLineSpacing = 0
+        let b = UICollectionView(frame: view.bounds, collectionViewLayout: f)
+        b.contentInset.top = .wzNavgationBarHeight
+        b.dataSource = self
+        b.delegate = self
+        b.backgroundColor = .wzWhite
+        b.register(TableGameListCell.self, forCellWithReuseIdentifier: "TableGameListCell")
+        return b
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.addSubview(tb)
+        
+        wzNavgationView.wzBackItem.setTitle("Back", for: .normal)
+    }
+    
+}
+
+extension TableGameVC: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TableGameListCell", for: indexPath) as? TableGameListCell
+        cell?.dataSource = self
+        return cell!
+    }
+    
+    
+}
+
+extension TableGameVC: TableGameListCellDataSource {
+    
+    func posterImage() -> UIImage {
+        UIImage(named: "simple")!
+    }
+    
+    func posterTitle() -> String {
+        "Poster NAME"
+    }
+    
+    func tagImage(at index: Int) -> UIImage? {
+        UIImage(named: "icon_topic")
+    }
+    
+    func tagTitle(at index: Int) -> String? {
+        "tag"
+    }
+    
+    func scoreOfPoster() -> NSAttributedString {
+        NSAttributedString(string: "8.0", attributes: [.font : UIFont.systemFont(ofSize: 10, weight: .bold)])
+    }
+    
+    func copyrightInfo() -> String? {
+        "OWNER"
+    }
+    
+    func iconInfo(at index: Int) -> (icon: UIImage, title: String) {
+        (UIImage(named: "icon_time")!, "3人")
+    }
+    
+    func isNolimitSex() -> Bool {
+        true
+    }
+    
+    func priceTitle() -> NSAttributedString {
+        NSAttributedString(string: "$108.0", attributes: [.font : UIFont.systemFont(ofSize: 18, weight: .bold)])
+    }
+    
+    func goPlayTitle() -> String? {
+        "Goooo!"
+    }
+    
+    func themeColor() -> UIColor {
+        UIColor(hex: 0xEEC62F)
+    }
+    
+    func otherInfo() -> String {
+        "199人玩过 | 宗师难度"
+    }
+    
+    
+}

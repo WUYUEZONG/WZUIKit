@@ -173,8 +173,8 @@ public extension UIColor {
         return UIColor(white: 1, alpha: alpha)
     }
     
-    static var wzDark: UIColor {
-        if #available(iOS 13, *) {
+    static func wzDark(_ onlyLight: Bool = false) -> UIColor {
+        if #available(iOS 13, *), !onlyLight {
             return UIColor  { $0.userInterfaceStyle == .light ? UIColor(hex: 0x1D1D1D) : UIColor(hex: 0xEBEBEB) }
         }
         return UIColor(hex: 0x1D1D1D)

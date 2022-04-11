@@ -169,7 +169,7 @@ open class WZUIButton: UIView {
     public lazy var wzTitle: UILabel = {
         let title = UILabel()
         title.font = .systemFont(ofSize: 15, weight: .bold)
-        title.textColor = .wzDark
+        title.textColor = .wzDark()
         textContentStack.insertArrangedSubview(title, at: 0)
         return title
     }()
