@@ -96,13 +96,18 @@ public class WZUIHUD: UIView {
     public override func layoutSubviews() {
         super.layoutSubviews()
         
-        contentView.layer.cornerRadius = contentView.frame.height/2
+        let cornerRadius = contentView.frame.height/2
+//        let shadow =
+        let path = UIBezierPath(roundedRect: contentView.bounds, cornerRadius: cornerRadius)
+        
+        contentView.layer.cornerRadius = cornerRadius
         contentView.layer.borderColor = UIColor.wzExtraLight.cgColor
         contentView.layer.borderWidth = 2
         contentView.layer.shadowRadius = 4
         contentView.layer.shadowOpacity = 0.1
         contentView.layer.shadowColor = UIColor.wzBlack.cgColor
         contentView.layer.shadowOffset = CGSize(width: 2, height: 3)
+        contentView.layer.shadowPath = path.cgPath
         contentView.backgroundColor = .wzWhite(alpha: 0.96)
         hudText.textColor = .wz333
         activityView.color = .wz333
@@ -163,7 +168,7 @@ extension WZUIHUD {
 
 public extension WZUIHUD {
     /// 展示文本信息 + 图片
-    func show(message: String? = nil, image: UIImage? = nil) {
+    func show(message: String? = nil, image: UIImage?) {
         wzShow(message: message, image: image, loading: false, delay: nil)
     }
     /// 展示文本信息 + loading
@@ -171,7 +176,7 @@ public extension WZUIHUD {
         wzShow(message: message, image: nil, loading: true, delay: delay)
     }
     /// 只展示文本信息
-    func showMessage(_ message: String? = nil, delay: TimeInterval? = nil) {
+    func showMessage(_ message: String, delay: TimeInterval? = nil) {
         wzShow(message: message, image: nil, loading: false, delay: delay)
     }
     

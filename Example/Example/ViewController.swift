@@ -8,184 +8,77 @@
 import UIKit
 import WZUIKit
 
-class ViewController: UIViewController {
-    
-    @IBOutlet weak var testNav: WZUINavgationView! {
+class ViewController: WZUIViewController {
+
+    @IBOutlet weak var tableView: UITableView! {
         didSet {
-        }
-    }
-    
-    @IBOutlet weak var longBtn: WZUIButton! {
-        didSet {
-            longBtn.wzTitle.text = "Poster"
+            tableView.contentInset.top = .wzNavgationBarHeight
             if #available(iOS 13.0, *) {
-                longBtn.wzImage.image = UIImage (systemName: "pencil.circle")
+                tableView.automaticallyAdjustsScrollIndicatorInsets = false
             } else {
                 // Fallback on earlier versions
             }
-//            longBtn.wzImagePosition = .top
-//            longBtn.contentMode = .scaleAspectFit
-            longBtn.wzDetail.text = "some things about Poster. goooooo | some things about Poster. goooooo"
-            longBtn.wzContentPosition = .trailing
-            
+            if #available(iOS 15.0, *) {
+                tableView.sectionHeaderTopPadding = 0
+            }
         }
     }
     
-    lazy var testButton: WZUIButton = {
-        let btn = WZUIButton()
-        btn.wzTitle.text = "This is title"
-//        btn.wzDetail.text = "here show some detail"
-        btn.tintColor = .systemBlue
-        return btn
-    }()
-    
-    
-    @IBOutlet weak var otherButton: WZUIButton!
-    
-    var otherButtonStyle = 0
-    
-    func setupOtherButton() {
-        
-        var buttonImage = UIImage(named: "switch-button")
-        if #available(iOS 13.0, *) {
-            buttonImage = UIImage(systemName: "pencil.circle")
-        }
-        
-        
-        otherButton.wzImage.image = buttonImage
-        
-        otherButton.wzTitle.text = "BUTTON TITLE"
-        otherButton.wzDetail.text = "here I can set detail of button description."
-        
-        otherButton.backgroundColor = .systemBlue
-        otherButton.layer.cornerRadius = 6
-        
-        otherButton.imageSize = CGSize(width: 28, height: 28)
-        
-        otherButton.wzTitle.font = .systemFont(ofSize: 15, weight: .medium)
-        
-        otherButton.wzTitle.textColor = .white
-        otherButton.wzDetail.textColor = .white
-        
-        otherButton.wzImage.tintColor = .white
-        
-        otherButton.contentInsertEdge = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
-        
-//        otherButton.wzSizeToFit()
-        
-        otherButton.addAction { [weak self] sender in
-//            let alert = UIAlertController(title: sender.wzTitle.text, message: sender.wzDetail.text, preferredStyle: .alert)
-//            let ok = UIAlertAction(title: "Oooook!", style: .default) { action in
-//                alert.dismiss(animated: true, completion: nil)
-//            }
-//            alert.addAction(ok)
-//            self.present(alert, animated: true, completion: nil)
-            
-//            WZUIHUD.shared.showLoading(message: "请稍后...", 5)
-            WZUIHUD.shared.showMessage("请稍后...", delay:  4)
-//            if #available(iOS 13.0, *) {
-//                WZUIHUD.shared.show(message: "请稍后...请稍后...请稍后...请稍后...请稍后...请稍后", image: UIImage(systemName: "pencil.circle"), 5)
-//            } else {
-//                // Fallback on earlier versions
-//            }
-            
-//            WZUIHUD.shared.padding = 24
-//            switch self?.otherButtonStyle {
-//            case 0:
-//                self?.otherButtonStyle = 1
-//                sender.wzImage.image = nil
-//                sender.wzImage.isHidden = true
-//                sender.startLoading()
-//
-//            case 1:
-//                self?.otherButtonStyle = 2
-//                sender.wzTitle.text = nil
-//
-//            case 2:
-//                self?.otherButtonStyle = 3
-//                sender.wzImage.image = buttonImage
-//                sender.wzImage.isHidden = false
-//                sender.wzDetail.text = nil
-//
-//            case 3:
-//                self?.otherButtonStyle = 4
-//                sender.wzImage.image = nil
-//                sender.wzImage.isHidden = true
-//                sender.wzTitle.text = "BUTTON TITLE"
-//
-//            default:
-//                self?.otherButtonStyle = 0
-//                sender.wzImage.image = buttonImage
-//                sender.wzImage.isHidden = false
-//                sender.wzTitle.text = "BUTTON TITLE"
-//                sender.wzDetail.text = "here I can set detail of button description."
-//                sender.stopLoading()
-//            }
-            
-//            if sender.wzImage.image != nil {
-//                sender.wzImage.image = nil
-//                sender.wzImage.isHidden = true
-//            } else if sender.wzTitle.text != nil  {
-//                sender.wzTitle.text = nil
-//            } else {
-//                sender.wzImage.image = buttonImage
-//                sender.wzImage.isHidden = false
-//                sender.wzTitle.text = "BUTTON TITLE"
-//                sender.wzDetail.text = "here I can set detail of button description."
-//            }
-            
-        }
-        
-        otherButton.wzImageTrailingSpacing = 20
-        
-    }
+    var datas: [String] = ["WZUIHUD"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
-//        Bundle.main.l
-        let a =  WZUINavgationView()//WZUINavgationView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 88))
-        a.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 88)
-        
-        
-        view.addSubview(a)
-        
-        setupOtherButton()
-        
-        view.addSubview(testButton)
-        testButton.translatesAutoresizingMaskIntoConstraints = false
-        let x = testButton.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        let y = testButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        NSLayoutConstraint.activate([x, y])
-        
-        var buttonImage = UIImage(named: "switch-button")
-        if #available(iOS 13.0, *) {
-            buttonImage = UIImage(systemName: "pencil.circle")
-        }
-        testButton.wzImage.image = buttonImage
-        
-        testButton.layer.borderColor = UIColor.systemGray.cgColor
-        testButton.layer.borderWidth = 1
-        testButton.layer.cornerRadius = 6
-//        testButton.wzSizeToFit()
-        testButton.addAction { [weak self] button in
-            
-            let page = PageController()
-            button.startLoading()
-            self?.present(page, animated: true, completion: {
-                button.stopLoading()
-            })
-        }
-        
-        
-        
-        testButton.contentInsertEdge = UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10)
-
-        testButton.imageSize = CGSize(width: 28, height: 28)
-        
+        self.navigationController?.navigationBar.isHidden = true
+        wzNavgationView.wzTitleLabel.text = "WZUIKit"
+        wzNavgationView.backgroundColor = .blue
+        wzNavgationView.isShowEffect = false
     }
+    
+//    override var prefersStatusBarHidden: Bool {
+//        return true
+//    }
 
 
+}
+
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return datas.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath)
+        if #available(iOS 14.0, *) {
+            var config = UIListContentConfiguration.subtitleCell()
+            config.text = datas[indexPath.row]
+            cell.contentConfiguration = config
+        } else {
+            // Fallback on earlier versions
+            cell.textLabel?.text = datas[indexPath.row]
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        switch indexPath.row {
+        case 0:
+            WZUIHUD.shared.showMessage("1234", delay: 5)
+            break
+        case 1:
+            
+            break
+            
+        default:
+            break
+        }
+    }
+    
+    
+    
+    
 }
 

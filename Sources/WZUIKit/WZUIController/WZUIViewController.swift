@@ -20,7 +20,6 @@ open class WZUIViewController: UIViewController {
         view.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         wzNavViewHeightConstraint = view.heightAnchor.constraint(equalToConstant: .wzStatusWithNavgationBarHeight)
         wzNavViewHeightConstraint!.isActive = true
-        view.addBackItem(title: "Back", image: nil, action: nil)
         return view
     }()
     
