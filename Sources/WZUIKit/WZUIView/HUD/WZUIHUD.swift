@@ -9,7 +9,7 @@ import UIKit
 
 public class WZUIHUD: UIView {
     
-    enum Position {
+    public enum Position {
         case top
         case center
         case bottom
@@ -50,8 +50,10 @@ public class WZUIHUD: UIView {
             contentCenterConstraint.isActive = position == .center
             contentBottomConstraint.isActive = position == .bottom
             
-            contentTopConstraint.constant = CGFloat.wzStatusBarHeightWithCamInScreen > 0 ? CGFloat.wzStatusBarHeightWithCamInScreen : 20.0
-            contentBottomConstraint.constant = CGFloat.wzControlBarHeight > 0 ? .wzControlBarHeight : 20.0
+            let statusH = CGFloat.wzStatusBarHeightWithCamInScreen()
+            let controlH = CGFloat.wzControlBarHeight
+            contentTopConstraint.constant = statusH > 0 ? statusH : 20.0
+            contentBottomConstraint.constant = controlH > 0 ? controlH : 20.0
             
         }
     }
@@ -88,7 +90,6 @@ public class WZUIHUD: UIView {
         contentCenterConstraint = contentView.centerYAnchor.constraint(equalTo: centerYAnchor)
         contentTopConstraint = contentView.bottomAnchor.constraint(equalTo: bottomAnchor)
         contentBottomConstraint = bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        position = .bottom
         
     }
     
@@ -112,7 +113,6 @@ extension WZUIHUD {
     func addToWindow() {
         self.isHidden = false
         self.alpha = 1
-        self.isUserInteractionEnabled = false
         var window: UIWindow?
         if #available(iOS 13.0, *) {
             if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -126,8 +126,9 @@ extension WZUIHUD {
         }
         
         if let window = window {
+            let p = position
+            self.position = p
             if !window.subviews.contains(self) {
-                self.position = position
                 self.frame = window.bounds
                 self.autoresizingMask = [.flexibleWidth, .flexibleHeight]
                 window.addSubview(self)
@@ -180,5 +181,14 @@ public extension WZUIHUD {
         } completion: { f in
             self.isHidden = true
         }
+    }
+}
+
+public extension WZUIHUD {
+    
+    /// 点击事件是否可穿透, 显示位置等...
+    func configWZUIHUD(isUserInteractionEnabled: Bool = true, position: Position = .bottom) {
+        self.isUserInteractionEnabled = isUserInteractionEnabled
+        self.position = position
     }
 }

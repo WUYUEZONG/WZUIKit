@@ -92,8 +92,8 @@ public extension CGFloat {
     /// 刘海屏，竖屏幕 = 状态栏 + 导航栏，不论状态栏隐不隐藏。
     ///
     /// 非刘海屏，竖屏幕 = 状态栏（不隐藏） + 导航栏
-    static var wzStatusOrNavgationBarHeight: CGFloat {
-        return wzStatusBarHeightWithCamInScreen + wzNavgationBarHeight
+    static func wzStatusOrNavgationBarHeight(statusBarHide: Bool) -> CGFloat {
+        return wzStatusBarHeightWithCamInScreen(statusBarHide: statusBarHide) + wzNavgationBarHeight
     }
     /// 根据是否刘海屏返回状态栏高度
     ///
@@ -101,7 +101,15 @@ public extension CGFloat {
     ///
     /// 非刘海屏: 根据隐藏显示返回状态栏高度
     ///
-    static var wzStatusBarHeightWithCamInScreen: CGFloat {
+    static func wzStatusBarHeightWithCamInScreen(statusBarHide: Bool? = nil) -> CGFloat {
+        
+        if let statusBarHide = statusBarHide {
+            if statusBarHide {
+                return WZUITool.isCamInScreen && WZUITool.isPortrait ? standardStatusBarHeight : 0
+            }
+            return standardStatusBarHeight
+        }
+        
         if WZUITool.isPortrait {
             return WZUITool.isCamInScreen ? standardStatusBarHeight : wzStatusBarHeight
         }
