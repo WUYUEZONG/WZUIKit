@@ -29,7 +29,7 @@ public protocol TableGameListCellDataSource {
     /// 2 人数: eg. 5人
     ///
     /// 3 时间: eg. 4小时
-    func iconInfo(at index: Int) -> (icon: UIImage, title: String)
+    func iconInfo(at index: Int) -> (icon: UIImage?, title: String)
     /// 性别要求
     func isNolimitSex() -> Bool
     /// 价格

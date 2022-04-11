@@ -32,6 +32,10 @@ open class WZUIViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        self.navView.addBackItem(title: nil, image: nil) { _ in
+            self.wzPopViewController()
+        }
+//        self.navView.backItem.isHidden = true
     }
     
     
@@ -80,6 +84,7 @@ extension WZUIViewController {
     open override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         confirmNavigationViewHeight()
+        view.bringSubviewToFront(navView)
     }
     
     open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

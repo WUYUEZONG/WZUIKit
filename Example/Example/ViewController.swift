@@ -86,7 +86,7 @@ class TableGameVC: WZUIViewController {
     
     lazy var tb: UICollectionView = {
         let f = UICollectionViewFlowLayout()
-        f.itemSize = CGSize(width: view.wzWidth, height: 145)
+        f.itemSize = CGSize(width: view.wzWidth, height: 145 * (CGFloat.wzScreenWidth / 375))
         f.scrollDirection = .vertical
         f.minimumInteritemSpacing = 0
         f.minimumLineSpacing = 0
@@ -112,7 +112,7 @@ class TableGameVC: WZUIViewController {
 extension TableGameVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        5
+        9
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -150,12 +150,18 @@ extension TableGameVC: TableGameListCellDataSource {
         "OWNER"
     }
     
-    func iconInfo(at index: Int) -> (icon: UIImage, title: String) {
-        (UIImage(named: "icon_time")!, "3人")
+    func iconInfo(at index: Int) -> (icon: UIImage?, title: String) {
+        switch index {
+        case 0, 1:
+            return (UIImage(named: "icon_fmale"), "2人")
+        default:
+            return (UIImage(named: "icon_time"), "3人")
+        }
+        
     }
     
     func isNolimitSex() -> Bool {
-        true
+        false
     }
     
     func priceTitle() -> NSAttributedString {
