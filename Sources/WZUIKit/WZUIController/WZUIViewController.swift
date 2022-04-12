@@ -28,7 +28,7 @@ open class WZUIViewController: UIViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = .wzF8
+        self.view.backgroundColor = .wzF8()
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self

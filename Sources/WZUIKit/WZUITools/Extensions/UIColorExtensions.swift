@@ -109,8 +109,8 @@ public extension UIColor {
         return UIColor(hex: 0x999999)
     }
     
-    static var wz666: UIColor {
-        if #available(iOS 13, *) {
+    static func wz666(_ onlyLight: Bool = false) -> UIColor {
+        if #available(iOS 13, *), !onlyLight {
             return UIColor  { $0.userInterfaceStyle == .light ? UIColor(hex: 0x666666) : UIColor(hex: 0xB8B8B8) }
         }
         return UIColor(hex: 0x666666)
@@ -124,23 +124,23 @@ public extension UIColor {
         return UIColor(hex: 0xD8D8D8)
     }
     
-    static var wzLight: UIColor {
-        if #available(iOS 13, *) {
+    static func wzLight(_ onlyLight: Bool = false) -> UIColor {
+        if #available(iOS 13, *), !onlyLight {
             return UIColor  { $0.userInterfaceStyle == .light ? UIColor(hex: 0xC4C4C4) : UIColor(hex: 0x777777) }
         }
         return UIColor(hex: 0xC4C4C4)
     }
     
     
-    static var wzF2: UIColor {
-        if #available(iOS 13, *) {
+    static func wzF2(_ onlyLight: Bool = false) -> UIColor {
+        if #available(iOS 13, *), !onlyLight {
             return UIColor  { $0.userInterfaceStyle == .light ? UIColor(hex: 0xF2F2F2) : UIColor(hex: 0x161616) }
         }
         return UIColor(hex: 0xF2F2F2)
     }
     
-    static var wzF8: UIColor {
-        if #available(iOS 13, *) {
+    static func wzF8(_ onlyLight: Bool = false) -> UIColor {
+        if #available(iOS 13, *), !onlyLight {
             return UIColor  { $0.userInterfaceStyle == .light ? UIColor(hex: 0xF8F8F8) : UIColor(hex: 0x000000) }
         }
         return UIColor(hex: 0xF8F8F8)
