@@ -68,7 +68,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         
         switch indexPath.row {
         case 0:
-            WZUIHUD.shared.showMessage("1234", delay: 5)
+            WZUIHUD.shared.showMessage("WZHUD消息提示", delay: 5)
             break
         case 1:
             self.navigationController?.show(TableGameVC(), sender: nil)
@@ -101,7 +101,7 @@ class TableGameVC: WZUIViewController {
         b.contentInset.top = .wzNavgationBarHeight
         b.dataSource = self
         b.delegate = self
-        b.backgroundColor = .wzWhite
+        b.backgroundColor = .wzWhite()
         b.register(TableGameCollectionCell.self, forCellWithReuseIdentifier: TableGameCollectionCell.identifier)
         return b
     }()
@@ -124,7 +124,7 @@ class TableGameVC: WZUIViewController {
 extension TableGameVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        9
+        30
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

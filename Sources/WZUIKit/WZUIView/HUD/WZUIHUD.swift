@@ -35,9 +35,22 @@ public class WZUIHUD: UIView {
     
     
     @IBOutlet weak var contentStack: UIStackView!
-    @IBOutlet weak var activityView: UIActivityIndicatorView!
+    @IBOutlet weak var activityView: UIActivityIndicatorView! {
+        didSet {
+            if #available(iOS 13.0, *) {
+                activityView.style = .medium
+            } else {
+                
+            }
+        }
+    }
     @IBOutlet weak var hudImage: UIImageView!
-    @IBOutlet weak var hudText: UILabel!
+    @IBOutlet weak var hudText: UILabel! {
+        didSet {
+            hudText.adjustsFontSizeToFitWidth = true
+            hudText.minimumScaleFactor = 0.8
+        }
+    }
     
     var contentTopConstraint: NSLayoutConstraint!
     var contentBottomConstraint: NSLayoutConstraint!
@@ -104,19 +117,19 @@ public class WZUIHUD: UIView {
         
         let cornerRadius = contentView.frame.height/2
 //        let shadow =
-        let path = UIBezierPath(roundedRect: contentView.bounds, cornerRadius: cornerRadius)
+//        let path = UIBezierPath(roundedRect: contentView.bounds, cornerRadius: cornerRadius)
         
         contentView.layer.cornerRadius = cornerRadius
-        contentView.layer.borderColor = UIColor.wzExtraLight.cgColor
-        contentView.layer.borderWidth = 2
-        contentView.layer.shadowRadius = 4
-        contentView.layer.shadowOpacity = 0.1
-        contentView.layer.shadowColor = UIColor.wzBlack.cgColor
-        contentView.layer.shadowOffset = CGSize(width: 2, height: 3)
-        contentView.layer.shadowPath = path.cgPath
-        contentView.backgroundColor = .wzWhite(alpha: 0.96)
-        hudText.textColor = .wz333()
-        activityView.color = .wz333()
+        contentView.layer.borderColor = UIColor.wz999().cgColor
+        contentView.layer.borderWidth = 1
+//        contentView.layer.shadowRadius = 4
+//        contentView.layer.shadowOpacity = 0.1
+//        contentView.layer.shadowColor = UIColor.wzBlack().cgColor
+//        contentView.layer.shadowOffset = CGSize(width: 2, height: 3)
+//        contentView.layer.shadowPath = path.cgPath
+        contentView.backgroundColor = .wzBlack(true, 0.7)//.wzWhite(alpha: 0.96)
+        hudText.textColor = .wzWhite(true)//.wz333()
+        activityView.color = .wzWhite(true)//.wz333()
     }
 }
 

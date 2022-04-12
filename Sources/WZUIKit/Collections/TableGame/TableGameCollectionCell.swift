@@ -132,12 +132,12 @@ open class TableGameCollectionCell: UICollectionViewCell {
         super.layoutSubviews()
         
         let lineWidth: CGFloat = 1
-        bottomLine.backgroundColor = UIColor.wzExtraLight.cgColor
+        bottomLine.backgroundColor = UIColor.wzExtraLight().cgColor
         bottomLine.frame = CGRect(x: posterTitle.wzMinX, y: self.wzHeight - lineWidth, width: self.wzWidth - posterTitle.wzMinX, height: lineWidth)
         
         posterTitle.textColor = .wzDark()
         ownerStatus.backgroundColor = .wzLight
-        ownerStatus.setTitleColor(.wzWhite, for: .normal)
+        ownerStatus.setTitleColor(.wzWhite(), for: .normal)
         
         otherInfo.textColor = .wz333()
         

@@ -341,10 +341,10 @@ public extension WZUIButton {
         isUserInteractionEnabled = false
         lastStyleTuple = (backgroundColor, wzTitle.textColor, wzDetail.textColor, layer.borderColor, wzImage.tintColor)
         backgroundColor = .wzF2
-        wzTitle.textColor = .wzExtraLight
-        wzDetail.textColor = .wzExtraLight
+        wzTitle.textColor = .wzExtraLight()
+        wzDetail.textColor = .wzExtraLight()
         layer.borderColor = UIColor.clear.cgColor
-        wzImage.tintColor = .wzExtraLight
+        wzImage.tintColor = .wzExtraLight()
         loadingView.color = .wz666
         loadingView.startAnimating()
     }
