@@ -107,7 +107,7 @@ open class TableGameCollectionCell: UICollectionViewCell {
     }
     
     func setupUI() {
-        if let contentView = UIView.initNib("TableGameListCell", owner: self) {
+        if let contentView = UIView.initNib("TableGameCollectionCell", owner: self) {
             self.wzContent = contentView
         } else {
             wzContent = UIView()
@@ -202,4 +202,13 @@ open class TableGameCollectionCell: UICollectionViewCell {
 extension TableGameCollectionCell {
     
     var imageCornerRadius: CGFloat { 6 }
+}
+
+public extension TableGameCollectionCell {
+    
+    static var heightOfCell: CGFloat {
+        return 145.0 * (CGFloat.wzMinScreenSide / 375)
+    }
+    
+    static var identifier: String { "TableGameCollectionCell" }
 }

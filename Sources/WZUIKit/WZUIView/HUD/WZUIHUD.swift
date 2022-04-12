@@ -50,10 +50,8 @@ public class WZUIHUD: UIView {
             contentCenterConstraint.isActive = position == .center
             contentBottomConstraint.isActive = position == .bottom
             
-            let statusH = CGFloat.wzStatusBarHeightWithCamInScreen()
-            let controlH = CGFloat.wzControlBarHeight
-            contentTopConstraint.constant = statusH > 0 ? statusH : 20.0
-            contentBottomConstraint.constant = controlH > 0 ? controlH + 30 : 44
+            contentTopConstraint.constant = constraintTop
+            contentBottomConstraint.constant = constraintBottom
             
             switch position {
             case .top:
@@ -123,6 +121,20 @@ public class WZUIHUD: UIView {
 }
 
 extension WZUIHUD {
+    
+    var constraintTop: CGFloat {
+        let statusH = CGFloat.wzStatusBarHeightWithCamInScreen()
+        return statusH > 0 ? statusH : 20.0
+    }
+    
+    var constraintBottom: CGFloat {
+        let controlH = CGFloat.wzControlBarHeight
+        return controlH > 0 ? controlH + 30 : 44
+    }
+    
+    var transBackY: CGFloat {
+        position == .top ? -(constraintTop + contentView.wzHeight * 2) : (constraintBottom + contentView.wzHeight * 2)
+    }
     
     var transformY: CGFloat {
         return 300
@@ -201,11 +213,24 @@ public extension WZUIHUD {
     }
     
     @objc func dismiss() {
-        UIView.animate(withDuration: 0.5) {
-            self.alpha = 0
-        } completion: { f in
-            self.isHidden = true
+        
+        switch position {
+        case .center:
+            UIView.animate(withDuration: 0.5) {
+                self.alpha = 0
+            } completion: { f in
+                self.isHidden = true
+            }
+            break
+        default:
+            UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 8, initialSpringVelocity: 2, options: .curveEaseInOut) {
+                self.contentView.transform = CGAffineTransform(translationX: 0, y: self.transBackY)
+            } completion: { f in
+                self.isHidden = true
+            }
+            break
         }
+        
     }
 }
 

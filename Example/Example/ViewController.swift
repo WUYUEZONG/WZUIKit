@@ -33,7 +33,7 @@ class ViewController: WZUIViewController {
         wzNavgationView.backgroundColor = .blue
         wzNavgationView.isShowEffect = false
         
-//        WZUIHUD.shared.configWZUIHUD(isUserInteractionEnabled: true, position: .center)
+        WZUIHUD.shared.configWZUIHUD(isUserInteractionEnabled: true, position: .bottom)
     }
     
 //    override var prefersStatusBarHidden: Bool {
@@ -86,18 +86,23 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 
 class TableGameVC: WZUIViewController {
     
-    lazy var tb: UICollectionView = {
+    lazy var flow: UICollectionViewFlowLayout = {
         let f = UICollectionViewFlowLayout()
-        f.itemSize = CGSize(width: view.wzWidth, height: 145 * (CGFloat.wzScreenWidth / 375))
+        f.itemSize = CGSize(width: view.wzWidth, height: TableGameCollectionCell.heightOfCell)
         f.scrollDirection = .vertical
         f.minimumInteritemSpacing = 0
         f.minimumLineSpacing = 0
-        let b = UICollectionView(frame: view.bounds, collectionViewLayout: f)
+        return f
+    }()
+    
+    lazy var tb: UICollectionView = {
+        
+        let b = UICollectionView(frame: view.bounds, collectionViewLayout: flow)
         b.contentInset.top = .wzNavgationBarHeight
         b.dataSource = self
         b.delegate = self
         b.backgroundColor = .wzWhite
-        b.register(TableGameCollectionCell.self, forCellWithReuseIdentifier: "TableGameCollectionCell")
+        b.register(TableGameCollectionCell.self, forCellWithReuseIdentifier: TableGameCollectionCell.identifier)
         return b
     }()
     
@@ -109,20 +114,29 @@ class TableGameVC: WZUIViewController {
         wzNavgationView.wzBackItem.setTitle("Back", for: .normal)
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tb.frame = view.bounds
+    }
+    
 }
 
-extension TableGameVC: UICollectionViewDelegate, UICollectionViewDataSource {
+extension TableGameVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         9
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TableGameCollectionCell", for: indexPath) as? TableGameCollectionCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TableGameCollectionCell.identifier, for: indexPath) as? TableGameCollectionCell
         cell?.dataSource = self
         return cell!
     }
     
+    // UICollectionViewDelegateFlowLayout
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: .wzScreenWidth, height: TableGameCollectionCell.heightOfCell)
+    }
     
 }
 

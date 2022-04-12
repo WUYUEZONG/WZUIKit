@@ -116,4 +116,9 @@ public extension CGFloat {
         return 0
     }
     
+    /// 返回屏幕较小的一边
+    static var wzMinScreenSide: CGFloat {
+        return wzScreenWidth < wzScreenHeight ? wzScreenWidth : wzScreenHeight
+    }
+    
 }
