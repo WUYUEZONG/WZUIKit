@@ -97,7 +97,7 @@ class TableGameVC: WZUIViewController {
         b.dataSource = self
         b.delegate = self
         b.backgroundColor = .wzWhite
-        b.register(TableGameListCell.self, forCellWithReuseIdentifier: "TableGameListCell")
+        b.register(TableGameCollectionCell.self, forCellWithReuseIdentifier: "TableGameCollectionCell")
         return b
     }()
     
@@ -118,7 +118,7 @@ extension TableGameVC: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TableGameListCell", for: indexPath) as? TableGameListCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TableGameCollectionCell", for: indexPath) as? TableGameCollectionCell
         cell?.dataSource = self
         return cell!
     }
@@ -126,7 +126,7 @@ extension TableGameVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
 }
 
-extension TableGameVC: TableGameListCellDataSource {
+extension TableGameVC: TableGameCollectionCellDataSource {
     
     func posterImage() -> UIImage {
         UIImage(named: "simple")!

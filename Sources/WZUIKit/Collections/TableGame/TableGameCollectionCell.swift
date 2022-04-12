@@ -7,7 +7,7 @@
 
 import UIKit
 
-public protocol TableGameListCellDataSource {
+public protocol TableGameCollectionCellDataSource {
     /// 海报图
     func posterImage() -> UIImage
     ///
@@ -41,10 +41,10 @@ public protocol TableGameListCellDataSource {
     
 }
 
-open class TableGameListCell: UICollectionViewCell {
+open class TableGameCollectionCell: UICollectionViewCell {
     
     /// cell的数据源
-    public var dataSource: TableGameListCellDataSource?
+    public var dataSource: TableGameCollectionCellDataSource?
     
     /// 海报图
     @IBOutlet weak var posterImageView: UIImageView! {
@@ -199,7 +199,7 @@ open class TableGameListCell: UICollectionViewCell {
 }
 
 
-extension TableGameListCell {
+extension TableGameCollectionCell {
     
     var imageCornerRadius: CGFloat { 6 }
 }

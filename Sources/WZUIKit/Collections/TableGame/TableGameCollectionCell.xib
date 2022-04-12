@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TableGameListCell" customModule="WZUIKit">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TableGameCollectionCell" customModule="WZUIKit">
             <connections>
                 <outlet property="boyLimit" destination="B41-JG-WOx" id="VHt-ls-2Dr"/>
                 <outlet property="gameTime" destination="Ybd-gJ-kfo" id="vz9-LA-0fJ"/>
