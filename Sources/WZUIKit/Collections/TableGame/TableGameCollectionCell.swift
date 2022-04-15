@@ -10,7 +10,7 @@ import UIKit
 public protocol TableGameCollectionCellDataSource {
     /// 海报图
     func posterImage() -> UIImage
-    ///
+    /// 标题
     func posterTitle() -> String
     /// tag1...5的图标, 标题
     func tagInfo(at index: Int) -> (icon: UIImage?, title: String?)
@@ -136,7 +136,7 @@ open class TableGameCollectionCell: UICollectionViewCell {
         bottomLine.frame = CGRect(x: posterTitle.wzMinX, y: self.wzHeight - lineWidth, width: self.wzWidth - posterTitle.wzMinX, height: lineWidth)
         
         posterTitle.textColor = .wzDark()
-        ownerStatus.backgroundColor = .wzLight
+        ownerStatus.backgroundColor = .wzLight()
         ownerStatus.setTitleColor(.wzWhite(), for: .normal)
         
         otherInfo.textColor = .wz333()
@@ -180,7 +180,7 @@ open class TableGameCollectionCell: UICollectionViewCell {
             noSexLimit.setTitleColor(dataSource.themeColor(), for: .normal)
             
             for (index, icon) in icons.enumerated() {
-                icon.setTitleColor(.wz666, for: .normal)
+                icon.setTitleColor(.wz666(), for: .normal)
                 icon.setImage(dataSource.iconInfo(at: index).icon, for: .normal)
                 icon.setTitle(dataSource.iconInfo(at: index).title, for: .normal)
             }
