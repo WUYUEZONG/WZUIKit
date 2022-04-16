@@ -68,7 +68,12 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         
         switch indexPath.row {
         case 0:
-            WZUIHUD.shared.showMessage("WZHUD消息提示", delay: 5)
+
+            if #available(iOS 13.0, *) {
+                WZHUDUI.shared.show(message: "WZHUDUI TIPS !!!", image: UIImage(systemName: "globe.americas.fill"))
+            } else {
+                WZUIHUD.shared.showMessage("WZHUD消息提示", delay: 5)
+            }
             break
         case 1:
             self.navigationController?.show(TableGameVC(), sender: nil)

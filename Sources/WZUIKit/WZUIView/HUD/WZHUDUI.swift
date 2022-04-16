@@ -10,7 +10,7 @@ import SwiftUI
 @available(iOS 13.0.0, *)
 public struct WZHUDUI : View {
     
-    static var shared = WZHUDUI()
+    public static var shared = WZHUDUI()
     
     var message: String?
     
@@ -26,6 +26,7 @@ public struct WZHUDUI : View {
         if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
            let keyWindow = scene.windows.first {
             if !keyWindow.subviews.contains(view) {
+                view.frame = keyWindow.bounds
                 keyWindow.addSubview(view)
             } else {
                 keyWindow.bringSubviewToFront(view)
@@ -40,18 +41,25 @@ public struct WZHUDUI : View {
     
     public var body: some View {
         
-        HStack(spacing: 14) {
-            if let image = image {
-                Image(uiImage: image)
-                    .resizable()
-                    .frame(width: 24, height: 24)
+        VStack(alignment: .center) {
+            HStack(spacing: 14) {
+                
+                if let image = image {
+                    Image(uiImage: image)
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                }
+                
+                if let message = message {
+                    Text(message)
+                }
             }
-            
-            if let message = message {
-                Text(message)
-            }
+            .frame(minWidth: .wzScreenWidth * 0.618, maxWidth: .wzScreenWidth * 0.9, minHeight: 44)
+            .background(Color.white)
+            .cornerRadius(10)
         }
-        .frame(minWidth: .wzScreenWidth * 0.618, maxWidth: .wzScreenWidth * 0.9, minHeight: 44)
+        .frame(width: .wzScreenWidth, height: .wzScreenHeight)
+        .background(Color.green)
         
         
     }
