@@ -14,4 +14,10 @@ public extension String {
         return self.boundingRect(with: .zero, options: .usesLineFragmentOrigin, attributes: attributes, context: nil).size.width
     }
     
+    func toDate(_ format: String, calendar: Calendar = Calendar.current) -> Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        return formatter.date(from: self)
+    }
+    
 }

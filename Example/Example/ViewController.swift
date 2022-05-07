@@ -24,7 +24,7 @@ class ViewController: WZUIViewController {
         }
     }
     
-    var datas: [String] = ["WZUIHUD", "TableGameVC"]
+    var datas: [String] = ["WZUIHUD", "TableGameVC", "DatePicker"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,15 +68,16 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         
         switch indexPath.row {
         case 0:
-
-            if #available(iOS 13.0, *) {
-                WZHUDUI.shared.show(message: "WZHUDUI TIPS !!!", image: UIImage(systemName: "globe.americas.fill"))
-            } else {
-                WZUIHUD.shared.showMessage("WZHUD消息提示", delay: 5)
-            }
+            WZUIHUD.shared.showMessage("WZHUD消息提示", delay: 5)
+            
             break
         case 1:
             self.navigationController?.show(TableGameVC(), sender: nil)
+            break
+            
+        case 2:
+            
+            self.navigationController?.show(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PickerController"), sender: nil)
             break
             
         default:

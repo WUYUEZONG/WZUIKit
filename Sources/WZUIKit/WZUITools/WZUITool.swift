@@ -6,8 +6,11 @@
 //
 
 import CoreGraphics
+import Foundation
 
 class WZUITool {
+    
+    static var shared = WZUITool()
     
     /// 是否刘海屏
     static var isCamInScreen: Bool {
@@ -19,7 +22,11 @@ class WZUITool {
         CGFloat.wzScreenWidth < CGFloat.wzScreenHeight
     }
     
+    lazy var utcCalendar: Calendar = {
+        return Calendar(identifier: .gregorian)
+    }()
     
+   
     
     
 }
