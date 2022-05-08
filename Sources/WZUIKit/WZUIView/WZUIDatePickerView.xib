@@ -26,19 +26,21 @@
                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6ZA-LA-Xrj">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OKE-s1-pIz">
-                            <rect key="frame" x="0.0" y="0.0" width="110.5" height="44"/>
+                        <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OKE-s1-pIz">
+                            <rect key="frame" x="0.0" y="0.0" width="102.5" height="44"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" image="chevron.right" catalog="system" title="2022-05">
-                                <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="18"/>
-                            </buttonConfiguration>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="2022-05" image="chevron.right" catalog="system">
+                                <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
                             <connections>
                                 <action selector="changeDateAction:" destination="-1" eventType="touchUpInside" id="oVj-nT-tQg"/>
                             </connections>
                         </button>
                         <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" horizontalCompressionResistancePriority="748" translatesAutoresizingMaskIntoConstraints="NO" id="0rE-xF-1vZ">
-                            <rect key="frame" x="110.5" y="0.0" width="237.5" height="44"/>
+                            <rect key="frame" x="102.5" y="0.0" width="245.5" height="44"/>
                         </stackView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xzM-qn-b6V">
                             <rect key="frame" x="348" y="0.0" width="33" height="44"/>
@@ -114,7 +116,7 @@
                     </constraints>
                 </stackView>
                 <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="QC1-Vk-c8Q">
-                    <rect key="frame" x="0.0" y="74" width="414" height="162"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="162"/>
                 </datePicker>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="b1c-7i-1ji">
                     <rect key="frame" x="0.0" y="74" width="414" height="284"/>
@@ -122,7 +124,7 @@
                     <constraints>
                         <constraint firstAttribute="height" priority="750" constant="128" id="OeJ-1y-bLT"/>
                     </constraints>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="7SF-6d-Gli">
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="7SF-6d-Gli">
                         <size key="itemSize" width="128" height="128"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -135,10 +137,10 @@
                 <constraint firstItem="51D-hE-4Cq" firstAttribute="top" secondItem="6ZA-LA-Xrj" secondAttribute="bottom" id="1II-bM-6OX"/>
                 <constraint firstAttribute="trailing" secondItem="QC1-Vk-c8Q" secondAttribute="trailing" id="D16-6Y-FMH"/>
                 <constraint firstItem="6ZA-LA-Xrj" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="DP1-fs-iCH"/>
-                <constraint firstItem="QC1-Vk-c8Q" firstAttribute="top" secondItem="51D-hE-4Cq" secondAttribute="bottom" id="IUw-57-t9s"/>
                 <constraint firstItem="b1c-7i-1ji" firstAttribute="top" secondItem="51D-hE-4Cq" secondAttribute="bottom" id="MHa-kv-azU"/>
                 <constraint firstAttribute="bottom" secondItem="b1c-7i-1ji" secondAttribute="bottom" id="Nx1-CZ-8Xf"/>
                 <constraint firstItem="6ZA-LA-Xrj" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Ous-qj-Juo"/>
+                <constraint firstItem="QC1-Vk-c8Q" firstAttribute="top" secondItem="6ZA-LA-Xrj" secondAttribute="bottom" id="X7x-J8-bfq"/>
                 <constraint firstItem="b1c-7i-1ji" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ZVt-DU-Rgu"/>
                 <constraint firstAttribute="trailing" secondItem="51D-hE-4Cq" secondAttribute="trailing" id="dsq-tQ-45U"/>
                 <constraint firstAttribute="trailing" secondItem="b1c-7i-1ji" secondAttribute="trailing" id="eU0-HG-DHc"/>

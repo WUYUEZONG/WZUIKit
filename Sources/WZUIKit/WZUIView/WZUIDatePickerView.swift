@@ -9,7 +9,13 @@ import UIKit
 
 class WZUIDatePickerView: UIView {
 
-    @IBOutlet weak var dateButton: UIButton!
+    @IBOutlet weak var dateButton: UIButton! {
+        didSet {
+            dateButton.setTitleColor(.systemBlue, for: .normal)
+            dateButton.setTitleColor(.systemRed, for: .selected)
+            dateButton.tintColor = dateButton.titleColor(for: .normal)
+        }
+    }
     
     @IBOutlet weak var previewMonthButton: UIButton!
     
@@ -33,7 +39,9 @@ class WZUIDatePickerView: UIView {
     }
     
     lazy var currentDate: Date = {
-        return Date()
+        let date = Date()
+        dateButton.setTitle(date.toString("yyyy-MM", calendar: WZUITool.shared.utcCalendar), for: .normal)
+        return date
     }()
     
     lazy var datas: [Date] = {
@@ -69,22 +77,25 @@ class WZUIDatePickerView: UIView {
         dateCollection.isHidden = sender.isSelected
         datePicker.isHidden = !sender.isSelected
         
+        
+        
         if sender.isSelected {
             datePicker.setDate(currentDate, animated: false)
+            dateButton.tintColor = dateButton.titleColor(for: .selected)
         } else {
-            currentDate = datePicker.date
-            setupAllNewStateByDate(currentDate)
+            setupAllNewStateByDate(datePicker.date)
+            dateButton.tintColor = dateButton.titleColor(for: .normal)
         }
         
     }
     
     @IBAction func previewMonthAction(_ sender: UIButton) {
-        currentDate = WZUITool.shared.utcCalendar.date(byAdding: .month, value: -1, to: currentDate)!
-        setupAllNewStateByDate(currentDate)
+        let date = WZUITool.shared.utcCalendar.date(byAdding: .month, value: -1, to: currentDate)!
+        setupAllNewStateByDate(date)
     }
     @IBAction func nextMonthAction(_ sender: UIButton) {
-        currentDate = WZUITool.shared.utcCalendar.date(byAdding: .month, value: 1, to: currentDate)!
-        setupAllNewStateByDate(currentDate)
+        let date = WZUITool.shared.utcCalendar.date(byAdding: .month, value: 1, to: currentDate)!
+        setupAllNewStateByDate(date)
     }
     
     
@@ -96,6 +107,7 @@ class WZUIDatePickerView: UIView {
 extension WZUIDatePickerView {
     
     func setupAllNewStateByDate(_ date: Date) {
+        currentDate = date
         dateButton.setTitle(date.toString("yyyy-MM", calendar: WZUITool.shared.utcCalendar), for: .normal)
         datas = getNewCurrentDatas(date)
         dateCollection.reloadData()
@@ -191,6 +203,11 @@ extension WZUIDatePickerView: UICollectionViewDelegateFlowLayout, UICollectionVi
         let w = (collectionView.wzWidth - collectionView.contentInset.left - collectionView.contentInset.right - wspacing * 6) / 7
         let h = (collectionView.wzHeight - collectionView.contentInset.left - collectionView.contentInset.right - hspacing * 4) / 5
         return CGSize(width: w, height: h)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        currentDate = datas[indexPath.row]
+        collectionView.reloadData()
     }
     
 }
