@@ -94,6 +94,9 @@
                             <constraint firstItem="QbN-p4-lh7" firstAttribute="centerY" secondItem="RDm-0a-I0y" secondAttribute="centerY" id="xMD-ac-wyF"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="datePicker" destination="QbN-p4-lh7" id="ETj-J5-AyC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0ni-I1-y1x" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -7,7 +7,22 @@
 
 import UIKit
 
-class WZUIDatePickerView: UIView {
+public class WZUIDatePickerView: UIView {
+    
+    public var buttonSelectTintColor: UIColor {
+        didSet {
+            dateButton.setTitleColor(buttonSelectTintColor, for: .selected)
+        }
+    }
+    
+    public var buttonTintColor : UIColor {
+        didSet {
+            dateButton.setTitleColor(buttonTintColor, for: .normal)
+            dateButton.tintColor = dateButton.titleColor(for: .normal)
+            previewMonthButton.setTitleColor(buttonTintColor, for: .normal)
+            nextMonthButton.setTitleColor(buttonTintColor, for: .normal)
+        }
+    }
 
     @IBOutlet weak var dateButton: UIButton! {
         didSet {
@@ -103,6 +118,8 @@ class WZUIDatePickerView: UIView {
     
     
 }
+
+
 
 extension WZUIDatePickerView {
     

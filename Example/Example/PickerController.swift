@@ -10,4 +10,10 @@ import WZUIKit
 
 class PickerController: WZUIViewController {
     
+    @IBOutlet weak var datePicker: WZUIDatePickerView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+    }
 }
