@@ -136,6 +136,8 @@ extension TableGameVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TableGameCollectionCell.identifier, for: indexPath) as? TableGameCollectionCell
         cell?.dataSource = self
+        cell?.delegate = self
+
         return cell!
     }
     
@@ -144,6 +146,12 @@ extension TableGameVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
         return CGSize(width: .wzScreenWidth, height: TableGameCollectionCell.heightOfCell)
     }
     
+}
+
+extension TableGameVC: TableGameCollectionCellDelegate {
+    func goPlayAction(sender: Any) {
+        print("goPlayAction \(sender)")
+    }
 }
 
 extension TableGameVC: TableGameCollectionCellDataSource {

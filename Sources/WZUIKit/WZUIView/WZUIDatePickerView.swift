@@ -9,13 +9,16 @@ import UIKit
 
 public class WZUIDatePickerView: UIView {
     
-    public var buttonSelectTintColor: UIColor {
+    /// 当前选中的日期，具体到天
+    public var selectedDate: Date = Date()
+    
+    public var buttonSelectTintColor: UIColor = .wz333() {
         didSet {
             dateButton.setTitleColor(buttonSelectTintColor, for: .selected)
         }
     }
     
-    public var buttonTintColor : UIColor {
+    public var buttonTintColor : UIColor = .wz333() {
         didSet {
             dateButton.setTitleColor(buttonTintColor, for: .normal)
             dateButton.tintColor = dateButton.titleColor(for: .normal)
@@ -23,6 +26,8 @@ public class WZUIDatePickerView: UIView {
             nextMonthButton.setTitleColor(buttonTintColor, for: .normal)
         }
     }
+    
+    // MARK: - the Internal properties -
 
     @IBOutlet weak var dateButton: UIButton! {
         didSet {
@@ -53,11 +58,15 @@ public class WZUIDatePickerView: UIView {
         }
     }
     
+    /// 当前的日期，具体到月
     lazy var currentDate: Date = {
         let date = Date()
         dateButton.setTitle(date.toString("yyyy-MM", calendar: WZUITool.shared.utcCalendar), for: .normal)
+        selectedDate = date
         return date
     }()
+    
+    
     
     lazy var datas: [Date] = {
        return getNewCurrentDatas(Date())
@@ -98,6 +107,7 @@ public class WZUIDatePickerView: UIView {
             datePicker.setDate(currentDate, animated: false)
             dateButton.tintColor = dateButton.titleColor(for: .selected)
         } else {
+            selectedDate = datePicker.date
             setupAllNewStateByDate(datePicker.date)
             dateButton.tintColor = dateButton.titleColor(for: .normal)
         }
@@ -195,22 +205,27 @@ extension WZUIDatePickerView {
         return 29
     }
 }
-
+// MARK: - UICollectionViewDelegateFlowLayout, UICollectionViewDataSource -
 extension WZUIDatePickerView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UICollectionViewCell.description(), for: indexPath)
         let currentComponents = WZUITool.shared.utcCalendar.dateComponents([.month, .day], from: currentDate)
-        let rowComponents = WZUITool.shared.utcCalendar.dateComponents([.month, .day], from: datas[indexPath.row])
-        cell.backgroundColor = currentComponents.month == rowComponents.month  ? (currentComponents.day == rowComponents.day ? .systemGreen : .systemBlue) : .systemRed
+        let selectedComponents = WZUITool.shared.utcCalendar.dateComponents([.year, .month, .day], from: selectedDate)
+        let rowDate = datas[indexPath.row]
+        let rowComponents = WZUITool.shared.utcCalendar.dateComponents([.year, .month, .day], from: rowDate)
+        
+        let isSelectedDay = selectedComponents.year == rowComponents.year && selectedComponents.month == rowComponents.month && selectedComponents.day == rowComponents.day
+        
+        cell.backgroundColor = isSelectedDay ? .systemGreen : (currentComponents.month == rowComponents.month  ? .systemBlue : .systemRed)
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return datas.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var wspacing: CGFloat = 0
         var hspacing: CGFloat = 0
         if let f = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
@@ -222,8 +237,8 @@ extension WZUIDatePickerView: UICollectionViewDelegateFlowLayout, UICollectionVi
         return CGSize(width: w, height: h)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        currentDate = datas[indexPath.row]
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedDate = datas[indexPath.row]
         collectionView.reloadData()
     }
     

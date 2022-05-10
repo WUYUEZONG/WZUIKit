@@ -41,10 +41,18 @@ public protocol TableGameCollectionCellDataSource {
     
 }
 
+@objc public protocol TableGameCollectionCellDelegate {
+    
+    @objc func goPlayAction(sender: Any)
+    
+}
+
 open class TableGameCollectionCell: UICollectionViewCell {
     
     /// cell的数据源
     public var dataSource: TableGameCollectionCellDataSource?
+    /// 事件代理
+    public var delegate: TableGameCollectionCellDelegate?
     
     /// 海报图
     @IBOutlet weak var posterImageView: UIImageView! {
@@ -116,6 +124,7 @@ open class TableGameCollectionCell: UICollectionViewCell {
         wzContent.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         contentView.addSubview(wzContent)
         
+        goPlay.addTarget(delegate, action: #selector(delegate?.goPlayAction(sender:)), for: .touchUpInside)
         
         self.layer.addSublayer(bottomLine)
     }
@@ -195,13 +204,13 @@ open class TableGameCollectionCell: UICollectionViewCell {
     }
     
     
-    
 }
 
 
 extension TableGameCollectionCell {
     
     var imageCornerRadius: CGFloat { 6 }
+    
 }
 
 public extension TableGameCollectionCell {
