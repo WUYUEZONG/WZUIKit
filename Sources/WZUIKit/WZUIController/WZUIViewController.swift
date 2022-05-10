@@ -6,7 +6,13 @@
 //
 
 import UIKit
-
+///
+/// `WZUIViewController`: 项目要使用到的基类，所有`ViewController`继承该类实现统一管理
+///
+/// 1. 该Controller实现了侧滑返回
+/// 2. 自带导航栏
+///    - `wzNavgationView`: 导航栏控件，管理导航栏。该导航栏实现了基本的横竖屏，刘海屏的适配
+///
 open class WZUIViewController: UIViewController {
     
     var wzNavViewHeightConstraint: NSLayoutConstraint?

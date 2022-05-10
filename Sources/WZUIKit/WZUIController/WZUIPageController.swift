@@ -14,14 +14,34 @@ open class WZUIPageContentController: UIViewController {
     
 }
 
+/// WZUIPageController
 ///
-/// 1. 继承 WZUIPageController
+/// - 使用方法
+///   1. 继承 WZUIPageController
+///       ```
+///       class PageController: WZUIPageController { ... }
+///       ```
 ///
-/// 2. titleDataSources 设置菜单栏文本
-///
-/// 3. addTitleRightItem 天际菜单栏右边的按钮
-///
-/// 4. reloadData
+///   2. 重写：initControllerAtIndex(_ index: Int)
+///       - `title` 属性将被用作缓存字段。
+///       ```
+///       override func initControllerAtIndex(_ index: Int) -> UIViewController {
+///           let vc = UIViewController()
+///           vc.view.backgroundColor = .randomColor(88)
+///           // vc.title = "title" 该操作无效，内部会重新设置。
+///           return vc
+///       }
+///       ```
+///   3. titleDataSources = 设置菜单栏数据["新闻", "热点", "本地"...]
+///         ```
+///             override func viewDidLoad() {
+///                super.viewDidLoad()
+///                titleDataSources = ["1", "22", "333", "4444", "5555", "666666", "7777777", "88888888", "999999999", "10101010101010", "11", "12", "13", "14", "15"]
+///                reloadData(at: 4)
+///             }
+///         ```
+///   4. addTitleRightItem 添加菜单栏右边的按钮, 没有需求可不添加
+///   5. reloadData(at index: Int) 刷新数据并指定index
 ///
 open class WZUIPageController: UIViewController {
     
@@ -272,7 +292,7 @@ public extension WZUIPageController {
     /// - `index`
     /// - `position` scroll animation
     ///
-    @objc func scrollToIndex(params: [String: Any]?) {
+    @objc private func scrollToIndex(params: [String: Any]?) {
         
         guard let params = params else {
             return
