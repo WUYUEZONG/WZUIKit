@@ -33,13 +33,13 @@ open class WZUIPageContentController: UIViewController {
 ///       }
 ///       ```
 ///   3. titleDataSources = 设置菜单栏数据["新闻", "热点", "本地"...]
-///         ```
-///             override func viewDidLoad() {
-///                super.viewDidLoad()
-///                titleDataSources = ["1", "22", "333", "4444", "5555", "666666", "7777777", "88888888", "999999999", "10101010101010", "11", "12", "13", "14", "15"]
-///                reloadData(at: 4)
-///             }
-///         ```
+///       ```
+///       override func viewDidLoad() {
+///            super.viewDidLoad()
+///            titleDataSources = ["1", "22", "333", "4444", "5555", "666666", "7777777", "88888888", "999999999", "10101010101010", "11", "12", "13", "14", "15"]
+///            reloadData(at: 4)
+///       }
+///       ```
 ///   4. addTitleRightItem 添加菜单栏右边的按钮, 没有需求可不添加
 ///   5. reloadData(at index: Int) 刷新数据并指定index
 ///
