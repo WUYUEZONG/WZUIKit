@@ -118,7 +118,7 @@
                 <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="QC1-Vk-c8Q">
                     <rect key="frame" x="0.0" y="44" width="414" height="162"/>
                 </datePicker>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="b1c-7i-1ji">
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="b1c-7i-1ji">
                     <rect key="frame" x="0.0" y="74" width="414" height="284"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
