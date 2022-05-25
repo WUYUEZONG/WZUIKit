@@ -1,0 +1,14 @@
+//
+//  ExampleConfig.release.xcconfig
+//  Example
+//
+//  Created by August on 2022/5/15.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+APP_DISPLAY_NAME = Release
+//PRODUCT_BUNDLE_IDENTIFIER = com.wyz.examplerelease
+//CURRENT_PROJECT_VERSION = 1.3.1
+MARKETING_VERSION = 1.0.1

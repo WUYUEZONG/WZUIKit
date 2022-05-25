@@ -22,6 +22,8 @@
 /* Begin PBXFileReference section */
 		613F681B27F5EE6700BD0932 /* NavgationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavgationController.swift; sourceTree = "<group>"; };
 		973573232826C358003B2052 /* PickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerController.swift; sourceTree = "<group>"; };
+		97AAE6992830C79A002A8786 /* ExampleConfig.debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ExampleConfig.debug.xcconfig; sourceTree = "<group>"; };
+		97AAE69A2830C7BA002A8786 /* ExampleConfig.release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ExampleConfig.release.xcconfig; sourceTree = "<group>"; };
 		CC5F506A2757020900EEB980 /* PageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageController.swift; sourceTree = "<group>"; };
 		CC66822D2716BA8400E40F6F /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC6682302716BA8400E40F6F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -45,9 +47,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		97AAE6982830C766002A8786 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				97AAE6992830C79A002A8786 /* ExampleConfig.debug.xcconfig */,
+				97AAE69A2830C7BA002A8786 /* ExampleConfig.release.xcconfig */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
 		CC6682242716BA8400E40F6F = {
 			isa = PBXGroup;
 			children = (
+				97AAE6982830C766002A8786 /* Config */,
 				CC66822F2716BA8400E40F6F /* Example */,
 				CC66822E2716BA8400E40F6F /* Products */,
 				CC6682492716BE9D00E40F6F /* Frameworks */,
@@ -309,12 +321,13 @@
 		};
 		CC6682422716BA8500E40F6F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 97AAE6992830C79A002A8786 /* ExampleConfig.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0.0.1;
 				DEVELOPMENT_TEAM = 2CR46MA89R;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Example/Info.plist;
@@ -327,7 +340,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wyz.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -338,12 +351,13 @@
 		};
 		CC6682432716BA8500E40F6F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 97AAE69A2830C7BA002A8786 /* ExampleConfig.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 1.0.0;
 				DEVELOPMENT_TEAM = 2CR46MA89R;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Example/Info.plist;
@@ -356,7 +370,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wyz.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
