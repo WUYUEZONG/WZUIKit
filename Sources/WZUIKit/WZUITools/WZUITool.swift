@@ -8,7 +8,7 @@
 import CoreGraphics
 import Foundation
 
-class WZUITool {
+public class WZUITool {
     
     static var shared = WZUITool()
     

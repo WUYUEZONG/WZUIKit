@@ -8,7 +8,7 @@
 import Foundation
 
 
-extension Date {
+public extension Date {
     /// Date to String
     ///
     /// format: "yyyy-MM-dd" "yyyy-MM-dd HH:mm" ...and more
