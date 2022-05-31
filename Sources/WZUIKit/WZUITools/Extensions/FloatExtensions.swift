@@ -35,6 +35,11 @@ public extension CGFloat {
         return UIScreen.main.bounds.width
     }
     
+    static var ignoreSafeAreaScreenWidth: CGFloat {
+        let appSafeAreaInsets = appSafeAreaInsets
+        return .wzScreenWidth - appSafeAreaInsets.left - appSafeAreaInsets.right
+    }
+    
     static var wzScreenHeight: CGFloat {
         return UIScreen.main.bounds.height
     }
@@ -64,16 +69,20 @@ public extension CGFloat {
     }
     
     static var wzControlBarHeight: CGFloat {
+        return appSafeAreaInsets.bottom
+    }
+    
+    static var appSafeAreaInsets: UIEdgeInsets {
         if #available(iOS 13.0, *) {
             if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                let keyWindow = scene.windows.first {
-                return keyWindow.safeAreaInsets.bottom
+                return keyWindow.safeAreaInsets
             }
             
         } else if #available(iOS 11.0, *) {
-            if let key = UIApplication.shared.keyWindow { return key.safeAreaInsets.bottom }
+            if let key = UIApplication.shared.keyWindow { return key.safeAreaInsets }
         }
-        return 0
+        return .zero
     }
     
     static var wzTabWithControlBarHeight: CGFloat {
