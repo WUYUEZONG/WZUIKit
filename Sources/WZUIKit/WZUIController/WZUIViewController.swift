@@ -15,7 +15,7 @@ import UIKit
 ///
 open class WZUIViewController: UIViewController {
     
-    open var wzNavNoNeedFitOnHeight: CGFloat?
+    open var wzNavNoNeedFitOnHeight: CGFloat? { nil }
     
     var wzNavViewHeightConstraint: NSLayoutConstraint?
     
