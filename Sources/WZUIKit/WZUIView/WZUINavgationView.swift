@@ -140,7 +140,10 @@ public extension WZUINavgationView {
     func rotate() {
         // 竖直或横屏，屏幕状态下左右间距调整
         contentStackLeading.constant = wzNavigationItemEdgeSpacing
+        contentStackTrailing.constant = wzNavigationItemEdgeSpacing
     }
+    
+    
     
 }
 

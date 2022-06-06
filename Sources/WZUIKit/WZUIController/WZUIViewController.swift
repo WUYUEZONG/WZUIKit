@@ -15,6 +15,8 @@ import UIKit
 ///
 open class WZUIViewController: UIViewController {
     
+    open wzNavNoNeedFitOnHeight: CGFloat?
+    
     var wzNavViewHeightConstraint: NSLayoutConstraint?
     
     lazy var navView: WZUINavgationView = {
@@ -80,10 +82,13 @@ extension WZUIViewController: UIGestureRecognizerDelegate {
 extension WZUIViewController {
     
     func confirmNavigationViewHeight(_ size: CGSize = CGSize(width: .wzScreenWidth, height: .wzScreenHeight)) {
-        if let height = self.wzNavViewHeightConstraint {
+        guard let height = self.wzNavViewHeightConstraint else { return }
+        if let fit = wzNavNoNeedFitOnHeight {
+            height.constant = fit
+        } else {
             height.constant = .wzStatusOrNavgationBarHeight(statusBarHide: self.prefersStatusBarHidden)
-            self.navView.rotate()
         }
+        self.navView.rotate()
     }
     
     open override func viewWillLayoutSubviews() {
