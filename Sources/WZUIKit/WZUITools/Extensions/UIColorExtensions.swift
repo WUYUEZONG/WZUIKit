@@ -24,8 +24,8 @@ public extension UIColor {
     /// Init color with hex code
     ///
     /// - Parameter hex: hex code (eg. 0x00eeee)
-    convenience init(hex: Int) {
-        self.init(r: (hex & 0xff0000) >> 16, g: (hex & 0xff00) >> 8, b: (hex & 0xff), a: 1)
+    convenience init(hex: Int, a: CGFloat = 1) {
+        self.init(r: (hex & 0xff0000) >> 16, g: (hex & 0xff00) >> 8, b: (hex & 0xff), a: a)
     }
 }
 
