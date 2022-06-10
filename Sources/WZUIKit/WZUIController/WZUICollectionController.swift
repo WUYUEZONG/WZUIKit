@@ -7,7 +7,7 @@
 
 import UIKit
 
-open class WZUICollectionController: WZUIViewController {
+open class WZUICollectionController: WZUIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     
     public lazy var collection: UICollectionView = {
@@ -43,6 +43,14 @@ open class WZUICollectionController: WZUIViewController {
         NSLayoutConstraint.activate([topConstraint, bottomConstraint, leftConstraint, rightConstraint])
     }
     
+    open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 0
+    }
+    
+    open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UICollectionViewCell", for: indexPath)
+        return cell
+    }
     
 }
 
@@ -51,16 +59,9 @@ public extension WZUICollectionController {
     var collectionRightEdge: CGFloat { 16 }
 }
 
-extension WZUICollectionController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension WZUICollectionController {
     
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
-    }
     
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UICollectionViewCell", for: indexPath)
-        return cell
-    }
     
     
     
