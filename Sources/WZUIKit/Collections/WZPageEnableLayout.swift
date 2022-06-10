@@ -24,8 +24,10 @@ public class WZPageEnableLayout : WZAlignFlowLayout {
 public class WZAlignFlowLayout: UICollectionViewFlowLayout {
     
     public enum Align {
-        /// cell 靠左对齐 ｜cell ... |
-        case leading
+        /// cell 靠左对齐 |-spacing-cell ... |
+        ///
+        /// 默认 `spacing` = .leftEdgeInset
+        case leading(spacing: CGFloat? = nil)
         /// cell 中间对齐 ｜... cell ... |
         case center
     }
@@ -69,8 +71,9 @@ extension WZAlignFlowLayout {
             itemCount = 0
         }
         switch targetAlign {
-        case .leading:
-            target = width * CGFloat(page) + itemSpace * CGFloat(itemCount)
+        case .leading(let spacing):
+            let spacing: CGFloat = spacing ?? collectionView!.contentInset.left
+            target = (width + itemSpace) * CGFloat(page) - spacing
         case .center:
             let halfLength = scrollDirection == .horizontal ? collectionView!.wzWidth / 2 : collectionView!.wzHeight / 2
             target = (width + itemSpace) * CGFloat(page) + width / 2 - halfLength
