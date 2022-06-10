@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WZBaseComponents
 
 public class WZUIDatePickerView: UIView {
     

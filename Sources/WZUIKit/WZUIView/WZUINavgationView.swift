@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import WZBaseComponents
 
 open class WZUINavgationView: UIView {
     

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WZBaseComponents
 
 public protocol TableGameCollectionCellDataSource {
     /// 海报图

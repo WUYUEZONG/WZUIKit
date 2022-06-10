@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WZBaseComponents
 
 /// no need set the width and height. it is auto size. you can set `contentInsertEdge` to resize the size.
 ///

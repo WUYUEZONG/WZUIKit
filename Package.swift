@@ -10,19 +10,27 @@ let package = Package(
         .library(
             name: "WZUIKit",
             targets: ["WZUIKit"]),
+//        .library(
+//            name: "WZBaseComponents",
+//            targets: ["WZBaseComponents"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
+        .package(url: "https://github.com/WUYUEZONG/WZBaseComponents.git", branch: "main")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        
         .target(
             name: "WZUIKit",
-            dependencies: []),
-        .testTarget(
-            name: "WZUIKitTests",
-            dependencies: ["WZUIKit"]),
+            dependencies: [
+                //.target(name: "WZBaseComponents")
+                .product(name: "WZBaseComponents", package: "WZBaseComponents")
+            ]),
+//        .testTarget(
+//            name: "WZUIKitTests",
+//            dependencies: ["WZUIKit"]),
     ]
 )
