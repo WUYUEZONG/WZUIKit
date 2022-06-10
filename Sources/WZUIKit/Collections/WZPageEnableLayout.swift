@@ -66,26 +66,31 @@ extension WZAlignFlowLayout {
     func targetOffset(width: CGFloat, page: Int, itemSpace: CGFloat) -> CGFloat {
         
         var target: CGFloat = 0
+        guard let collectionView = collectionView else { return target }
+        
         var itemCount = page - 1
         if itemCount < 0 {
             itemCount = 0
         }
+        let contentInset = collectionView.contentInset
+        let isHorizontal = scrollDirection == .horizontal
         switch targetAlign {
         case .leading(let spacing):
-            let spacing: CGFloat = spacing ?? collectionView!.contentInset.left
+            let spacing: CGFloat = spacing ?? contentInset.left
             target = (width + itemSpace) * CGFloat(page) - spacing
         case .center:
-            let halfLength = scrollDirection == .horizontal ? collectionView!.wzWidth / 2 : collectionView!.wzHeight / 2
+            let halfLength = isHorizontal ? collectionView.wzWidth / 2 : collectionView.wzHeight / 2
             target = (width + itemSpace) * CGFloat(page) + width / 2 - halfLength
         }
-        let isHorizontal = scrollDirection == .horizontal
-        let leftEdge = isHorizontal ? collectionView!.contentInset.left : collectionView!.contentInset.top
+        
+        let contentSize = collectionView.contentSize
+        let startEdge = isHorizontal ? contentInset.left : contentInset.top
         /// 最大可滚动到的位置
-        let maxContentLength = isHorizontal ? collectionView!.contentSize.width : collectionView!.contentSize.height
-        let endSideEdge = isHorizontal ? collectionView!.contentInset.right : collectionView!.contentInset.bottom
+        let maxContentLength = isHorizontal ? contentSize.width : contentSize.height
+        let endSideEdge = isHorizontal ? contentInset.right : contentInset.bottom
         let maxTarget = maxContentLength - width - endSideEdge
         if target <= 0 {
-            target = -leftEdge
+            target = -startEdge
         } else if target > maxTarget {
             target = maxTarget
             lastPage = Int((maxTarget - itemSpace * CGFloat(itemCount)) / width) + 1
