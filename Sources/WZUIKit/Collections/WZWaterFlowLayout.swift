@@ -10,4 +10,11 @@ import UIKit
 class WZWaterFlowLayout: UICollectionViewLayout {
     
     
+    
+    
+    override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        <#code#>
+    }
+    
+    
 }
