@@ -7,23 +7,36 @@
 
 import UIKit
 
-public class WZPageEnableLayout: UICollectionViewFlowLayout {
+public class WZPageEnableLayout : WZAlignFlowLayout {
     
-    public override var scrollDirection: UICollectionView.ScrollDirection {
+    /// no need to set this property.
+    final public override var decelerationRate: UIScrollView.DecelerationRate {
         set {
-            super.scrollDirection = .horizontal
+            super.decelerationRate = .fast
         }
         get {
-            .horizontal
+            .fast
         }
     }
+}
+
+
+public class WZAlignFlowLayout: UICollectionViewFlowLayout {
     
-    /// 默认 .fast 使得更快的减速，到达类似 pageEnable的效果
+    public enum Align {
+        /// cell 靠左对齐 ｜cell ... |
+        case leading
+        /// cell 中间对齐 ｜... cell ... |
+        case center
+    }
+    /// 滚动到目标的对齐方式
+    public var targetAlign: Align = .center
+    
+    /// 默认 .fast 使得更快的减速，到达类似 pageEnable 的效果
+    /// .normal 不会有 pageEnable 的效果， 但可以快速滑动
     public var decelerationRate: UIScrollView.DecelerationRate = .fast {
         didSet {
-            if decelerationRate == .normal {
-                pageEnabe = false
-            }
+            collectionView?.decelerationRate = decelerationRate
         }
     }
     
@@ -33,7 +46,8 @@ public class WZPageEnableLayout: UICollectionViewFlowLayout {
 
     }
     
-    public var pageEnabe = false
+    /// test, not open
+    private var pageEnabe = false
     
     private var lastPage: Int = 0
     
@@ -45,19 +59,46 @@ public class WZPageEnableLayout: UICollectionViewFlowLayout {
     }
 }
 
-extension WZPageEnableLayout {
+extension WZAlignFlowLayout {
     
-    var stepSpace: CGFloat {
-        itemSize.width + minimumInteritemSpacing
+    func targetOffset(width: CGFloat, page: Int, itemSpace: CGFloat) -> CGFloat {
+        
+        var target: CGFloat = 0
+        var itemCount = page - 1
+        if itemCount < 0 {
+            itemCount = 0
+        }
+        switch targetAlign {
+        case .leading:
+            target = width * CGFloat(page) + itemSpace * CGFloat(itemCount)
+        case .center:
+            let halfLength = scrollDirection == .horizontal ? collectionView!.wzWidth / 2 : collectionView!.wzHeight / 2
+            target = (width + itemSpace) * CGFloat(page) + width / 2 - halfLength
+        }
+        let isHorizontal = scrollDirection == .horizontal
+        let leftEdge = isHorizontal ? collectionView!.contentInset.left : collectionView!.contentInset.top
+        /// 最大可滚动到的位置
+        let maxContentLength = isHorizontal ? collectionView!.contentSize.width : collectionView!.contentSize.height
+        let endSideEdge = isHorizontal ? collectionView!.contentInset.right : collectionView!.contentInset.bottom
+        let maxTarget = maxContentLength - width - endSideEdge
+        if target <= 0 {
+            target = -leftEdge
+        } else if target > maxTarget {
+            target = maxTarget
+            lastPage = Int((maxTarget - itemSpace * CGFloat(itemCount)) / width) + 1
+        }
+        return target
     }
     
     func likePageEnable(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
-        guard let collectionView = collectionView else { return proposedContentOffset }
+        guard collectionView != nil else { return proposedContentOffset }
+        
+        let isHorizontal = scrollDirection == .horizontal
         // 分页的 width
-        let cellWidth = itemSize.width
-        let itemSpace = minimumInteritemSpacing
-        let proposeX = proposedContentOffset.x
-        let leftEdge = collectionView.contentInset.left
+        let cellWidth = isHorizontal ? itemSize.width : itemSize.height
+        let itemSpace = isHorizontal ? minimumLineSpacing : minimumInteritemSpacing
+        let proposeX = isHorizontal ? proposedContentOffset.x : proposedContentOffset.y
+        
         /// 除去特例的 第0页 之后的剩余
         let calProposeX = proposeX - (cellWidth / 2)
         
@@ -71,72 +112,43 @@ extension WZPageEnableLayout {
         
         if decelerationRate == .fast {
             if lastPage == page {
-                if velocity.x > 0.21 {
-                    page += 1
-                } else if velocity.x < -0.21 {
-                    page -= 1
-                }
-                if page < 0 {
-                    page = 0
-                }
+                velocityTo(velocity: velocity, page: &page)
             }
-            
             lastPage = page
         }
-        
-        var itemCount = page - 1
-        if itemCount < 0 {
-            itemCount = 0
-        }
         /// 目标滚动到的 x
-        var targetX: CGFloat = cellWidth * CGFloat(page) + itemSpace * CGFloat(itemCount)
-        /// 最大可滚动到的位置
-        let maxTarget = collectionView.contentSize.width - cellWidth - collectionView.contentInset.right
-        if targetX <= 0 {
-            targetX = -leftEdge
-        } else if targetX > maxTarget {
-            targetX = maxTarget
-        }
-        
-        return CGPoint(x: targetX, y: proposedContentOffset.y)
+        let target: CGFloat = targetOffset(width: cellWidth, page: page, itemSpace: itemSpace)
+        return isHorizontal ? CGPoint(x: target, y: proposedContentOffset.y) : CGPoint(x: proposedContentOffset.x, y: target)
     }
     
     func pageEnable(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
-        guard let collectionView = collectionView else { return proposedContentOffset }
+       
+        guard collectionView != nil else { return proposedContentOffset }
+        
+        let isHorizontal = scrollDirection == .horizontal
         // 分页的 width
-        let cellWidth = itemSize.width
-        let itemSpace = minimumInteritemSpacing
-
-        let leftEdge = collectionView.contentInset.left
+        let cellWidth = isHorizontal ? itemSize.width : itemSize.height
+        let itemSpace = isHorizontal ? minimumLineSpacing : minimumInteritemSpacing
         /// 预计滚动到的页数
         var page: Int = lastPage
-        if velocity.x > 0.21 {
+        velocityTo(velocity: velocity, page: &page)
+        lastPage = page
+        
+        /// 目标滚动到的 x
+        let target: CGFloat = targetOffset(width: cellWidth, page: page, itemSpace: itemSpace)
+        return isHorizontal ? CGPoint(x: target, y: proposedContentOffset.y) : CGPoint(x: proposedContentOffset.x, y: target)
+    }
+    
+    func velocityTo(velocity: CGPoint, page: inout Int) {
+        let vP = scrollDirection == .horizontal ? velocity.x : velocity.y
+        if vP > 0.21 {
             page += 1
-        } else if velocity.x < -0.21 {
+        } else if vP < -0.21 {
             page -= 1
         }
         if page < 0 {
             page = 0
         }
-        
-        lastPage = page
-        
-        var itemCount = page - 1
-        if itemCount < 0 {
-            itemCount = 0
-        }
-        /// 目标滚动到的 x
-        var targetX: CGFloat = cellWidth * CGFloat(page) + itemSpace * CGFloat(itemCount)
-        /// 最大可滚动到的位置
-        let maxTarget = collectionView.contentSize.width - cellWidth - collectionView.contentInset.right
-        if targetX <= 0 {
-            targetX = -leftEdge
-        } else if targetX > maxTarget {
-            targetX = maxTarget
-            lastPage = Int((maxTarget - itemSpace * CGFloat(itemCount)) / cellWidth) + 1
-        }
-        
-        return CGPoint(x: targetX, y: proposedContentOffset.y)
     }
     
     
