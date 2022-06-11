@@ -7,15 +7,20 @@
 
 import UIKit
 
-@objc public protocol WZWaterFlowLayoutDelegate: UICollectionViewDelegateFlowLayout {
-    
+public protocol WZWaterFlowLayoutDelegate {
+    /// 返回对应`indexPath`的高度
     func layoutItemHeight(at indexPath: IndexPath) -> CGFloat
     
-    @available(*, unavailable, renamed: "layoutItemHeight(at:)")
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
-    
 }
-
+/// 瀑布流
+///
+/// 1. 不支持多section，所以collection的section只能等于1
+///
+/// 2. 暂不支持 section header / footer
+///
+/// 3. 实现 `delegate: WZWaterFlowLayoutDelegate` 返回对应高度即可
+///
+/// 
 public class WZWaterFlowLayout: UICollectionViewLayout {
     
     public var delegate: WZWaterFlowLayoutDelegate?
@@ -31,7 +36,7 @@ public class WZWaterFlowLayout: UICollectionViewLayout {
             invalidateLayout()
         }
     }
-    public var rowSpacing: CGFloat = 20 {
+    public var rowSpacing: CGFloat = 10 {
         didSet {
             invalidateLayout()
         }
@@ -42,7 +47,7 @@ public class WZWaterFlowLayout: UICollectionViewLayout {
     var itemCounts: Int {
         collectionView?.numberOfItems(inSection: 0) ?? 0
     }
-    
+    /// 记录当所有列的 最大y坐标
     lazy var lastMinMaxys: [CGFloat] = {
         return Array(repeating: 0, count: column)
     }()
@@ -54,33 +59,43 @@ public class WZWaterFlowLayout: UICollectionViewLayout {
         
         guard let delegate = delegate else { return }
         
-        if layoutAttributes.count == 0 {
-            layoutAttributes = Array(repeating: nil, count: itemCounts)
-        } else {
-            layoutAttributes.removeAll(keepingCapacity: true)
-        }
-        let contentInset = collectionView.contentInset
-        let width = (CGFloat.wzScreenWidth - contentInset.left - contentInset.right - columnSpacing * CGFloat(column - 1)) / CGFloat(column)
+        /// 一次性申请全部内存
+        layoutAttributes = Array(repeating: nil, count: itemCounts)
         
+        let contentInset = collectionView.contentInset
+        ///  根据列间距和列数获取item的宽度
+        let width = (collectionView.wzWidth - contentInset.left - contentInset.right - columnSpacing * CGFloat(column - 1)) / CGFloat(column)
+        /// 计算全部item的 `attributes.frame`
         for index in 0..<itemCounts {
             let indexPath = IndexPath(row: index, section: 0)
             let height = delegate.layoutItemHeight(at: indexPath)
             let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
+            /// n = 当前列
             let n = index % column
+            /// 确定item的 `attributes.frame..x`
             var x = CGFloat(n) * (width + columnSpacing)
 
             var lastMinMaxY = lastMinMaxys[n]
             var col = n
+            // 为了底部能尽量对齐，不考虑这个，可以注释这段代码 --- start
             if lastMinMaxY > 0 {
-                lastMinMaxY =  lastMinMaxys.min() ?? 0
-                col = lastMinMaxys.firstIndex(of: lastMinMaxY) ?? n
+                // 找到最后一列的最短y坐标
+                lastMinMaxys.enumerated().forEach { e in
+                    let index = e.offset.self, y = e.element.self
+                    if lastMinMaxY > y {
+                        lastMinMaxY = y
+                        col = index
+                    }
+                }
                 x = CGFloat(col) * (width + columnSpacing)
             }
-            
-            
+            // 为了底部能尽量对齐，不考虑这个，可以注释这段代码 --- end
+            /// 确定item的 `attributes.frame..y`
             let y = lastMinMaxY + rowSpacing
             attributes.frame = CGRect(x: x, y: y, width: width, height: height)
+            // 记录当前列的 最大y坐标
             lastMinMaxys[col] = y + height
+            /// 存储 `attributes.frame`
             layoutAttributes[index] = attributes
         }
         
@@ -91,21 +106,6 @@ public class WZWaterFlowLayout: UICollectionViewLayout {
         guard let layoutAttributes = layoutAttributes as? [UICollectionViewLayoutAttributes] else { return super.layoutAttributesForElements(in: rect) }
         
         let rectAttributes = layoutAttributes.filter{ rect.intersects($0.frame) }
-//        debugPrint("layoutAttributesForElements offset: \(collectionView?.contentOffset.y)")
-//        let rectCenterX = rect.origin.y + rect.self.height / 2
-//        let y = collectionView?.contentOffset.y ?? 0
-//        let half = (collectionView?.wzHeight ?? 0) / 2
-//        let rectCenterX = y + half
-//        for attribute in rectAttributes {
-//            let attributeFrameX = attribute.frame.minY + attribute.frame.height / 2
-//            var scale = abs(attributeFrameX - rectCenterX) / (.wzScreenHeight / 2)
-//            if scale > 1 {
-//                scale = 1
-//            } else if scale < 0.8 {
-//                scale = 0.8
-//            }
-//            attribute.transform = CGAffineTransform(scaleX: 1, y: scale)
-//        }
         return rectAttributes
     }
     
@@ -120,7 +120,7 @@ public class WZWaterFlowLayout: UICollectionViewLayout {
     public override var collectionViewContentSize: CGSize {
         guard let collectionView = collectionView else { return .zero }
         let contentInset = collectionView.contentInset
-        let height = contentInset.top + contentInset.bottom + (lastMinMaxys.max() ?? 0)
+        let height = lastMinMaxys.max() ?? 0
         let width = collectionView.wzWidth - contentInset.left - contentInset.right
         return CGSize(width: width, height: height)
     }
