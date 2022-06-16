@@ -26,7 +26,7 @@ let package = Package(
         .target(
             name: "WZUIKit",
             dependencies: [
-//                .target(name: "WZBaseComponents")
+                .target(name: "WZBaseComponents")
 //                .product(name: "WZBaseComponents", package: "WZBaseComponents")
             ]),
 //        .testTarget(
