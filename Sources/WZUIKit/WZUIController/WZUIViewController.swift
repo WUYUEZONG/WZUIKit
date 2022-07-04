@@ -90,9 +90,9 @@ extension WZUIViewController: WZUIViewControllerUISetting {
     }
 }
 
-open extension WZUIViewController {
+extension WZUIViewController {
     
-    func confirmNavigationViewHeight(_ size: CGSize = CGSize(width: .wzScreenWidth, height: .wzScreenHeight)) {
+    public func confirmNavigationViewHeight(_ size: CGSize = CGSize(width: .wzScreenWidth, height: .wzScreenHeight)) {
         guard let height = self.wzNavViewHeightConstraint else { return }
         if let fit = wzNavNoNeedFitOnHeight() {
             height.constant = fit
