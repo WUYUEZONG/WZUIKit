@@ -85,7 +85,7 @@ extension WZUIViewController: UIGestureRecognizerDelegate {
 }
 
 extension WZUIViewController: WZUIViewControllerUISetting {
-    public func wzNavNoNeedFitOnHeight() -> CGFloat? {
+    open func wzNavNoNeedFitOnHeight() -> CGFloat? {
         return nil
     }
 }
