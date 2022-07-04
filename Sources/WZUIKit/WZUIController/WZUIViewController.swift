@@ -6,6 +6,11 @@
 //
 
 import UIKit
+
+public protocol WZUIViewControllerUISetting {
+    func wzNavNoNeedFitOnHeight() -> CGFloat?
+}
+
 ///
 /// `WZUIViewController`: 项目要使用到的基类，所有`ViewController`继承该类实现统一管理
 ///
@@ -15,7 +20,7 @@ import UIKit
 ///
 open class WZUIViewController: UIViewController {
     
-    open var wzNavNoNeedFitOnHeight: CGFloat? { nil }
+    //open var wzNavNoNeedFitOnHeight: CGFloat? { nil }
     
     var wzNavViewHeightConstraint: NSLayoutConstraint?
     
@@ -79,11 +84,17 @@ extension WZUIViewController: UIGestureRecognizerDelegate {
     }
 }
 
-extension WZUIViewController {
+extension WZUIViewController: WZUIViewControllerUISetting {
+    public func wzNavNoNeedFitOnHeight() -> CGFloat? {
+        return nil
+    }
+}
+
+open extension WZUIViewController {
     
     func confirmNavigationViewHeight(_ size: CGSize = CGSize(width: .wzScreenWidth, height: .wzScreenHeight)) {
         guard let height = self.wzNavViewHeightConstraint else { return }
-        if let fit = wzNavNoNeedFitOnHeight {
+        if let fit = wzNavNoNeedFitOnHeight() {
             height.constant = fit
         } else {
             height.constant = .wzStatusOrNavgationBarHeight(statusBarHide: self.prefersStatusBarHidden)
